@@ -1,6 +1,13 @@
 ---
   extends: airbnb-base
   env:
-    node: true
+    browser: true
     mocha: true
     es6: true
+  rules:
+    indent: [2,4]
+    func-names: 0
+    vars-on-top: 0
+    one-var: 0
+    radix: 'off'
+    no_underscore_dangle: 0
