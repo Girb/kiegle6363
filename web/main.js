@@ -6,4 +6,5 @@ if (config.beta) {
 }
 
 window.app = new App(config);
+window.app.dbname = 'mydb2';
 window.app.start();

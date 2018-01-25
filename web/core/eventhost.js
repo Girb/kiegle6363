@@ -1,8 +1,7 @@
 class EventHost {
-
     constructor() {
         this.listeners = [];
-        this.events = [];
+        this._events = [];
     }
 
     on(type, listener, context) {
@@ -12,72 +11,70 @@ class EventHost {
         this._addListener(type, listener, true, context);
     }
     off(eventType, listenerFunc) {
-        var typeidx = this.events.indexOf(eventType);
-        var hasType = eventType && typeidx !== -1;
-        if( !hasType ) return;
+        const typeidx = this._events.indexOf(eventType);
+        const hasType = eventType && typeidx !== -1;
+        if (!hasType) return;
 
-        if( !listenerFunc ) {
+        if (!listenerFunc) {
             delete this.listeners[eventType];
-            this.events.splice(typeidx, 1);
+            this._events.splice(typeidx, 1);
         } else {
-            (function() {
-                var removedEvents = [];
-                var typeListeners = this.listeners[eventType];
-                typeListeners.forEach(function(f, idx) {
-                    if( f.f === listenerFunc ) {
+            (function () {
+                const removedEvents = [];
+                const typeListeners = this.listeners[eventType];
+                typeListeners.forEach((f, idx) => {
+                    if (f.f === listenerFunc) {
                         removedEvents.unshift(idx);
                     }
                 });
-                removedEvents.forEach(function(idx) {
+                removedEvents.forEach((idx) => {
                     typeListeners.splice(idx, 1);
                 });
-                if( !typeListeners.length ) {
-                    this.events.splice(typidx, 1);
+                if (!typeListeners.length) {
+                    this._events.splice(typidx, 1);
                     delete this.listeners[eventType];
                 }
             }.bind(this))();
         }
     }
     trigger(type) {
-        for( var len = arguments.length, eventArgs = Array(len > 1 ? len - 1 : 0), key = 1; key < len; key++ ) {
-            eventArgs[key-1] = arguments[key];
+        for (var len = arguments.length, eventArgs = Array(len > 1 ? len - 1 : 0), key = 1; key < len; key++) {
+            eventArgs[key - 1] = arguments[key];
         }
         this._applyEvents(type, eventArgs);
     }
     destroy() {
         this.listeners = [];
-        this.events = [];
+        this._events = [];
     }
     _addListener(type, listener, once, context) {
-        if( typeof listener !== 'function' ) {
+        if (typeof listener !== 'function') {
             throw TypeError('Listener must be a function');
         }
 
-        var x = {once: once, f: listener, context: context};
-        if( this.events.indexOf(type) === -1 ) {
+        const x = { once, f: listener, context };
+        if (this._events.indexOf(type) === -1) {
             this.listeners[type] = [x];
-            this.events.push(type);
+            this._events.push(type);
         } else {
             this.listeners[type].push(x);
         }
     }
     _applyEvents(eventType, eventArguments) {
-        var typeListeners = this.listeners[eventType];
-        if( !typeListeners || !typeListeners.length ) return;
+        const typeListeners = this.listeners[eventType];
+        if (!typeListeners || !typeListeners.length) return;
 
-        var removableListeners = [];
-        typeListeners.forEach(function(l, idx) {
+        const removableListeners = [];
+        typeListeners.forEach((l, idx) => {
             l.f.apply(l.context, eventArguments);
-            if( l.once ) {
+            if (l.once) {
                 removableListeners.unshift(idx);
             }
         });
-        removableListeners.forEach(function(idx) {
+        removableListeners.forEach((idx) => {
             typeListeners.splice(idx, 1);
         });
-
     }
-
 }
 
 export default EventHost;

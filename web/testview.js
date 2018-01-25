@@ -17,7 +17,6 @@ class TestView extends View {
     get className() {
         return 'test';
     }
-
     get template() {
         return `
             <div><label for="name">Navn</label><input id="name" /></div>
@@ -25,6 +24,15 @@ class TestView extends View {
             <button id="okgo"><span>Ok go</span></button>
             <div id="list"></div>
         `;
+    }
+    get events() {
+        return {
+            'click #okgo': 'okgo',
+        };
+    }
+
+    okgo(e) {
+        alert('ok GO');
     }
 
     list() {
@@ -40,17 +48,17 @@ class TestView extends View {
     }
 
     render() {
-        this.one('#okgo').addEventListener('click', () => {
-            const name = this.one('#name').value,
-                age = this.one('#age').value;
-            const doc = {
-                _id: `${new Date().valueOf()}`,
-                name,
-                age,
-            };
-            this.db.put(doc);
-            this.list();
-        });
+        // this.one('#okgo').addEventListener('click', () => {
+        //     const name = this.one('#name').value,
+        //         age = this.one('#age').value;
+        //     const doc = {
+        //         _id: `${new Date().valueOf()}`,
+        //         name,
+        //         age,
+        //     };
+        //     this.db.put(doc);
+        //     this.list();
+        // });
 
         this.list();
 

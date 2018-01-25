@@ -1,9 +1,24 @@
 body {
-  background-color: #222; color: #f0f0f0;
+  background-color: #222; color: #f0f0f0; font-family: Arial, sans-serif;
 }
 
 .test {
   padding: 60px;
   label { width: 120px; display: inline-block; }
   button { margin-top: 16px; }
+}
+
+.participants {
+  .edit {
+    div { display: inline-block; margin: 0 12px 0 0; } // make responsive
+    label {
+      margin-right: 6px;
+      &:after{ content: ':'; }
+    }
+    input { width: 160px; }
+  }
+  #participantlist {
+    margin-top: 24px;
+    span { display: inline-block; margin-right: 16px; }
+  }
 }

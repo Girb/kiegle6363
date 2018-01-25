@@ -1,15 +1,19 @@
 import { Router } from './core/router';
 import { HomeView } from './homeview';
 import { TestView } from './testview';
+import { ParticipantsView } from './views/participants';
+import { DB } from './db';
 
 class App extends Router {
     constructor(config) {
         super();
+        this.db = new DB('mydb2');
     }
     get routes() {
         return {
             '': 'home',
-            test: 'test',
+            'test': 'test',
+            'participants': 'participants',
         };
     }
     start() { // starts the app
@@ -23,6 +27,10 @@ class App extends Router {
 
     test() {
         this.applyView(new TestView());
+    }
+
+    participants() {
+        this.applyView(new ParticipantsView());
     }
 
     applyView(view) {
