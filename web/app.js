@@ -1,7 +1,8 @@
 import { Router } from './core/router';
+import Header from './Header';
 import { HomeView } from './homeview';
 import { TestView } from './testview';
-import { ParticipantsView } from './views/participants';
+import { ParticipantsView } from './views/ParticipantsView';
 import { DB } from './db';
 
 class App extends Router {
@@ -37,7 +38,11 @@ class App extends Router {
         while (document.body.firstChild) {
             document.body.removeChild(document.body.firstChild);
         }
-        document.body.appendChild(view.render().el);
+        document.body.appendChild(new Header().render().el);
+        var container = document.createElement('div');
+        container.classList.add('container');
+        document.body.appendChild(container);
+        container.appendChild(view.render().el);
         return view;
     }
 }

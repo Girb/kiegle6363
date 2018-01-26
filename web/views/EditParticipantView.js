@@ -1,6 +1,6 @@
-import View from '../core/view';
+import BaseView from '../BaseView';
 
-class EditParticipantView extends View {
+class EditParticipantView extends BaseView {
     get className() {
         return 'edit';
     }
@@ -12,7 +12,7 @@ class EditParticipantView extends View {
     }
     queryReady() {
         let allok = true;
-        [].forEach.call(this.all('input'), (ipt) => {
+        this.all('input').forEach((ipt) => {
             allok = allok && !!ipt.value.trim();
         }, this);
         allok && this.one('#addparticipant').removeAttribute('disabled');
@@ -41,6 +41,10 @@ class EditParticipantView extends View {
             <div><label for="club">Klubb</label><input required id="club" /></div>
             <div><button disabled="disabled" id="addparticipant"><span>Legg til</span></button></div>
         `;
+    }
+    render() {
+        this.el.innerHTML = this.template;
+        return this;
     }
 }
 

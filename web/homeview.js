@@ -1,9 +1,6 @@
-import View from './core/view';
+import NativeView from 'backbone.nativeview';
 
-class HomeView extends View {
-    constructor() {
-        super();
-    }
+class HomeView extends NativeView {
     get className() {
         return 'home';
     }
@@ -13,6 +10,7 @@ class HomeView extends View {
         `;
     }
     render() {
+        this.el.innerHTML = this.template;
         return this;
     }
 }

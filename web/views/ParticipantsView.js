@@ -1,0 +1,33 @@
+import BaseView from '../BaseView';
+import { EditParticipantView } from './EditParticipantView';
+import { ParticipantListItem } from './participantlistitem';
+
+class ParticipantsView extends BaseView {
+    get className() {
+        return 'participants';
+    }
+    list() {
+        const lst = this.one('#participantlist');
+        lst.innerHTML = '';
+        app.db.all().then((result) => {
+            result.rows.forEach((row) => {
+                const itm = new ParticipantListItem({ doc: row.doc });
+                lst.appendChild(itm.render().el);
+            }, this);
+        });
+    }
+    render() {
+        this.el.innerHTML = `<div id='participantlist'></div>`;
+        const ev = new EditParticipantView();
+        ev.on('add', function (doc) {
+            this.list();
+        }, this);
+        this.el.insertBefore(ev.render().el, this.one('#participantlist'));
+
+        this.list();
+
+        return this;
+    }
+}
+
+export { ParticipantsView };
