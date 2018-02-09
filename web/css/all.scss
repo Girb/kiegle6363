@@ -4,28 +4,47 @@
 @mixin for-desktop-up { @media (min-width: 1200px) { @content; } }
 @mixin for-big-desktop-up { @media (min-width: 1600px) { @content; } }
 
+$buttonbgcolor1: #5ead3d;
+$buttoncolor1: #fff;
+
+
 body {
-  background-color: #f0f0f0; color: #222; font-family: Arial, sans-serif; padding: 80px 0 0 0; margin: 0; font-size: 18px;
+  background-color: #f0f0f0; color: #222; font-family: Arial, sans-serif; padding: 60px 0 0 0; margin: 0; font-size: 18px;
 }
 header {
-  position: fixed; left: 0; top: 0; right: 0; min-height: 50px; margin-bottom: 20px; background-color: #263521;
+  position: fixed; left: 0; top: 0; right: 0; min-height: 50px; margin-bottom: 20px; background-color: #263521; box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28); padding: 0 25px;
+  h1 { margin: 0; color: #fff; line-height: 50px; }
   #logo { height: 30px; position: absolute; right: 30px; top: 10px; }
 }
 
 // box-shadow: 0 -1px 0 #e4e4e4, 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
 
 .container {
-   color: #222; min-height: 2000px; margin: 0 auto; padding: 24px;
+   color: #222; min-height: 2000px; margin: 0 auto; padding: 25px;
 }
 
 label { font-size: 18px; }
+input,select { box-sizing: border-box; }
+form {
+  label,input,select,button { display: block; width: 100%; font-size: 18px; padding: 5px; }
+  input[type=date] { width: auto; }
+  button { margin-top: 25px; }
+  .row { margin-bottom: 10px; }
+}
+
+@include for-tablet-landscape-up {
+  form {
+    label,input,select, button { width: 450px; }
+  }
+}
 
 button {
-  box-shadow: 0 0 2px rgba(0,0,0,.12), 0 2px 4px rgba(0,0,0,.24); border-radius: 2px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: box-shadow .2s cubic-bezier(.4,0,.2,1),background-color .2s cubic-bezier(.4,0,.2,1);
+  height: 35px; padding: 0 20px; box-shadow: 0 0 2px rgba(0,0,0,.12), 0 2px 4px rgba(0,0,0,.24); border-radius: 2px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: box-shadow .2s cubic-bezier(.4,0,.2,1),background-color .2s cubic-bezier(.4,0,.2,1); background-color: $buttonbgcolor1; color: $buttoncolor1; box-sizing: border-box;
   &:not([disabled]) {
     &:hover { box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28); }
     &:active { box-shadow: 0 0 6px rgba(0,0,0,.16), 0 6px 12px rgba(0,0,0,.32); }
   }
+  &:disabled { box-shadow: none; background-color: rgba(128,128,128,.5); cursor: default; }
 }
 button.main { font-size: 18px; height: 50px; padding: 0 25px; background-color: #5ead3d; color: #fff; width: 100%; }
 @include for-tablet-portrait-up {

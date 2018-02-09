@@ -5,6 +5,7 @@ import { TestView } from './testview';
 import { ParticipantsView } from './views/ParticipantsView';
 import { DB } from './db';
 import AdminHome from './views/AdminHome';
+import CreateCompetitionView from './views/CreateCompetitionView';
 
 class App extends Router {
     constructor(config) {
@@ -16,6 +17,7 @@ class App extends Router {
             '': 'home',
             'test': 'test',
             'admin': 'admin',
+            'admin/competitions/create': 'createCompetition',
             'participants': 'participants',
         };
     }
@@ -40,12 +42,16 @@ class App extends Router {
         this.applyView(new AdminHome());
     }
 
+    createCompetition() {
+        this.applyView(new CreateCompetitionView());
+    }
+
     applyView(view) {
         while (document.body.firstChild) {
             document.body.removeChild(document.body.firstChild);
         }
-        document.body.appendChild(new Header().render().el);
-        var container = document.createElement('div');
+        document.body.appendChild(new Header(view).render().el);
+        const container = document.createElement('div');
         container.classList.add('container');
         document.body.appendChild(container);
         container.appendChild(view.render().el);
