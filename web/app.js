@@ -4,6 +4,7 @@ import { HomeView } from './homeview';
 import { TestView } from './testview';
 import { ParticipantsView } from './views/ParticipantsView';
 import { DB } from './db';
+import AdminHome from './views/AdminHome';
 
 class App extends Router {
     constructor(config) {
@@ -14,6 +15,7 @@ class App extends Router {
         return {
             '': 'home',
             'test': 'test',
+            'admin': 'admin',
             'participants': 'participants',
         };
     }
@@ -32,6 +34,10 @@ class App extends Router {
 
     participants() {
         this.applyView(new ParticipantsView());
+    }
+
+    admin() {
+        this.applyView(new AdminHome());
     }
 
     applyView(view) {

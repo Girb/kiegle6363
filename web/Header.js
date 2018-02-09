@@ -4,8 +4,7 @@ class Header extends BaseView {
     get tagName() { return 'header'; }
     get template() {
         return `
-            <a href="#/"><img src="img/kiegle6363white.svg" alt="Kiegle6363 logo" /></a>
-            <img class="kiegle" src="img/participants.png" alt="Kiegle som holder skilt med teksten 'Slagere'" />
+            <a href="#/"><img id="logo" src="img/kiegle6363white.svg" alt="Kiegle6363 logo" /></a>
         `;
     }
     render() {

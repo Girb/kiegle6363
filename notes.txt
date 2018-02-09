@@ -1,0 +1,33 @@
+
+
+ADMIN
+-----
+ny konkurranse
+rediger konkurranse
+sett aktiv konkurranse
+slagere
+    ny slager
+    slett slager
+    rediger slager
+
+KONKURRANSE
+-----------
+rekkefølge
+slagning
+resultater
+
+
+
+
+
+
+DB names/types:
+(gus) -> Gustibus
+(kvp) -> Kniksens Vandrepokal
+(kvk) -> Klubb vs Klubb
+
+
+
+---------------------------------------
+
+
