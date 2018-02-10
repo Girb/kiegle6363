@@ -7,10 +7,14 @@ export default class AdminHome extends BaseView {
     get events() {
         return {
             'click .newcomp': 'newCompetition',
+            'click .editparticipants': 'editParticipants'
         };
     }
     newCompetition() {
         window.location.href = '/#admin/competitions/create';
+    }
+    editParticipants() {
+        window.location.href = '/#participants';
     }
     get template() {
         return `

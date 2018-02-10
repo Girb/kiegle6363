@@ -19,7 +19,7 @@ class DB {
 
     _connect(name) {
         this.db = new PouchDB(name);
-        this.remote = new PouchDB(`http://genghis:8081/${name}`);
+        this.remote = new PouchDB(`http://185.7.62.149:5984/${name}`);
         this.db.sync(this.remote, {
             live: true,
             retry: true,
