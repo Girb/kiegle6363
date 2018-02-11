@@ -8,8 +8,8 @@ class Header extends BaseView {
     get tagName() { return 'header'; }
     get template() {
         return `
+            <div class="menubtn"><i class="material-icons">menu</i></div>
             <h1>${this.baseview.title}</h1>
-            <a href="#/"><img id="logo" src="img/kiegle6363white.svg" alt="Kiegle6363 logo" /></a>
         `;
     }
     render() {

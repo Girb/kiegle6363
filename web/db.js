@@ -1,6 +1,8 @@
 import PouchDB from 'pouchdb-browser';
 import DocView from './views/docview';
 
+const remote = 'http://185.7.62.149:5984';
+
 class DB {
     constructor() {
         const name = localStorage.getItem('dbname') || 'testdb';
@@ -19,7 +21,7 @@ class DB {
 
     _connect(name) {
         this.db = new PouchDB(name);
-        this.remote = new PouchDB(`http://185.7.62.149:5984/${name}`);
+        this.remote = new PouchDB(`${remote}/${name}`);
         this.db.sync(this.remote, {
             live: true,
             retry: true,
@@ -45,6 +47,17 @@ class DB {
 
     info() {
         return this.db.info();
+    }
+
+    dbs(callback) {
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                callback(JSON.parse(xhr.responseText));
+            }
+        };
+        xhr.open('GET', `${remote}/_all_dbs`, true);
+        xhr.send();
     }
 }
 

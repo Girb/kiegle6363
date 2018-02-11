@@ -6,12 +6,12 @@ export default class AdminHome extends BaseView {
     get className() { return 'admin'; }
     get events() {
         return {
-            'click .newcomp': 'newCompetition',
+            'click .selectcomp': 'selectCompetition',
             'click .editparticipants': 'editParticipants'
         };
     }
-    newCompetition() {
-        window.location.href = '/#admin/competitions/create';
+    selectCompetition() {
+        window.location.href = '/#admin/competitions';
     }
     editParticipants() {
         window.location.href = '/#participants';
@@ -29,7 +29,7 @@ export default class AdminHome extends BaseView {
                 <button class="main editparticipants"><span>Rediger slagere</span></button>
             </div>
             <div class="buttons">
-                <button class="main newcomp"><span>Opprett ny konkurranse</span></button>
+                <button class="main selectcomp"><span>Bytt konkurranse</span></button>
             </div>
         `;
     }

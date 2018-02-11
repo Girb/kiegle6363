@@ -3,6 +3,7 @@ import { EditParticipantView } from './EditParticipantView';
 import { ParticipantListItem } from './participantlistitem';
 
 class ParticipantsView extends BaseView {
+    get title() { return 'Slagere'; }
     get className() {
         return 'participants';
     }

@@ -6,6 +6,7 @@ import { ParticipantsView } from './views/ParticipantsView';
 import { DB } from './db';
 import AdminHome from './views/AdminHome';
 import CreateCompetitionView from './views/CreateCompetitionView';
+import SelectCompetitionView from './views/SelectCompetitionView';
 
 class App extends Router {
     constructor(config) {
@@ -17,6 +18,7 @@ class App extends Router {
             '': 'home',
             'test': 'test',
             'admin': 'admin',
+            'admin/competitions': 'competitions',
             'admin/competitions/create': 'createCompetition',
             'participants': 'participants',
         };
@@ -40,6 +42,10 @@ class App extends Router {
 
     admin() {
         this.applyView(new AdminHome());
+    }
+
+    competitions() {
+        this.applyView(new SelectCompetitionView());
     }
 
     createCompetition() {
