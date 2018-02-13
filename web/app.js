@@ -1,4 +1,4 @@
-import { Router } from './core/router';
+import { Bacbkone } from 'backbone';
 import Header from './Header';
 import { HomeView } from './homeview';
 import { TestView } from './testview';
@@ -7,10 +7,12 @@ import { DB } from './db';
 import AdminHome from './views/AdminHome';
 import CreateCompetitionView from './views/CreateCompetitionView';
 import SelectCompetitionView from './views/SelectCompetitionView';
+import KVPList from './views/KVPList';
+import RegView from './views/RegView';
 
-class App extends Router {
-    constructor(config) {
-        super();
+class App extends Backbone.Router {
+    constructor(options) {
+        super(options);
         this.db = new DB('mydb2');
     }
     get routes() {
@@ -21,15 +23,20 @@ class App extends Router {
             'admin/competitions': 'competitions',
             'admin/competitions/create': 'createCompetition',
             'participants': 'participants',
+            'reg/:id/:count': 'reg',
         };
     }
     start() { // starts the app
-        super.start();
+        Backbone.history.start();
         // this.navigate('/');
     }
 
     home() {
         this.applyView(new HomeView());
+        this.applyView(new KVPList());
+    }
+    reg(id, count) {
+        this.applyView(new RegView(id, count));
     }
 
     test() {

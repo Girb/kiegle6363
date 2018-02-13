@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class DBName {
     static get nameMap() {
         return {
@@ -7,12 +9,11 @@ export default class DBName {
             'dra': 'Dronningaften',
         };
     }
-    static humanize(dbname) {
-        const namepart = dbname.split('+')[0].replace(/_/g, ' ');
-        return namepart.replace(/\b\w/g, l => l.toUpperCase()).replace('_', ' ');
+    constructor(rawname) {
+        this.rawname = rawname;
     }
     static create(name, date, type) {
-        return name.toLowerCase()
+        let rn = name.toLowerCase()
             .replace(/ /g, '_')
             .replace('æ', 'ae')
             .replace('ø', 'o')
@@ -20,14 +21,19 @@ export default class DBName {
             + '+'
             + date
             + '+'
-            //.replace(/^[a-z][a-z0-9_$()+/-]*$/, '')
             + type.toLowerCase();
+        return new DBName(rn);
     }
-    static getRules(name) {
-        const abbr = name.split('+')[2];
+
+    get name() {
+        const namepart = this.rawname.split('+')[0].replace(/_/g, ' ');
+        return namepart.replace(/\b\w/g, l => l.toUpperCase()).replace('_', ' ');
+    }
+    get rules() {
+        const abbr = this.rawname.split('+')[2];
         return DBName.nameMap[abbr] || '(Ukjent)';
     }
-    static getDateStr(name) {
-        return name.split('+')[1];
+    get dateStr() {
+        return moment(this.rawname.split('+')[1]).format('DD.MM.YYYY');
     }
 }

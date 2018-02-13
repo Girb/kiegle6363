@@ -1,6 +1,6 @@
 import BaseView from '../BaseView';
 import ListView from './ListView';
-import DBName from  '../DBName';
+import DBName from '../DBName';
 
 export default class SelectCompetitionView extends BaseView {
     get title() { return 'Velg konkurranse'; }
@@ -8,19 +8,20 @@ export default class SelectCompetitionView extends BaseView {
     render() {
         this.el.innerHTML = '';
         app.db.dbs((res) => {
-            var data = [];
-            res.forEach(function(db) {
-                if( !db.startsWith('_') ) {
-                    var itmdata = {
-                        text: DBName.humanize(db),
-                        extra : DBName.getDateStr(db),
+            const data = [];
+            res.forEach((db) => {
+                if (!db.startsWith('_')) {
+                    const dbn = new DBName(db);
+                    const itmdata = {
+                        text: dbn.name,
+                        extra: `${dbn.rules} (${dbn.dateStr})`,
                         icon: 'radio_button_unchecked',
-                        raw: db
+                        raw: dbn.rawname,
                     };
                     data.push(itmdata);
                 }
             }, this);
-            let lv = new ListView({ data: data });
+            const lv = new ListView({ data });
             lv.on('select', (itm) => {
                 const dbname = itm.raw;
                 localStorage.setItem('dbname', dbname);

@@ -7,7 +7,7 @@ export default class AdminHome extends BaseView {
     get events() {
         return {
             'click .selectcomp': 'selectCompetition',
-            'click .editparticipants': 'editParticipants'
+            'click .editparticipants': 'editParticipants',
         };
     }
     selectCompetition() {
@@ -36,13 +36,11 @@ export default class AdminHome extends BaseView {
     render() {
         this.el.innerHTML = this.template;
         app.db.info().then((info) => {
-            const rawname = info.db_name;
-            const name = DBName.humanize(rawname);
-            const rules = DBName.getRules(rawname);
-            this.one('.compname').innerText = name;
-            this.one('.rules').innerText = rules;
-            this.one('.pcount').innerText = info.doc_count + ' slagere';
-            this.one('.date').innerText = 'Dato: ' + DBName.getDateStr(rawname);
+            const dbname = new DBName(info.db_name);
+            this.one('.compname').innerText = dbname.name;
+            this.one('.rules').innerText = dbname.rules;
+            this.one('.pcount').innerText = `${info.doc_count} slagere`;
+            this.one('.date').innerText = `Dato: ${dbname.dateStr}`;
         });
         return this;
     }
