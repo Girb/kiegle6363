@@ -36,7 +36,9 @@ class App extends Backbone.Router {
         this.applyView(new KVPList());
     }
     reg(id, count) {
-        this.applyView(new RegView(id, count));
+        this.emptyBody();
+        let rv = new RegView(id, count);
+        document.body.appendChild(rv.render().el);
     }
 
     test() {
@@ -59,10 +61,14 @@ class App extends Backbone.Router {
         this.applyView(new CreateCompetitionView());
     }
 
-    applyView(view) {
+    emptyBody() {
         while (document.body.firstChild) {
             document.body.removeChild(document.body.firstChild);
         }
+    }
+
+    applyView(view) {
+        this.emptyBody();
         document.body.appendChild(new Header(view).render().el);
         const container = document.createElement('div');
         container.classList.add('container');

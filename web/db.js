@@ -41,6 +41,10 @@ class DB {
         return this.db.put(doc);
     }
 
+    get(id) {
+        return this.db.get(id);
+    }
+
     all() {
         return this.db.allDocs({ include_docs: true });
     }
