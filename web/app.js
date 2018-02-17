@@ -3,17 +3,17 @@ import Header from './Header';
 import { HomeView } from './homeview';
 import { TestView } from './testview';
 import { ParticipantsView } from './views/ParticipantsView';
-import { DB } from './db';
+import DB from './db';
 import AdminHome from './views/AdminHome';
 import CreateCompetitionView from './views/CreateCompetitionView';
 import SelectCompetitionView from './views/SelectCompetitionView';
 import KVPList from './views/KVPList';
 import RegView from './views/RegView';
+import KVPSideNav from './views/KVPSideNav';
 
 class App extends Backbone.Router {
     constructor(options) {
         super(options);
-        this.db = new DB('mydb2');
     }
     get routes() {
         return {
@@ -26,14 +26,16 @@ class App extends Backbone.Router {
             'reg/:id/:count': 'reg',
         };
     }
-    start() { // starts the app
+    start(dbname) { // starts the app
+        localStorage.setItem('dbname', dbname);
+        this.db = new DB(dbname);
         Backbone.history.start();
         // this.navigate('/');
     }
 
     home() {
-        this.applyView(new HomeView());
-        this.applyView(new KVPList());
+        this.applyView(new KVPList(), 'bb');
+        this.sideNav(new KVPSideNav());
     }
     reg(id, count) {
         this.emptyBody();
@@ -47,34 +49,42 @@ class App extends Backbone.Router {
 
     participants() {
         this.applyView(new ParticipantsView());
+        this.sideNav(new KVPSideNav());
     }
 
     admin() {
         this.applyView(new AdminHome());
+        this.sideNav(new KVPSideNav());
     }
 
     competitions() {
         this.applyView(new SelectCompetitionView());
+        this.sideNav(new KVPSideNav());
     }
 
     createCompetition() {
         this.applyView(new CreateCompetitionView());
     }
 
-    emptyBody() {
+    emptyBody(cls) {
         while (document.body.firstChild) {
             document.body.removeChild(document.body.firstChild);
         }
+        document.body.className = cls;
     }
 
-    applyView(view) {
-        this.emptyBody();
+    applyView(view, bodyclass) {
+        this.emptyBody(bodyclass);
         document.body.appendChild(new Header(view).render().el);
         const container = document.createElement('div');
         container.classList.add('container');
         document.body.appendChild(container);
         container.appendChild(view.render().el);
         return view;
+    }
+
+    sideNav(nav) {
+        document.body.appendChild(nav.render().el);
     }
 }
 

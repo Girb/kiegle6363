@@ -1,13 +1,27 @@
 import BaseView from '../BaseView';
 import ListView from './ListView';
 import DBName from '../DBName';
+import DB from '../db';
 
 export default class SelectCompetitionView extends BaseView {
     get title() { return 'Velg konkurranse'; }
     get className() { return 'comps'; }
+    get template() {
+        return `
+            <div style="margin-bottom: 16px"><button id="createcomp"><span>Opprett ny konkurranse</span></button></div>
+        `;
+    }
+    get events() {
+        return {
+            'click #createcomp': 'createComp',
+        };
+    }
+    createComp() {
+        window.location.href = '#admin/competitions/create';
+    }
     render() {
-        this.el.innerHTML = '';
-        app.db.dbs((res) => {
+        this.el.innerHTML = this.template;
+        DB.dbs((res) => {
             const data = [];
             res.forEach((db) => {
                 if (!db.startsWith('_')) {
@@ -30,6 +44,7 @@ export default class SelectCompetitionView extends BaseView {
             });
             this.el.appendChild(lv.render().el);
         });
+
         return this;
     }
 }

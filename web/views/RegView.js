@@ -44,7 +44,8 @@ export default class RegView extends BaseView {
         model.unset('draft');
         app.db.put(model.attributes).then((res) => {
             model.set(res);
-            this.render();
+            //this.render();
+            window.history.back();
         });
     }
     render() {

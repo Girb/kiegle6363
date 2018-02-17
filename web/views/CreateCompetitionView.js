@@ -47,9 +47,8 @@ export default class CreateCompetitionView extends BaseView {
             rules = this.one('#rules').value,
             date = this.one('#date').value;
         const dbname = DBName.create(name, date, rules);
-        console.log(dbname);
-        localStorage.setItem('dbname', dbname);
-        app.db.connect(dbname);
+        localStorage.setItem('dbname', dbname.rawname);
+        app.db.connect(dbname.rawname);
     }
     render() {
         this.el.innerHTML = this.template;

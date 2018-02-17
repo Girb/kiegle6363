@@ -33,7 +33,13 @@ export default class DBName {
         const abbr = this.rawname.split('+')[2];
         return DBName.nameMap[abbr] || '(Ukjent)';
     }
+    get rulesAbbr() {
+        return this.rawname.split('+')[2];
+    }
     get dateStr() {
         return moment(this.rawname.split('+')[1]).format('DD.MM.YYYY');
+    }
+    get date() {
+        return moment(this.rawname.split('+')[1]);
     }
 }

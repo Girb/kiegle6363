@@ -42,7 +42,9 @@ export default class ScoreboardView extends NativeView {
                 });
                 this.el.appendChild(ss.render().el);
             }
-            this.items[0].el.focus();
+            setTimeout(() => {
+                this.items[0].el.focus();
+            });
         }
         return this;
     }

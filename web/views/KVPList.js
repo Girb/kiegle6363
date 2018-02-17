@@ -1,24 +1,46 @@
 import BaseView from '../BaseView';
-import ListView from './ListView';
+import Participant from '../Participant';
+import KVPListItem from './KVPListItem';
+import EditParticipantView from './EditParticipantView';
 
 export default class KVPList extends BaseView {
-    get title() { return 'Tavle'; }
+    constructor() {
+        super();
+        app.db.on('update', (doc) => {
+            //console.log('update!');
+            this.render();
+        });
+    }
+    get tagName() { return 'ul'; }
+    get className() { return 'bb'; }
+    get title() { return app.db.toString(); }
+    get events() {
+        return {
+            'click #addparticipant': 'addParticipant',
+        };
+    }
+    addParticipant() {
+        var epv = new EditParticipantView();
+        this.listenToOnce(epv, 'add', (doc) => {
+            this.render();
+        });
+        epv.render().show();
+    }
     render() {
         this.el.innerHTML = '';
         app.db.all().then((result) => {
-            const data = [];
             result.rows.forEach((row) => {
-                data.push({
-                    text: row.doc.lastname,
-                    extra: row.doc.club,
-                    id: row.doc._id
+                const p = new Participant(row.doc);
+                const itm = new KVPListItem(p);
+                this.listenTo(itm, 'click', (itmx) => {
+                    window.location.href = `#reg/${itmx.model.get('_id')}/10`;
                 });
+                this.el.appendChild(itm.render().el);
             }, this);
-            const lv = new ListView({ data });
-            this.listenTo(lv, 'select', (itm) => {
-                window.location.href = `#reg/${itm.id}/10`;
-            });
-            this.el.appendChild(lv.render().el);
+            let addli = document.createElement('li');
+            addli.setAttribute('id', 'addparticipant');
+            addli.innerText = 'Legg til slager...';
+            this.el.appendChild(addli);
         });
         return this;
     }

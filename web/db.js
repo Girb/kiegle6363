@@ -1,11 +1,14 @@
 import PouchDB from 'pouchdb-browser';
 import DocView from './views/docview';
+import DBName from './DBName';
+import moment from 'moment';
+import EventHost from './core/eventhost'
 
-const remote = 'http://185.7.62.149:5984';
+const remote = 'http://admin:kiegle6363@185.7.62.149:5984';
 
-class DB {
-    constructor() {
-        const name = localStorage.getItem('dbname') || 'testdb';
+class DB extends EventHost {
+    constructor(name) {
+        super();
         this._connect(name);
     }
 
@@ -30,6 +33,7 @@ class DB {
             if (change.direction === 'pull') {
                 change.change.docs.forEach((doc) => {
                     DocView.update(doc);
+                    this.trigger('update', doc);
                 }, this);
             }
         }).on('error', (err) => {
@@ -46,14 +50,34 @@ class DB {
     }
 
     all() {
-        return this.db.allDocs({ include_docs: true });
+        //return this.db.allDocs({ include_docs: true });
+        return this.db.query(function(doc) {
+            emit(doc.sortOrder);
+        }, { include_docs: true });
     }
 
     info() {
         return this.db.info();
     }
 
-    dbs(callback) {
+    static inferName(callback) {
+        DB.dbs((res) => {
+            let found = false;
+            for (const db of res) {
+                if (!db.startsWith('_')) {
+                    const dbn = new DBName(db);
+                    if (moment().isSame(dbn.date, 'day')) {
+                        callback(dbn.rawname);
+                        found = true;
+                        return;
+                    }
+                }
+            }
+            !found && res.length && callback(res[0]); // grasping at straws here...
+        });
+    }
+
+    static dbs(callback) {
         const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
             if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -63,6 +87,15 @@ class DB {
         xhr.open('GET', `${remote}/_all_dbs`, true);
         xhr.send();
     }
+
+    isKniksen() {
+        return new DBName(localStorage.getItem('dbname')).rulesAbbr === 'kvp';
+    }
+
+    toString() {
+        const dbn = new DBName(localStorage.getItem('dbname'));
+        return dbn.name + ' ' + dbn.dateStr;
+    }
 }
 
-export { DB };
+export default DB;

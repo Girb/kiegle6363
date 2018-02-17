@@ -57,30 +57,43 @@ $buttoncolor1: #fff;
 
 body {
   background-color: #f0f0f0; color: #222; font-family: "Helvetica Neue", Arial, sans-serif; padding: 80px 0 0 0; margin: 0; font-size: 18px;
+  &.bb { background-color: #222; }
 }
 header {
   position: fixed; left: 0; top: 0; right: 0; min-height: 64px; margin-bottom: 20px; background-color: #263521; box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28); padding: 0 25px;
   .menubtn {
-    position: absolute; left: 0; top: 0; width: 64px; height: 64px; color: white;
+    position: absolute; left: 0; top: 0; width: 64px; height: 64px; color: white; cursor: pointer;
     i { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); font-size: 28px;  }
   }
-  h1 { margin: 0; color: #fff; line-height: 64px; margin-left: 50px; font-size: 28px; }
+  h1 { margin: 0; color: #fff; line-height: 64px; margin-left: 50px; font-size: 21px; }
+  @include for-tablet-portrait-up { h1 { font-size: 28px; } }
   #logo { height: 30px; position: absolute; right: 30px; top: 10px; }
 }
 
 // box-shadow: 0 -1px 0 #e4e4e4, 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
 
 .container {
-   color: #222; min-height: 2000px; margin: 0 auto; padding: 10px;
+   color: #222; margin: 0 auto; padding: 10px;
 }
 @include for-tablet-landscape-up {
   padding: 25px;
+}
+
+#sidenav {
+  position: fixed; left: 0; top: 0; height: 100%; background-color: #000; transition: .1s; width: 0; overflow-x: hidden; padding-top: 32px;
+  &.open { width: 300px; transition: .1s; }
+  .closesidenav { color: #fff; position: absolute; right: 16px; top: 16px; }
+  a {
+    display: block; padding: 12px; color: #ccc; text-decoration: none; font-size: 21px;
+    &:active { color: #000; background-color: #aaa; }
+  }
 }
 
 label { font-size: 18px; }
 input,select { box-sizing: border-box; }
 form {
   label,input,select,button { display: block; width: 100%; font-size: 18px; padding: 5px; }
+  input { margin-top: 2px; }
   input[type=date] { width: auto; }
   button { margin-top: 25px; }
   .row { margin-bottom: 10px; }
@@ -103,6 +116,14 @@ button {
 button.main { font-size: 18px; height: 50px; padding: 0 25px; background-color: #5ead3d; color: #fff; width: 100%; }
 @include for-tablet-portrait-up {
   button.main { width: auto; }
+}
+
+.overlay { position: fixed; left: 0; top: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,.5); }
+.modal {
+  display: inline-block; background-color: #fff; padding: 0; max-width: 85%; max-height: 85%; min-width: 200px; min-height: 400px; position: relative; margin: 0 auto; top: 50%; left: 50%; transform: translate(-50%,-50%) perspective(1px);
+  .header { background-color: #263521; height: 40px; padding: 16px; color: #fff; font-size: 21px; line-height: 40px; }
+  .content { padding: 16px; }
+  .footer { padding: 16px; }
 }
 
 .listview {
@@ -207,6 +228,20 @@ button.main { font-size: 18px; height: 50px; padding: 0 25px; background-color: 
 .single {
   font-family: sa-digital-number; font-size: 96px; width: 1em; user-select: all; background-color: #333; color: #e6ffac; text-align: center; cursor: pointer; text-shadow: 0 0 12px #87f324, 0 0 18px #288903; border: 1px solid transparent;
   &::selection { color: rgba(81, 203, 238, 1); }
+}
+
+ul.bb {
+  list-style: none; font-family: Nanum Pen Script, cursive; font-size: 28px; padding: 6px 0; display: block; margin-top: 0;
+  li {
+    list-style-type: none; color: #ccc; padding: 0; cursor: pointer; display: table-row;
+    .name { padding-right: 32px; display: table-cell; }
+    .score { padding-right: 24px; }
+  }
+  #addparticipant { color: #e6ffac; display: inline-block; margin-top: 24px; border: 1px solid #555; padding: 8px 16px; }
+  @include for-tablet-portrait-up { #addparticipant { font-size: 32px; } }
+  @include for-tablet-portrait-up { font-size: 48px; }
+  @include for-tablet-landscape-up { font-size: 56px; }
+  @include for-desktop-up { font-size: 72px; }
 }
 
 input::-webkit-outer-spin-button,
