@@ -48,6 +48,6 @@ module.exports = {
     devServer: {
         contentBase: './web',
         port: 8099,
-        host: '10.0.0.104'
+        host: '0.0.0.0'
     },
 };

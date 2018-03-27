@@ -1,8 +1,10 @@
 import BaseView from '../BaseView';
-import Backbone from 'backbone';
+import DocModel from '../DocModel';
 import ScoreboardView from './ScoreboardView';
 import TotalScoreView from './TotalScoreView';
+import RegPrognosisView from './RegPrognosisView';
 import RegOptionsView from './RegOptionsView';
+
 
 export default class RegView extends BaseView {
     constructor(slagerid, count) {
@@ -20,6 +22,7 @@ export default class RegView extends BaseView {
             </div>
             <div id="scores"></div>
             <div id="totals"></div>
+            <div id="prognosis"></div>
             <div id="options"></div>
         `;
     }
@@ -44,18 +47,19 @@ export default class RegView extends BaseView {
         model.unset('draft');
         app.db.put(model.attributes).then((res) => {
             model.set(res);
-            //this.render();
+            // this.render();
             window.history.back();
         });
     }
     render() {
         this.el.innerHTML = this.template;
         app.db.get(this.slagerid).then((doc) => {
-            const docmodel = new Backbone.Model(doc);
+            const docmodel = new DocModel(doc);
             this.one('#info .sname').innerHTML = `${doc.firstname} ${doc.lastname}`;
             this.one('#info .sclub').innerHTML = doc.club;
             const scoreboard = new ScoreboardView(docmodel);
             const totalview = new TotalScoreView(docmodel);
+            const progview = new RegPrognosisView(docmodel);
             const regopts = new RegOptionsView(docmodel);
             this.listenTo(regopts, 'start', this.start);
             this.listenTo(regopts, 'discard', this.discard);
@@ -63,6 +67,7 @@ export default class RegView extends BaseView {
             this.el.appendChild(scoreboard.render().el);
             if (docmodel.get('draft')) {
                 this.el.appendChild(totalview.render().el);
+                this.el.appendChild(progview.render().el);
             }
             this.el.appendChild(regopts.render().el);
         });
