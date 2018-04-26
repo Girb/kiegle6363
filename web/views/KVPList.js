@@ -27,8 +27,8 @@ export default class KVPList extends BaseView {
         epv.render().show();
     }
     render() {
-        this.el.innerHTML = '';
         app.db.all().then((result) => {
+            this.el.innerHTML = '';
             result.rows.forEach((row) => {
                 const p = new Participant(row.doc);
                 const itm = new KVPListItem(p);

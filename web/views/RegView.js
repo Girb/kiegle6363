@@ -11,6 +11,10 @@ export default class RegView extends BaseView {
         super();
         this.count = count;
         this.slagerid = slagerid;
+        app.db.get(this.slagerid).then((doc) => {
+            this.doc = new DocModel(doc);
+            this.render();
+        });
     }
     get title() { return 'Slagning'; }
     get className() { return 'reg'; }
@@ -28,16 +32,15 @@ export default class RegView extends BaseView {
     }
     start(model) {
         model.set('draft', new Array(10));
-        app.db.put(model.attributes).then((res) => {
-            model.set(res);
+        model.save(() => {
             this.render();
         });
     }
     discard(model) {
         model.unset('draft');
-        app.db.put(model.attributes).then((res) => {
-            model.set(res);
-            this.render();
+        this.render();
+        model.save(() => {
+
         });
     }
     save(model) {
@@ -45,16 +48,17 @@ export default class RegView extends BaseView {
         scores.push(model.get('draft').slice());
         model.set('scores', scores);
         model.unset('draft');
-        app.db.put(model.attributes).then((res) => {
-            model.set(res);
-            // this.render();
+        model.save(() => {
             window.history.back();
         });
     }
     render() {
+        if( !this.doc ) return this;
         this.el.innerHTML = this.template;
-        app.db.get(this.slagerid).then((doc) => {
-            const docmodel = new DocModel(doc);
+        //app.db.get(this.slagerid).then((doc) => {
+            //const docmodel = new DocModel(doc);
+        const docmodel = this.doc;
+        const doc = docmodel.attributes;
             this.one('#info .sname').innerHTML = `${doc.firstname} ${doc.lastname}`;
             this.one('#info .sclub').innerHTML = doc.club;
             const scoreboard = new ScoreboardView(docmodel);
@@ -70,7 +74,7 @@ export default class RegView extends BaseView {
                 this.el.appendChild(progview.render().el);
             }
             this.el.appendChild(regopts.render().el);
-        });
+        //});
         return this;
     }
 }

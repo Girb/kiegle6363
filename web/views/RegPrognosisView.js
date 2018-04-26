@@ -10,8 +10,18 @@ export default class RegPrognosisView extends NativeView {
 
     get template() {
         return `
-            <div>Prognose: <span class="num">${this.doc.prog10()}</span></div>
-            <div>Maks: <span class="num">${this.doc.max10()}</span></div>
+            <table>
+                <tr>
+                    <th>Må slå</th>
+                    <th>Prognose</th>
+                    <th>Maks</th>
+                </tr>
+                <tr>
+                    <td>${this.doc.secondbest10() || '-'}</td>
+                    <td>${this.doc.prog10()}</td>
+                    <td>${this.doc.max10()}</td>
+                </tr>
+            </table>
         `;
     }
     render() {

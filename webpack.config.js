@@ -33,7 +33,7 @@ module.exports = {
                 loader: 'style-loader!css-loader!autoprefixer-loader!sass-loader',
             },
             {
-                test: /\.(eot|woff|woff2|ttf)$/,
+                test: /\.(eot|woff|woff2|ttf|png)$/,
                 loader: 'file-loader',
             }
         ],
@@ -47,7 +47,7 @@ module.exports = {
     ],
     devServer: {
         contentBase: './web',
-        port: 8099,
+        port: 3000,
         host: '0.0.0.0'
     },
 };
