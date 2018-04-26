@@ -3,18 +3,15 @@ import Header from './Header';
 import { HomeView } from './homeview';
 import { TestView } from './testview';
 import { ParticipantsView } from './views/ParticipantsView';
-import DB from './db';
 import AdminHome from './views/AdminHome';
 import CreateCompetitionView from './views/CreateCompetitionView';
 import SelectCompetitionView from './views/SelectCompetitionView';
 import KVPList from './views/KVPList';
 import RegView from './views/RegView';
 import KVPSideNav from './views/KVPSideNav';
+import StagesList from './views/StagesList';
 
 class App extends Backbone.Router {
-    constructor(options) {
-        super(options);
-    }
     get routes() {
         return {
             '': 'home',
@@ -28,13 +25,13 @@ class App extends Backbone.Router {
     }
     start(dbname) { // starts the app
         localStorage.setItem('dbname', dbname);
-        this.db = new DB(dbname);
+        //this.db = new DB(dbname);
         Backbone.history.start();
         // this.navigate('/');
     }
 
     home() {
-        this.applyView(new KVPList(), 'bb');
+        this.applyView(new StagesList(), 'bb');
         this.sideNav(new KVPSideNav());
     }
     reg(id, count) {

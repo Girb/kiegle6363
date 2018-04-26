@@ -6,7 +6,7 @@ module.exports = {
         'babel-polyfill',
         './web/css/all.scss',
         './web/main',
-        'webpack-dev-server/client?http://localhost:8099',
+        'webpack-dev-server/client?http://localhost:3000',
     ],
     output: {
         publicPath: '/',
