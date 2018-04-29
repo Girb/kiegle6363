@@ -12,6 +12,9 @@ import KVPSideNav from './views/KVPSideNav';
 import StagesList from './views/StagesList';
 
 class App extends Backbone.Router {
+    get competition() {
+        return { id: 2 }
+    }
     get routes() {
         return {
             '': 'home',

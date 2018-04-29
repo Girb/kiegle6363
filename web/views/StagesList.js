@@ -1,15 +1,19 @@
 import BaseView from '../BaseView';
 import Server from '../server';
-import Participants from '../models/Participants';
+import moment from 'moment';
 
 export default class StagesList extends BaseView {
     get tagName() { return 'ul'; }
     get className() { return 'bb'; }
     get title() { return 'Slagninger'; }
     render() {
-        const ps = new Participants();
-        ps.url = `${Server.baseUrl()}/stages/1`;
-        ps.fetch();
+        Server.get(`/competitions/${app.competition.id}/stages`).then((data) => {
+            data.forEach((stage) => {
+                const d = document.createElement('li');
+                d.innerHTML = moment(stage.stage_date).format('DD.MM.YYYY');
+                this.el.appendChild(d);
+            });
+        });
 
         return this;
     }
