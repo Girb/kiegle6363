@@ -11,7 +11,7 @@ module.exports = {
     output: {
         publicPath: '/',
         filename: 'main.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
     },
     devtool: 'source-map',
     module: {
@@ -29,25 +29,43 @@ module.exports = {
                 },
             },
             {
-                test: /\.scss$/,
-                loader: 'style-loader!css-loader!autoprefixer-loader!sass-loader',
+                test: /\.(scss)$/,
+                use: [{
+                    loader: 'style-loader', // inject CSS to page
+                }, {
+                    loader: 'css-loader', // translates CSS into CommonJS modules
+                }, {
+                    loader: 'postcss-loader', // Run post css actions
+                    options: {
+                        plugins() { // post css plugins, can be exported to postcss.config.js
+                            return [
+                                require('precss'),
+                                require('autoprefixer'),
+                            ];
+                        },
+                    },
+                }, {
+                    loader: 'sass-loader', // compiles Sass to CSS
+                }],
             },
             {
                 test: /\.(eot|woff|woff2|ttf|png)$/,
                 loader: 'file-loader',
-            }
+            },
         ],
     },
     plugins: [
         new webpack.ProvidePlugin({
+            $: 'jquery',
             Backbone: 'backbone',
             _: 'underscore',
+            
         }),
-        new webpack.IgnorePlugin(/^jquery$/),
     ],
     devServer: {
         contentBase: './web',
         port: 3000,
-        host: '0.0.0.0'
+        host: '0.0.0.0',
+        historyApiFallback: true,
     },
 };

@@ -1,4 +1,4 @@
-import BaseView from '../BaseView';
+import BaseView from './BaseView';
 import DBName from '../DBName';
 
 export default class AdminHome extends BaseView {

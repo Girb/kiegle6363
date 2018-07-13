@@ -1,3 +1,4 @@
+@import "~bootstrap/scss/bootstrap";
 @mixin for-phone-only { @media (min-width: 300px) and (max-width: 599px) { @content; } }
 @mixin for-tablet-portrait-up { @media (min-width: 600px) { @content; } }
 @mixin for-tablet-landscape-up { @media (min-width: 900px) { @content; } }
@@ -56,93 +57,17 @@ $buttoncolor1: #fff;
 }
 
 body {
-  background: #f0f0f0 url('../img/bg1.png') no-repeat; color: #222; font-family: "Helvetica Neue", Arial, sans-serif; padding: 80px 0 0 0; margin: 0; font-size: 18px;
+  background: #222; color: #aaa; font-family: "Helvetica Neue", Arial, sans-serif; padding: 48px 0 0 0; margin: 0; font-size: 18px;
   &.bb { background-color: #222; }
 }
-header {
-  position: fixed; left: 0; top: 0; right: 0; min-height: 64px; margin-bottom: 20px; background-color: #263521; box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28); padding: 0 25px;
-  .menubtn {
-    position: absolute; left: 0; top: 0; width: 64px; height: 64px; color: white; cursor: pointer;
-    i { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); font-size: 28px;  }
-  }
-  h1 { margin: 0; color: #fff; line-height: 64px; margin-left: 50px; font-size: 21px; }
-  @include for-tablet-portrait-up { h1 { font-size: 28px; } }
-  #logo { height: 30px; position: absolute; right: 30px; top: 10px; }
-}
-
 // box-shadow: 0 -1px 0 #e4e4e4, 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
-
 .container {
    color: #222; margin: 0 auto; padding: 10px;
-}
-@include for-tablet-landscape-up {
-  padding: 25px;
-}
-
-#sidenav {
-  position: fixed; left: 0; top: 0; height: 100%; background-color: #000; transition: .1s; width: 0; overflow-x: hidden; padding-top: 32px;
-  &.open { width: 300px; transition: .1s; }
-  .closesidenav { color: #fff; position: absolute; right: 16px; top: 16px; }
-  a {
-    display: block; padding: 12px; color: #ccc; text-decoration: none; font-size: 21px;
-    &:active { color: #000; background-color: #aaa; }
-  }
 }
 
 label { font-size: 18px; }
 input,select { box-sizing: border-box; }
 form {
-  label,input,select,button { display: block; width: 100%; font-size: 18px; padding: 5px; }
-  input { margin-top: 2px; }
-  input[type=date] { width: auto; }
-  button { margin-top: 25px; }
-  .row { margin-bottom: 10px; }
-}
-
-@include for-tablet-landscape-up {
-  form {
-    label,input,select, button { width: 450px; }
-  }
-}
-
-button {
-  height: 35px; padding: 0 20px; box-shadow: 0 0 2px rgba(0,0,0,.12), 0 2px 4px rgba(0,0,0,.24); border-radius: 2px; border: none; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: box-shadow .2s cubic-bezier(.4,0,.2,1),background-color .2s cubic-bezier(.4,0,.2,1); background-color: $buttonbgcolor1; color: $buttoncolor1; box-sizing: border-box;
-  &:not([disabled]) {
-    &:hover { box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28); }
-    &:active { box-shadow: 0 0 6px rgba(0,0,0,.16), 0 6px 12px rgba(0,0,0,.32); }
-  }
-  &:disabled { box-shadow: none; background-color: rgba(128,128,128,.5); cursor: default; }
-}
-button.main { font-size: 18px; height: 50px; padding: 0 25px; background-color: #5ead3d; color: #fff; width: 100%; }
-@include for-tablet-portrait-up {
-  button.main { width: auto; }
-}
-
-.overlay { position: fixed; left: 0; top: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,.5); }
-.modal {
-  display: inline-block; background-color: #fff; padding: 0; max-width: 85%; max-height: 85%; min-width: 200px; min-height: 400px; position: relative; margin: 0 auto; top: 50%; left: 50%; transform: translate(-50%,-50%) perspective(1px);
-  .header { background-color: #263521; height: 40px; padding: 16px; color: #fff; font-size: 21px; line-height: 40px; }
-  .content { padding: 16px; }
-  .footer { padding: 16px; }
-}
-
-.listview {
-  display: table; width: 100%; padding: 8px 0; margin: 0; list-style: none;
-  li {
-    display: table-row; height: 50px; cursor: pointer;
-    &:hover { background-color: rgba(0,0,0,.05); }
-    & > * {
-      display: block; margin: 0; padding: 0; vertical-align: middle;
-      &:first-child { padding-left: 15px; }
-      &:last-child { padding-right: 15px; }
-    }
-    @include for-tablet-landscape-up {
-      & > * { display: table-cell; }
-    }
-    .icon { width: 64px; color: #757575; display: table-cell; }
-    .text { color: #000; font-size: 21px; }
-    .extra { color: #555; font-size: 16px; }
-  }
 }
 
 .admin {
@@ -150,12 +75,6 @@ button.main { font-size: 18px; height: 50px; padding: 0 25px; background-color: 
   .compname { font-weight: bold; font-size: 21px; }
   .comptype { color: #555; font-size: 16px; }
   div.buttons { margin-bottom: 25px; }
-}
-
-.test {
-  padding: 60px;
-  label { width: 120px; display: inline-block; }
-  button { margin-top: 16px; }
 }
 
 .participants {

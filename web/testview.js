@@ -1,5 +1,4 @@
 import View from './core/view';
-import PouchDB from 'pouchdb-browser';
 
 class TestView extends View {
     constructor() {

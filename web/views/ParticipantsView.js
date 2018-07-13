@@ -1,50 +1,51 @@
-import BaseView from '../BaseView';
-import EditParticipantView from './EditParticipantView';
-import { ParticipantListItem } from './participantlistitem';
+import BaseView from './BaseView';
+import Participants from '../models/Participants';
+//import EditParticipantView from './EditParticipantView';
+import ParticipantListItem from './participantlistitem';
 
-class ParticipantsView extends BaseView {
+export default class ParticipantsView extends BaseView {
     get title() { return 'Slagere'; }
     get className() {
         return 'participants';
+    }
+    initialize(options) {
+        Object.assign(this, options);
+        this.$el.append(this.template);
+        this.collection = new Participants();
+        this.collection.url = 'http://localhost:3001/api/competitions/2/participants';
+        this.listenTo(this.collection, 'add', this.addOne);
+        this.listenTo(this.collection, 'reset', this.addAll);
+        this.listenTo(this.collection, 'all', _.debounce(this.render, 0));
+        this.collection.fetch({ reset: true });
     }
     get events() {
         return {
             'click #addparticipant': 'add',
         };
     }
-    list() {
-        const lst = this.one('#participantlist');
-        lst.innerHTML = '';
-        app.db.all().then((result) => {
-            result.rows.forEach((row) => {
-                const itm = new ParticipantListItem({ doc: row.doc });
-                lst.appendChild(itm.render().el);
-            }, this);
-        });
+    get template() {
+        return `
+            <div id="participantlist"></div>
+        `;
     }
-    add() {
-        const ev = new EditParticipantView();
-        ev.on('add', function (doc) {
-            this.list();
-        }, this);
-        ev.render().show();
+    addOne(p) {
+        const itm = new ParticipantListItem({ participant: p });
+        itm.render().$el.appendTo(this.$('#participantlist'));
     }
+    addAll() {
+        this.$('#participantlist').empty();
+        this.collection.each(this.addOne, this);
+    }
+    // add() {
+    //     const ev = new EditParticipantView();
+    //     ev.on('add', function (doc) {
+    //         this.list();
+    //     }, this);
+    //     ev.render().show();
+    // }
+
 
     render() {
-        this.el.innerHTML = `<div id='participantlist'></div>`;
-
-        this.list();
-
-        var btn = document.createElement('button');
-        btn.setAttribute('id', 'addparticipant');
-        btn.style.marginTop = '24px';
-        var txt = document.createElement('span');
-        txt.innerText = 'Legg til deltager';
-        btn.appendChild(txt);
-        this.el.appendChild(btn);
-
         return this;
     }
 }
-
-export { ParticipantsView };

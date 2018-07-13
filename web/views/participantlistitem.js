@@ -1,12 +1,13 @@
-import DocView from './docview';
+import Backbone from 'backbone';
 
-class ParticipantListItem extends DocView {
+export default class ParticipantListItem extends Backbone.View {
+    initialize(options) {
+        Object.assign(this, options);
+    }
     render() {
-        this.el.innerHTML = `
-            <span>${this.doc.firstname} ${this.doc.lastname}</span><span>${this.doc.club}</span>
-        `;
+        this.$el.empty().append(`
+            <span>${this.participant.id} ${this.participant.lastname}</span><span>${this.participant.club}</span>
+        `);
         return this;
     }
 }
-
-export { ParticipantListItem };
