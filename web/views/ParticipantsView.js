@@ -1,51 +1,44 @@
+import $ from 'jquery';
 import BaseView from './BaseView';
 import Participants from '../models/Participants';
-//import EditParticipantView from './EditParticipantView';
-import ParticipantListItem from './participantlistitem';
+import ParticipantList from './ParticipantList';
 
 export default class ParticipantsView extends BaseView {
     get title() { return 'Slagere'; }
-    get className() {
-        return 'participants';
-    }
     initialize(options) {
         Object.assign(this, options);
-        this.$el.append(this.template);
-        this.collection = new Participants();
-        this.collection.url = 'http://localhost:3001/api/competitions/2/participants';
-        this.listenTo(this.collection, 'add', this.addOne);
-        this.listenTo(this.collection, 'reset', this.addAll);
-        this.listenTo(this.collection, 'all', _.debounce(this.render, 0));
-        this.collection.fetch({ reset: true });
+        this.confirmed = new Participants();
+        this.confirmed.url = 'http://localhost:3001/api/competitions/2/participants/1';
+        this.registered = new Participants();
+        this.registered.url = 'http://localhost:3001/api/competitions/2/participants/0';
+        this.listenTo(this.confirmed, 'change:status_id', this.statusChanged);
+        this.listenTo(this.registered, 'change:status_id', this.statusChanged);
+    }
+    statusChanged(model) {
+        model.collection.remove(model);
+        if (model.get('status_id') === 0) {
+            this.registered.add(model);
+        } else if (model.get('status_id') === 1) {
+            this.confirmed.add(model);
+            this.confirmed.saveSortOrders();
+        }
     }
     get events() {
         return {
             'click #addparticipant': 'add',
         };
     }
-    get template() {
-        return `
-            <div id="participantlist"></div>
-        `;
-    }
-    addOne(p) {
-        const itm = new ParticipantListItem({ participant: p });
-        itm.render().$el.appendTo(this.$('#participantlist'));
-    }
-    addAll() {
-        this.$('#participantlist').empty();
-        this.collection.each(this.addOne, this);
-    }
-    // add() {
-    //     const ev = new EditParticipantView();
-    //     ev.on('add', function (doc) {
-    //         this.list();
-    //     }, this);
-    //     ev.render().show();
-    // }
-
-
     render() {
+        this.$el.empty();
+        
+        $('<h1/>').text('Bekreftet').appendTo(this.$el);
+        const cv = new ParticipantList({ collection: this.confirmed });
+        cv.render().$el.addClass('confirmed').appendTo(this.$el);
+
+        $('<h1/>').text('Påmeldt').appendTo(this.$el);
+        const rv = new ParticipantList({ collection: this.registered });
+        rv.render().$el.appendTo(this.$el);
+
         return this;
     }
 }

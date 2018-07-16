@@ -1,3 +1,5 @@
+-- psql -U postgres -f db.sql
+
 DROP DATABASE IF EXISTS kiegle63;
 CREATE DATABASE kiegle63;
 
@@ -32,48 +34,71 @@ CREATE TABLE competition (
 INSERT INTO competition (title, type_id) VALUES ('Kongematch 2018', 1);
 INSERT INTO competition (title, type_id) VALUES ('Kniksens Vandrepokal 2018', 2);
 
+CREATE TABLE club (
+	id serial PRIMARY KEY,
+	name VARCHAR
+);
+
+INSERT INTO club (name) VALUES ('Kniksen');
+INSERT INTO club (name) VALUES ('Satelitten');
+INSERT INTO club (name) VALUES ('Viking');
+INSERT INTO club (name) VALUES ('Baltus');
+
 CREATE TABLE player (
 	id serial PRIMARY KEY,
 	firstname VARCHAR,
 	lastname VARCHAR,
 	nickname VARCHAR,
-	email VARCHAR
+	email VARCHAR,
+	club_id INTEGER NOT NULL REFERENCES club(id)
 );
 
-INSERT INTO player (firstname, lastname, nickname, email) VALUES ('Bjørn-Erik', 'Allers-Hansen', 'Bønnen', 'bjorneah@online.no');
-INSERT INTO player (firstname, lastname, nickname, email) VALUES ('Ørjan', 'Berg', 'Kaptein Tinn', 'orbe@berg-hansen.no');
-INSERT INTO player (firstname, lastname, nickname, email) VALUES ('Herman', 'Brandt', 'Prinsen', 'herman.brandt@gmail.com');
-INSERT INTO player (firstname, lastname, nickname, email) VALUES ('Cato', 'Ervik', 'Svinet', 'cato@ervik-it.no');
-INSERT INTO player (firstname, lastname, nickname, email) VALUES ('Fredrik', 'Gisholt', 'Essemusen', 'fgi@wr.no');
-INSERT INTO player (firstname, lastname, nickname, email) VALUES ('Arne', 'Kolle d.y.', 'Godteposen', 'arne@kolle.no');
-INSERT INTO player (firstname, lastname, nickname, email) VALUES ('Olav', 'Kolle d.e.', 'Kolli BMF', 'olav@kolle.no');
-INSERT INTO player (firstname, lastname, nickname, email) VALUES ('Kjetil', 'Lilletvedt', 'Kix Melon', 'kixmelon@gmail.com');
-INSERT INTO player (firstname, lastname, nickname, email) VALUES ('Helge', 'Loy', 'Helveten', 'helge@machina.no');
-INSERT INTO player (firstname, lastname, nickname, email) VALUES ('Julius', 'Sannem', 'Frans', 'jul-san@online.no');
-INSERT INTO player (firstname, lastname, nickname, email) VALUES ('Eivind', 'Sommersten', 'Sommerhesten', 'eivind@machina.no');
-INSERT INTO player (firstname, lastname, nickname, email) VALUES ('Axel', 'Wangberg', 'Dr', 'axelwangberg@hotmail.com');
-INSERT INTO player (firstname, lastname, nickname, email) VALUES ('Truls', 'Lien', 'Bien', 'truls.lien@akersolutions.com');
-INSERT INTO player (firstname, lastname, nickname, email) VALUES ('Andreas', 'Nordgreen', 'Gud', 'andreas.nordgreen@norsildmel.no');
-INSERT INTO player (firstname, lastname, nickname, email) VALUES ('Håkon', 'Marås', 'Samantha', 'hmaras@broadpark.no');
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Bjørn-Erik', 'Allers-Hansen', 'Bønnen', 'bjorneah@online.no', 1);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Ørjan', 'Berg', 'Kaptein Tinn', 'orbe@berg-hansen.no', 1);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Herman', 'Brandt', 'Prinsen', 'herman.brandt@gmail.com', 1);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Cato', 'Ervik', 'Svinet', 'cato@ervik-it.no', 1);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Fredrik', 'Gisholt', 'Essemusen', 'fgi@wr.no', 1);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Arne', 'Kolle d.y.', 'Godteposen', 'arne@kolle.no', 1);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Olav', 'Kolle d.e.', 'Kolli BMF', 'olav@kolle.no', 1);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Kjetil', 'Lilletvedt', 'Kix Melon', 'kixmelon@gmail.com', 1);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Helge', 'Loy', 'Helveten', 'helge@machina.no', 1);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Julius', 'Sannem', 'Frans', 'jul-san@online.no', 1);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Eivind', 'Sommersten', 'Sommerhesten', 'eivind@machina.no', 1);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Axel', 'Wangberg', 'Dr', 'axelwangberg@hotmail.com', 1);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Truls', 'Lien', 'Bien', 'truls.lien@akersolutions.com', 1);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Andreas', 'Nordgreen', 'Gud', 'andreas.nordgreen@norsildmel.no', 1);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Håkon', 'Marås', 'Samantha', 'hmaras@broadpark.no', 1);
+
+CREATE TABLE participant_status (
+	id INTEGER PRIMARY KEY,
+	title VARCHAR
+);
+
+INSERT INTO participant_status (id, title) VALUES (0, 'Registered');
+INSERT INTO participant_status (id, title) VALUES (1, 'Confirmed');
+INSERT INTO participant_status (id, title) VALUES (2, 'Finished');
+INSERT INTO participant_status (id, title) VALUES (3, 'Cancelled');
 
 CREATE table participant (
 	id serial PRIMARY KEY,
 	competition_id INTEGER NOT NULL REFERENCES competition(id),
-	player_id INTEGER NOT NULL REFERENCES player(id)
+	player_id INTEGER NOT NULL REFERENCES player(id),
+	sort_order INTEGER,
+	status_id INTEGER NOT NULL DEFAULT 0 REFERENCES participant_status(id)
 );
 
-INSERT INTO participant (competition_id, player_id) VALUES (2,1);
-INSERT INTO participant (competition_id, player_id) VALUES (2,2);
-INSERT INTO participant (competition_id, player_id) VALUES (2,3);
-INSERT INTO participant (competition_id, player_id) VALUES (2,4);
-INSERT INTO participant (competition_id, player_id) VALUES (2,5);
-INSERT INTO participant (competition_id, player_id) VALUES (2,8);
-INSERT INTO participant (competition_id, player_id) VALUES (2,9);
-INSERT INTO participant (competition_id, player_id) VALUES (2,10);
-INSERT INTO participant (competition_id, player_id) VALUES (2,11);
-INSERT INTO participant (competition_id, player_id) VALUES (2,13);
-INSERT INTO participant (competition_id, player_id) VALUES (2,14);
-INSERT INTO participant (competition_id, player_id) VALUES (2,15);
+INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (2,1,0,0);
+INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (2,2,1,0);
+INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (2,3,2,0);
+INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (2,4,3,0);
+INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (2,5,4,0);
+INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (2,8,5,0);
+INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (2,9,6,0);
+INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (2,10,7,0);
+INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (2,11,8,0);
+INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (2,13,9,0);
+INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (2,14,10,1);
+INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (2,15,11,1);
 
 
 CREATE TABLE stage (

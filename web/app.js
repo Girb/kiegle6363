@@ -28,8 +28,6 @@ class App extends Backbone.Router {
         // this.db = new DB(dbname);
         Backbone.history.start({ pushState: true });
         // this.navigate('/');
-        
-        
     }
     home() {
         
@@ -40,9 +38,9 @@ class App extends Backbone.Router {
         
     }
     participants() {
+        this.$main.empty();
         const pv = new ParticipantsView();
         pv.render().$el.appendTo(this.$main);
-        console.log(pv.$el[0]);
     }
     admin() {
     }

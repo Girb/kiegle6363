@@ -1,9 +1,4 @@
 @import "~bootstrap/scss/bootstrap";
-@mixin for-phone-only { @media (min-width: 300px) and (max-width: 599px) { @content; } }
-@mixin for-tablet-portrait-up { @media (min-width: 600px) { @content; } }
-@mixin for-tablet-landscape-up { @media (min-width: 900px) { @content; } }
-@mixin for-desktop-up { @media (min-width: 1200px) { @content; } }
-@mixin for-big-desktop-up { @media (min-width: 1600px) { @content; } }
 
 @font-face {
   font-family: 'sa-digital-number';
@@ -57,10 +52,11 @@ $buttoncolor1: #fff;
 }
 
 body {
-  background: #222; color: #aaa; font-family: "Helvetica Neue", Arial, sans-serif; padding: 48px 0 0 0; margin: 0; font-size: 18px;
+  background: #222; color: #aaa; font-family: "Helvetica Neue", Arial, sans-serif; padding: 60px 0 0 0; margin: 0; font-size: 18px;
   &.bb { background-color: #222; }
 }
 // box-shadow: 0 -1px 0 #e4e4e4, 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
+#main { padding: 16px; }
 .container {
    color: #222; margin: 0 auto; padding: 10px;
 }
@@ -86,9 +82,18 @@ form {
     }
     input { width: 160px; }
   }
-  #participantlist {
+  table {
     margin-top: 24px;
     span { display: inline-block; margin-right: 16px; }
+    td.commands { 
+      width: 120px; overflow: visible;
+      i { vertical-align: middle; }
+    }
+  }
+  &.confirmed {
+    table {
+      tr:nth-child(4n), tr:nth-child(4n-1) { background-color: #313539; }
+    }
   }
 }
 
@@ -137,19 +142,19 @@ form {
 }
 
 
-@include for-tablet-portrait-up {
-  .scoreboard,.totalscore { font-size: 48px; }
-}
-@include for-tablet-landscape-up {
-  .scoreboard,.totalscore { font-size: 64px; }
-  span { padding: 0 4px; }
-}
-@include for-desktop-up {
-  .scoreboard,.totalscore { font-size: 80px; }
-}
-@include for-big-desktop-up {
-  .scoreboard,.totalscore { font-size: 96px; }
-}
+// @include for-tablet-portrait-up {
+//   .scoreboard,.totalscore { font-size: 48px; }
+// }
+// @include for-tablet-landscape-up {
+//   .scoreboard,.totalscore { font-size: 64px; }
+//   span { padding: 0 4px; }
+// }
+// @include for-desktop-up {
+//   .scoreboard,.totalscore { font-size: 80px; }
+// }
+// @include for-big-desktop-up {
+//   .scoreboard,.totalscore { font-size: 96px; }
+// }
 
 @-ms-viewport{ width: device-width; }
 
@@ -165,11 +170,7 @@ ul.bb {
     .name { padding-right: 32px; display: table-cell; }
     .score { padding-right: 24px; }
   }
-  #addparticipant { color: #e6ffac; display: inline-block; margin-top: 24px; border: 1px solid #555; padding: 8px 16px; }
-  @include for-tablet-portrait-up { #addparticipant { font-size: 32px; } }
-  @include for-tablet-portrait-up { font-size: 48px; }
-  @include for-tablet-landscape-up { font-size: 56px; }
-  @include for-desktop-up { font-size: 72px; }
+  
 }
 
 input::-webkit-outer-spin-button,

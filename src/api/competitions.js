@@ -20,8 +20,11 @@ export default ({ config, db }) => {
         });
     });
 
-    api.get('/:id/participants', (req, res) => {
-        db.any('select * from participant where competition_id = $1', req.params.id).then((data) => {
+    api.get('/:id/participants/:status', (req, res) => {
+        db.any(`select pa.id, player.id as player_id, player.firstname, player.lastname, player.nickname, player.email, club.name as club, pa.sort_order, pa.status_id from participant pa
+                inner join player on pa.player_id = player.id
+                inner join club on player.club_id = club.id
+                where competition_id = $1 AND pa.status_id = $2 order by pa.sort_order ASC;`, [req.params.id, req.params.status]).then((data) => {
             res.json(data);
         });
     });
