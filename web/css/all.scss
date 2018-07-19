@@ -56,7 +56,12 @@ body {
   &.bb { background-color: #222; }
 }
 // box-shadow: 0 -1px 0 #e4e4e4, 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
-#main { padding: 16px; }
+#main { 
+  padding: 16px; margin: 0; height: 100%;
+  &.home {
+    background: #888 url('../img/bg1.png') no-repeat;
+  }
+}
 .container {
    color: #222; margin: 0 auto; padding: 10px;
 }
@@ -74,6 +79,12 @@ button {
 }
 .navbar {
   
+}
+
+.home {
+  .comp {
+    width: 18em; margin: 0 18px 18px 0; display: inline-block;
+  }
 }
 
 .admin {
@@ -96,7 +107,7 @@ button {
     margin-top: 24px;
     span { display: inline-block; margin-right: 16px; }
     td.commands { 
-      width: 120px; overflow: visible;
+      width: 220px; overflow: visible;
       i { vertical-align: middle; }
     }
   }

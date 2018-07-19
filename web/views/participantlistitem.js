@@ -8,6 +8,7 @@ export default class ParticipantListItem extends Backbone.View {
     initialize(options) {
         Object.assign(this, options);
         this.listenTo(this.model, 'remove', this.remove);
+        this.listenTo(this.model, 'sync', this.render);
     }
     get events() {
         return {
@@ -22,10 +23,11 @@ export default class ParticipantListItem extends Backbone.View {
     registerPlayer(e) {
         e.preventDefault();
         const playerid = this.playerSelect.$el.val();
-        this.model.url = `http://localhost:3001/api/competitions/${app.competition.id}/players/add/${playerid}`;
-        this.model.save().then(() => {
-            this.model.collection.fetch({ reset: true });
-        });
+        this.model.url = app.url(`/competitions/${app.session.get('competition').id}/players/add/${playerid}`);
+        this.model.save();
+        // .then(() => {
+        //     this.model.collection.fetch({ reset: true });
+        // });
     }
     unregisterPlayer(e) {
         e.preventDefault();
@@ -103,7 +105,7 @@ export default class ParticipantListItem extends Backbone.View {
         this.$el.empty().toggleClass('table-info', this.model.isNew()).append(tmp);
         if (this.model.isNew()) {
             const players = new Players();
-            players.url = `http://localhost:3001/api/competitions/${app.competition.id}/players/add`;
+            players.url = `http://localhost:3001/api/competitions/${app.session.get('competition').id}/players/add`;
             this.playerSelect = new PlayerSelect({ collection: players });
             this.playerSelect.render().$el.appendTo(this.$('.playersel'));
         }

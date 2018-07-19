@@ -19,7 +19,10 @@ export default class Participant extends Backbone.Model {
         });
     }
     destroy() {
-        this.url = `http://localhost:3001/api/participants/${this.id}`;
+        this.url = app.url(`/participants/${this.id}`);
         return Backbone.Model.prototype.destroy.apply(this);
+    }
+    toString() {
+        return `${this.get('firstname')} ${this.get('lastname')} (${this.get('club')})`;
     }
 }

@@ -7,7 +7,7 @@ export default class StagesList extends BaseView {
     get className() { return 'bb'; }
     get title() { return 'Slagninger'; }
     render() {
-        Server.get(`/competitions/${app.competition.id}/stages`).then((data) => {
+        Server.get(`/competitions/${app.session.get('competition').id}/stages`).then((data) => {
             data.forEach((stage) => {
                 const d = document.createElement('li');
                 d.innerHTML = moment(stage.stage_date).format('DD.MM.YYYY');

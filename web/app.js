@@ -3,39 +3,66 @@ import Backbone from 'backbone';
 import NavBar from './views/NavBar';
 import ParticipantsView from './views/ParticipantsView';
 import AdminHome from './views/AdminHome';
+import Server from './server';
+import HomeView from './views/HomeView';
+import CompetitionView from './views/CompetitionView';
 
 class App extends Backbone.Router {
-    initialize() {
+    initialize(options) {
+        Object.assign(this, options);
         const body = $('body');
-        new NavBar().render().$el.appendTo(body);
+        new NavBar({ session: this.session }).render().$el.appendTo(body);
         this.$main = $('<div/>').prop('id', 'main').appendTo(body);        
     }
-    get competition() {
-        return { id: 2 };
+    url(tail) {
+        return `${Server.baseUrl()}${tail}`;
     }
     get routes() {
         return {
             '': 'home',
             'test': 'test',
             'admin': 'admin',
-            'competitions': 'competitions',
             'participants': 'participants',
+            'competition': 'competition',
+            'results': 'results',            
             'reg/:id/:count': 'reg',
         };
     }
     start(dbname) { // starts the app
+        console.log('app starting');
         localStorage.setItem('dbname', dbname);
-        // this.db = new DB(dbname);
         Backbone.history.start({ pushState: true });
-        // this.navigate('/');
+        $(document).on('click', 'a:not([data-bypass])', function (evt) {
+            var href = $(this).attr('href');
+            var protocol = this.protocol + '//';
+            if (href.slice(protocol.length) !== protocol) {
+              evt.preventDefault();
+              app.navigate(href, { trigger: true });
+            }
+          });
+    }
+    execute(callback, args) {
+        if( !this.session.get('competition') ) {
+            this.navigate('/');
+            this.home.apply(this, args);
+        } else {
+            callback && callback.apply(this, args);
+        }
     }
     home() {
-        
+        this.$main.empty();
+        const hv = new HomeView();
+        hv.render().$el.appendTo(this.$main);                        
     }
     test() {
     }
-    competitions() {
-        
+    competition() {
+        this.$main.empty();        
+        var cv = new CompetitionView();
+        cv.render().$el.appendTo(this.$main);
+    }
+    results() {
+        this.$main.empty().append('results');
     }
     participants() {
         this.$main.empty();

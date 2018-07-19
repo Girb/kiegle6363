@@ -8,9 +8,9 @@ export default class ParticipantsView extends BaseView {
     initialize(options) {
         Object.assign(this, options);
         this.confirmed = new Participants();
-        this.confirmed.url = 'http://10.0.0.104:3001/api/competitions/2/participants/1';
+        this.confirmed.url = app.url(`/competitions/${app.session.get('competition').id}/participants/1`);
         this.registered = new Participants();
-        this.registered.url = 'http://10.0.0.104:3001/api/competitions/2/participants/0';
+        this.registered.url = app.url(`/competitions/${app.session.get('competition').id}/participants/0`);
         this.listenTo(this.confirmed, 'change:status_id', this.statusChanged);
         this.listenTo(this.registered, 'change:status_id', this.statusChanged);
     }
