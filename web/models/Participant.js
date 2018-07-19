@@ -18,4 +18,8 @@ export default class Participant extends Backbone.Model {
             this.set('status_id', 0);
         });
     }
+    destroy() {
+        this.url = `http://localhost:3001/api/participants/${this.id}`;
+        return Backbone.Model.prototype.destroy.apply(this);
+    }
 }

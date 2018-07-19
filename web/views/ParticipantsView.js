@@ -8,9 +8,9 @@ export default class ParticipantsView extends BaseView {
     initialize(options) {
         Object.assign(this, options);
         this.confirmed = new Participants();
-        this.confirmed.url = 'http://localhost:3001/api/competitions/2/participants/1';
+        this.confirmed.url = 'http://10.0.0.104:3001/api/competitions/2/participants/1';
         this.registered = new Participants();
-        this.registered.url = 'http://localhost:3001/api/competitions/2/participants/0';
+        this.registered.url = 'http://10.0.0.104:3001/api/competitions/2/participants/0';
         this.listenTo(this.confirmed, 'change:status_id', this.statusChanged);
         this.listenTo(this.registered, 'change:status_id', this.statusChanged);
     }
@@ -25,18 +25,18 @@ export default class ParticipantsView extends BaseView {
     }
     get events() {
         return {
-            'click #addparticipant': 'add',
+            'click #addparticipant': 'add'
         };
     }
     render() {
         this.$el.empty();
         
-        $('<h1/>').text('Bekreftet').appendTo(this.$el);
+        $('<h1/>').text('Bekreftet / møtt opp').appendTo(this.$el);
         const cv = new ParticipantList({ collection: this.confirmed });
         cv.render().$el.addClass('confirmed').appendTo(this.$el);
 
         $('<h1/>').text('Påmeldt').appendTo(this.$el);
-        const rv = new ParticipantList({ collection: this.registered });
+        const rv = new ParticipantList({ collection: this.registered, filter: true });
         rv.render().$el.appendTo(this.$el);
 
         return this;

@@ -43,6 +43,7 @@ INSERT INTO club (name) VALUES ('Kniksen');
 INSERT INTO club (name) VALUES ('Satelitten');
 INSERT INTO club (name) VALUES ('Viking');
 INSERT INTO club (name) VALUES ('Baltus');
+INSERT INTO club (name) VALUES ('Gambrinius');
 
 CREATE TABLE player (
 	id serial PRIMARY KEY,
@@ -68,6 +69,12 @@ INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Axel
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Truls', 'Lien', 'Bien', 'truls.lien@akersolutions.com', 1);
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Andreas', 'Nordgreen', 'Gud', 'andreas.nordgreen@norsildmel.no', 1);
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Håkon', 'Marås', 'Samantha', 'hmaras@broadpark.no', 1);
+
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Jan', 'Sommersten', 'Far', 'jan@sommersten.com', 4);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Truls', 'sundt', 'Truls', 'trulssundt@online.no', 4);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Morten', 'Iversen', 'Morten', 'morten@spv.no', 5);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Knut', 'Matre', 'Knut', 'knut@example.com', 5);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Egil', 'Skjoldmo', 'Skjoldmo', 'egil@nordea.no', 5);
 
 CREATE TABLE participant_status (
 	id INTEGER PRIMARY KEY,
@@ -120,6 +127,14 @@ CREATE TABLE throw (
 	score INTEGER
 );
 
+
+--- VIEWS
+
+CREATE OR REPLACE VIEW participants AS
+select pa.id, player.id as player_id, player.firstname, player.lastname, player.nickname, player.email, club.name as club, pa.sort_order, pa.status_id, pa.competition_id as competition_id
+from participant pa
+inner join player on pa.player_id = player.id
+inner join club on player.club_id = club.id;
 
 --- SOME TEST DATA
 

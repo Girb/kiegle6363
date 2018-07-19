@@ -17,6 +17,14 @@ export default ({ config, db }) => {
         });
     });
 
+    api.delete('/:id', (req, res) => {
+        db.none('DELETE FROM participant where id = $1', req.params.id).then(() => {
+            res.end();
+        }).catch((err) => {
+            res.status(500).json(err);
+        });
+    });
+
     api.post('/:id/status/:statusid', (req, res) => {
         db.none('UPDATE participant SET status_id = $1 WHERE id = $2', [parseInt(req.params.statusid), parseInt(req.params.id)]).then(() => {
             res.end();

@@ -63,7 +63,17 @@ body {
 
 label { font-size: 18px; }
 input,select { box-sizing: border-box; }
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: searchfield-cancel-button;
+}
 form {
+}
+
+button {
+  i { vertical-align: text-bottom; font-size: 21px; margin-right: 6px; }
+}
+.navbar {
+  
 }
 
 .admin {

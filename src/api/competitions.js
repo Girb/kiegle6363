@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { EDESTADDRREQ } from 'constants';
 
 export default ({ config, db }) => {
     const api = Router();
@@ -21,10 +22,8 @@ export default ({ config, db }) => {
     });
 
     api.get('/:id/participants/:status', (req, res) => {
-        db.any(`select pa.id, player.id as player_id, player.firstname, player.lastname, player.nickname, player.email, club.name as club, pa.sort_order, pa.status_id from participant pa
-                inner join player on pa.player_id = player.id
-                inner join club on player.club_id = club.id
-                where competition_id = $1 AND pa.status_id = $2 order by pa.sort_order ASC;`, [req.params.id, req.params.status]).then((data) => {
+        db.any(`select * from participants
+                where competition_id = $1 AND status_id = $2 order by sort_order ASC;`, [req.params.id, req.params.status]).then((data) => {
             res.json(data);
         });
     });
@@ -35,6 +34,24 @@ export default ({ config, db }) => {
         });
     });
 
+    api.get('/:id/players/add', (req, res) => {
+        db.any(`select player.id, firstname, lastname, nickname, email, cl.name as club from player
+                INNER JOIN club cl on club_id = cl.id
+                where player.id NOT IN (select player_id from participant where competition_id = 2) ORDER BY club, firstname;;`, req.params.id).then((data) => {
+            res.json(data);
+        });         
+    });
+
+    api.post('/:id/players/add/:playerid', (req, res) => {
+        db.one('select max(sort_order)+1 as sortorder from participant where competition_id = $1;', req.params.id).then((data) => {
+            db.none('INSERT INTO participant (competition_id, player_id, sort_order) VALUES ($1, $2, $3);', [req.params.id, req.params.playerid, data.sortorder]).then(() => {
+                res.end();
+            }).catch((err) => {
+                res.status(500).json(err);
+            });
+        });
+    });
+
     api.get('/:id/stages', (req, res) => {
         db.any('select * from stage where competition_id = $1', req.params.id).then((data) => {
             res.json(data);
@@ -42,5 +59,4 @@ export default ({ config, db }) => {
     });
 
     return api;
-    
 };
