@@ -92,7 +92,7 @@ button {
     table {
       .btn-outline-secondary { color: #ccc; }
       .sum {
-        padding-left: 24px;
+        padding-left: 24px; border-color: transparent;
         &::after { border-top-color: transparent; }
         &:hover {
           &::after { border-top-color: rgb(204,204,204); }

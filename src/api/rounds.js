@@ -4,6 +4,14 @@ import { Router } from 'express';
 export default ({ config, db }) => {
     const api = Router();
 
+    api.delete('/:id', (req, res) => {
+      db.none('DELETE from round where id = $1', req.params.id).then(() => {
+        res.end();
+      }).catch((err) => {
+        res.status(500).json(err);
+      });
+    });
+
 };
 
 /*select r.id, r.participant_id, r.status_id, p.player_id, p.sort_order, p.status_id as participant_status_id, pl.firstname, pl.lastname, pl.nickname, cl.name as club

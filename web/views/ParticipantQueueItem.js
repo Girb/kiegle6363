@@ -1,4 +1,5 @@
 import Backbone from 'backbone';
+import SumItem from './SumItem';
 
 export default class ParticipantQueueItem extends Backbone.View {
     get tagName() { return 'tr'; }
@@ -19,7 +20,7 @@ export default class ParticipantQueueItem extends Backbone.View {
     render() {
         this.$el.empty().append(this.template);
         this.model.get('rounds').forEach((round) => {
-            this.$('.rounds').append(this.roundTemplate(round));
+            new SumItem({ round }).render().$el.appendTo(this.$('.rounds'));
         });
         $('<button/>').addClass('btn btn-primary add').text('Ny').appendTo(this.$('.rounds'));
         return this;
