@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { EDESTADDRREQ } from 'constants';
 
 export default ({ config, db }) => {
     const api = Router();
@@ -61,15 +60,46 @@ export default ({ config, db }) => {
         });
     });
 
+    function participant(roundrow) {
+        return { 
+            participant_id: roundrow.participant_id, 
+            rounds: [], 
+            lastname: roundrow.lastname, 
+            firstname: roundrow.firstname, 
+            nickname: roundrow.nickname,
+            club: roundrow.club,
+        };
+    }
+
+    function round(roundrow) {
+        return { 
+            throws: roundrow.throws, 
+            id: roundrow.id, 
+            status_id: roundrow.status_id,
+            sum: roundrow.throws.reduce((a, b) => a + b, 0),
+        };
+    }
+    
     api.get('/:id/rounds', (req, res) => {
         db.any(`select r.*, array_agg(score) as throws
                 from throw t
                 INNER JOIN rounds r ON t.round_id = r.id
                 WHERE competition_id = $1
-                GROUP BY r.player_id, r.firstname, r.lastname, r.nickname, r.club, r.sort_order, r.id, r.status_id, r.participant_id, r.participant_status_id, r.competition_id`, req.params.id).then(data => {
-                    res.json(data);
-                });
+                GROUP BY r.player_id, r.firstname, r.lastname, r.nickname, r.club, r.sort_order, r.id, r.status_id, r.participant_id, r.participant_status_id, r.competition_id`, req.params.id).then((data) => {
+            const ret = [];
+            data.forEach((row) => {
+                let p = ret.find(x => x.participant_id === row.participant_id);
+                if (!p) {
+                    p = participant(row);
+                    ret.push(p);
+                }
+                p.rounds.push(round(row));
+            });
+
+            res.json(ret);
+        });
     });
 
     return api;
 };
+

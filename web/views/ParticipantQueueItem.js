@@ -7,16 +7,21 @@ export default class ParticipantQueueItem extends Backbone.View {
     }
     get template() {
         return `
-            <td scope="row">${this.title}</td>
+            <td scope="row">${this.model.toString()}</td>
             <td class="rounds"></td>
+        `;
+    }
+    roundTemplate(r) {
+        return `
+            <button class="btn btn-outline-secondary dropdown-toggle sum">${r.sum}</button>
         `;
     }
     render() {
         this.$el.empty().append(this.template);
-        this.rounds.forEach(round => {
-            this.$('.rounds').append(round.throws.reduce((a,b) => a + b, 0));
+        this.model.get('rounds').forEach((round) => {
+            this.$('.rounds').append(this.roundTemplate(round));
         });
+        $('<button/>').addClass('btn btn-primary add').text('Ny').appendTo(this.$('.rounds'));
         return this;
     }
-
 }

@@ -8,13 +8,12 @@ export default class ParticipantQueue extends Backbone.View {
     initialize(options) {
         Object.assign(this, options);
         this.$el.append(this.template);
-        // this.collection = new Participants();
-        // //this.collection.url = app.url(`/competitions/${app.session.get('competition').id}/participants/1`);
-        // this.collection.url = app.url(`/competitions/${app.session.get('competition').id}/rounds`);
-        // this.listenTo(this.collection, 'reset', this.addAll);
-        // this.listenTo(this.collection, 'add', this.addOne);
-        // this.listenTo(this.collection, 'all', _.debounce(this.render, 0));
-        // this.collection.fetch({ reset: true });
+        this.collection = new Participants();
+        this.collection.url = app.url(`/competitions/${app.session.get('competition').id}/rounds`);
+        this.listenTo(this.collection, 'reset', this.addAll);
+        this.listenTo(this.collection, 'add', this.addOne);
+        this.listenTo(this.collection, 'all', _.debounce(this.render, 0));
+        this.collection.fetch({ reset: true });
     }
     get template() {
         return `
@@ -24,28 +23,13 @@ export default class ParticipantQueue extends Backbone.View {
         `;
     }
     addAll() {
-        this.$('tbody').empty();
-        const list = this.collection.groupBy((p) => {
-            return p.toString();
-        });
-        console.log(list);
-
+        this.collection.each(this.addOne, this);
     }
     addOne(model) {
-        var itm = new ParticipantQueueItem({ model: model });
+        const itm = new ParticipantQueueItem({ model });
         itm.render().$el.appendTo(this.$('tbody'));
     }
-    render() {
-        this.$el.empty();
-        Server.get(`/competitions/${app.session.get('competition').id}/rounds`).then((rows) => {
-            const list = _.groupBy(rows, (row) => { return row.lastname; });
-            _.keys(list).forEach((key) => {
-                new ParticipantQueueItem({ title: key, rounds: list[key] }).render().$el.appendTo(this.$el);
-            });
-            
-        });
-
+   render() {
         return this;
     }
-
 }

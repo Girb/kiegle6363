@@ -87,6 +87,21 @@ button {
   }
 }
 
+.competition {
+  .queue {
+    table {
+      .btn-outline-secondary { color: #ccc; }
+      .sum {
+        padding-left: 24px;
+        &::after { border-top-color: transparent; }
+        &:hover {
+          &::after { border-top-color: rgb(204,204,204); }
+        } 
+      }
+    }
+  }
+}
+
 .admin {
   .activecomp { margin-bottom: 50px; }
   .compname { font-weight: bold; font-size: 21px; }
