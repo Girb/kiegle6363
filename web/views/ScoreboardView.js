@@ -27,17 +27,14 @@ export default class ScoreboardView extends Backbone.View {
     }
     render() {
         this.$el.empty();
-        const { throws } = this.round;
+        const throws = this.model.get('throws');
 
         this.items = [];
         for (let i = 0; i < throws.length; i += 1) {
-            const ss = new SingleScoreView(throws[i]);
+            const ss = new SingleScoreView({ throw: throws[i] });
             this.items.push(ss);
             this.listenTo(ss, 'change:value', (sx) => {
-                // const draft = this.doc.get('draft').slice();
-                // draft[i] = sx.get();
-                // this.doc.set('draft', draft);
-                // this.focusNext(sx);
+                this.focusNext(sx);
                 // this.sum();
             });
             this.$el.append(ss.render().$el);

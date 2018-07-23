@@ -3,6 +3,7 @@ import { version } from '../../package.json';
 import competitions from './competitions';
 import stages from './stages';
 import participants from './participants';
+import rounds from './rounds';
 
 export default ({ config, db }) => {
     const api = Router();
@@ -23,6 +24,7 @@ export default ({ config, db }) => {
     api.use('/competitions', competitions({ config, db }));
     api.use('/stages', stages({ config, db }));
     api.use('/participants', participants({ config, db }));
+    api.use('/rounds', rounds({ config, db }));
 
     return api;
 };

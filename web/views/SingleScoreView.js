@@ -25,19 +25,20 @@ export default class SingleScoreView extends Backbone.View {
         this.$ipt = $('<input />')
             .prop('type', 'number')
             .css('position', 'absolute')
-            .css('left:', '-120%')
+            .css('left', '-120%')
             .appendTo(this.$el)
             .focus();
     }
     kp(e) {
         this.$el.text(e.key);
+        this.throw.score = this.get();
         this.trigger('change:value', this);
     }
     get() {
         return isNaN(this.$el.text()) ? undefined : parseInt(this.$el.text());
     }
     render() {
-        this.$el.text(this.score || '-');
+        this.$el.text(this.throw.score || '-');
         return this;
     }
 }

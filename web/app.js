@@ -6,6 +6,8 @@ import AdminHome from './views/AdminHome';
 import Server from './server';
 import HomeView from './views/HomeView';
 import CompetitionView from './views/CompetitionView';
+import Round from './models/Round';
+import RegView from './views/RegView';
 
 class App extends Backbone.Router {
     initialize(options) {
@@ -26,6 +28,7 @@ class App extends Backbone.Router {
             'competition': 'competition',
             'results': 'results',            
             'reg/:id/:count': 'reg',
+            'round/:id': 'round'
         };
     }
     start(dbname) { // starts the app
@@ -55,6 +58,14 @@ class App extends Backbone.Router {
         hv.render().$el.appendTo(this.$main);                        
     }
     test() {
+    }
+    round(id) {
+        const round = new Round();
+        round.url = this.url(`/rounds/${id}`);
+        round.fetch().then(() => {
+            const rv = new RegView({ model: round });
+            rv.render().$el.appendTo(this.$main);
+        });
     }
     competition() {
         this.$main.empty();        

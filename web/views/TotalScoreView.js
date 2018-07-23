@@ -1,22 +1,21 @@
-import NativeView from 'backbone.nativeview';
+import Backbone from 'backbone';
 
-export default class TotalScoreView extends NativeView {
-    constructor(doc) {
-        super();
-        this.doc = doc;
-        this.listenTo(this.doc, 'change:draft', () => {
-            var draft = this.doc.get('draft');
-            if( draft && draft.length ) {
-                const vals = [];
-                for( const i of this.doc.get('draft') ) {
-                    i && vals.push(i);
-                }
-                if( vals.length ) {
-                    const sum = vals.reduce((a, b) => a + b);
-                    this.el.innerHTML = sum;
-                }
-            }
-        });
+export default class TotalScoreView extends Backbone.View {
+    initialize(options) {
+        Object.assign(this, options);
+        // this.listenTo(this.doc, 'change:draft', () => {
+        //     var draft = this.doc.get('draft');
+        //     if( draft && draft.length ) {
+        //         const vals = [];
+        //         for( const i of this.doc.get('draft') ) {
+        //             i && vals.push(i);
+        //         }
+        //         if( vals.length ) {
+        //             const sum = vals.reduce((a, b) => a + b);
+        //             this.el.innerHTML = sum;
+        //         }
+        //     }
+        // });
     }
     get className() { return 'totalscore'; }
     get template() {
@@ -25,10 +24,10 @@ export default class TotalScoreView extends NativeView {
         `;
     }
     set(val) {
-        this.el.innerHTML = val;
+        this.$el.text(val);
     }
     render() {
-        this.el.innerHTML = this.template;
+        this.$el.empty().append(this.template);
         return this;
     }
 }

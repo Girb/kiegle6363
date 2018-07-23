@@ -11,6 +11,7 @@ export default class SumItemMenu extends Backbone.View {
     get events() {
         return {
             'click .del': 'deleteRound',
+            'click .edit': 'editRound'
         };
     }
     deleteRound(e) {
@@ -18,6 +19,10 @@ export default class SumItemMenu extends Backbone.View {
         if (window.confirm('Er du helt sikker?')) {
             console.log('deleting...');
         }
+    }
+    editRound(e) {
+        e.preventDefault();
+        app.navigate(`/round/${this.round.id}`, { trigger: true });
     }
     item(text, className) {
         return $('<a/>')
@@ -28,6 +33,7 @@ export default class SumItemMenu extends Backbone.View {
     }
     render() {
         this.$el.empty();
+        this.item('Rediger', 'edit');
         this.item('Slett', 'del');
         return this;
     }
