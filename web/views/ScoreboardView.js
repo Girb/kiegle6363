@@ -1,10 +1,9 @@
-import NativeView from 'backbone.nativeview';
+import Backbone from 'backbone';
 import SingleScoreView from './SingleScoreView';
 
-export default class ScoreboardView extends NativeView {
-    constructor(doc) {
-        super();
-        this.doc = doc;
+export default class ScoreboardView extends Backbone.View {
+    initialize(options) {
+        Object.assign(this, options);
     }
     get className() { return 'scoreboard'; }
     get events() {
@@ -27,25 +26,26 @@ export default class ScoreboardView extends NativeView {
         this.trigger('change:total', total);
     }
     render() {
-        this.el.innerHTML = '';
-        if (this.doc.get('draft')) {
-            this.items = [];
-            for (let i = 0; i < this.doc.get('draft').length; i += 1) {
-                const ss = new SingleScoreView(this.doc.get('draft')[i]);
-                this.items.push(ss);
-                this.listenTo(ss, 'change:value', (sx) => {
-                    let draft = this.doc.get('draft').slice();
-                    draft[i] = sx.get();
-                    this.doc.set('draft', draft);
-                    this.focusNext(sx);
-                    this.sum();
-                });
-                this.el.appendChild(ss.render().el);
-            }
-            setTimeout(() => {
-                this.items[0].el.focus();
+        this.$el.empty();
+        const { throws } = this.round;
+
+        this.items = [];
+        for (let i = 0; i < throws.length; i += 1) {
+            const ss = new SingleScoreView(throws[i]);
+            this.items.push(ss);
+            this.listenTo(ss, 'change:value', (sx) => {
+                // const draft = this.doc.get('draft').slice();
+                // draft[i] = sx.get();
+                // this.doc.set('draft', draft);
+                // this.focusNext(sx);
+                // this.sum();
             });
+            this.$el.append(ss.render().$el);
         }
+        setTimeout(() => {
+            this.items[0].$el.focus();
+        });
+
         return this;
     }
 }

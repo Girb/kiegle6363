@@ -16,7 +16,7 @@ export default class NavBar extends Backbone.View {
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="/participants">Registrering</a>
                     </li>
                     <li class="nav-item">
@@ -38,9 +38,6 @@ export default class NavBar extends Backbone.View {
         };
     }
 
-    add() {
-        
-    }
 
     render() {
         this.$el.empty().append(this.template);

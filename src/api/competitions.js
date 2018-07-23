@@ -4,8 +4,7 @@ export default ({ config, db }) => {
     const api = Router();
 
     api.get('/', (req, res) => {
-        console.log('getting all');
-        db.any(`select c.id, c.title, ct.title as type from competition c
+        db.any(`select c.id, c.title, ct.throws_per_round, ct.number_of_rounds, ct.title as type from competition c
                 INNER JOIN competition_type ct ON c.type_id = ct.id`).then((data) => {
             res.json(data);
         }).catch((err) => {

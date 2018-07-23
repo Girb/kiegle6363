@@ -7,15 +7,17 @@ CREATE DATABASE kiegle63;
 
 CREATE TABLE competition_type (
 	id INTEGER PRIMARY KEY,
-	title VARCHAR
+	title VARCHAR,
+	throws_per_round INTEGER DEFAULT 10 NOT NULL,
+	number_of_rounds INTEGER DEFAULT 2 NOT NULL
 );
 
-INSERT INTO competition_type (id, title) VALUES (1, 'Kongematch (kvalifisering)');
-INSERT INTO competition_type (id, title) VALUES (2, 'Kongematch (semi)');
-INSERT INTO competition_type (id, title) VALUES (3, 'Kongematch (finale)');
-INSERT INTO competition_type (id, title) VALUES (4, 'Kniksens Vandrepokal');
-INSERT INTO competition_type (id, title) VALUES (5, 'Dronningaften');
-INSERT INTO competition_type (id, title) VALUES (6, 'Klubb vs Klubb');
+INSERT INTO competition_type (id, title, throws_per_round, number_of_rounds) VALUES (1, 'Kongematch (kvalifisering)', 5, 2);
+INSERT INTO competition_type (id, title, throws_per_round, number_of_rounds) VALUES (2, 'Kongematch (semi)', 5, 2);
+INSERT INTO competition_type (id, title, throws_per_round, number_of_rounds) VALUES (3, 'Kongematch (finale)', 10, 2);
+INSERT INTO competition_type (id, title, throws_per_round, number_of_rounds) VALUES (4, 'Kniksens Vandrepokal', 10, -1);
+INSERT INTO competition_type (id, title, throws_per_round, number_of_rounds) VALUES (5, 'Dronningaften', 5, -1);
+INSERT INTO competition_type (id, title, throws_per_round, number_of_rounds) VALUES (6, 'Klubb vs Klubb', 10, 2);
 
 CREATE TABLE round_status (
 	id INTEGER PRIMARY KEY,

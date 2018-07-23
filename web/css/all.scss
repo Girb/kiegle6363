@@ -83,7 +83,7 @@ button {
 
 .home {
   .comp {
-    width: 18em; margin: 0 18px 18px 0; display: inline-block;
+    width: 20em; margin: 0 18px 18px 0; display: inline-block;
   }
 }
 
@@ -91,6 +91,7 @@ button {
   .queue {
     table {
       .btn-outline-secondary { color: #ccc; }
+      .sumdiv { display: inline-block; }
       .sum {
         padding-left: 24px; border-color: transparent;
         &::after { border-top-color: transparent; }

@@ -1,9 +1,9 @@
-import NativeView from 'backbone.nativeview';
+import $ from 'jquery';
+import Backbone from 'backbone';
 
-export default class SingleScoreView extends NativeView {
-    constructor(score) {
-        super();
-        this.score = score;
+export default class SingleScoreView extends Backbone.View {
+    initialize(options) {
+        Object.assign(this, options);
     }
     get tagName() { return 'span'; }
     get attributes() {
@@ -19,24 +19,25 @@ export default class SingleScoreView extends NativeView {
         };
     }
     bl() {
-        this.ipt && this.el.removeChild(this.ipt);
+        this.$ipt.remove();
     }
     fc() {
-        this.ipt = document.createElement('input');
-        this.ipt.setAttribute('type', 'number');
-        this.ipt.setAttribute('style', 'position: absolute; left: -120%;')
-        this.el.append(this.ipt);
-        this.ipt.focus();
+        this.$ipt = $('<input />')
+            .prop('type', 'number')
+            .css('position', 'absolute')
+            .css('left:', '-120%')
+            .appendTo(this.$el)
+            .focus();
     }
     kp(e) {
-        this.el.innerText = e.key;
+        this.$el.text(e.key);
         this.trigger('change:value', this);
     }
     get() {
-        return isNaN(this.el.innerHTML) ? undefined : parseInt(this.el.innerHTML);
+        return isNaN(this.$el.text()) ? undefined : parseInt(this.$el.text());
     }
     render() {
-        this.el.innerHTML = this.score || '-';
+        this.$el.text(this.score || '-');
         return this;
     }
 }

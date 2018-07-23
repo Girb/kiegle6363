@@ -32,7 +32,7 @@ class App extends Backbone.Router {
         console.log('app starting');
         localStorage.setItem('dbname', dbname);
         Backbone.history.start({ pushState: true });
-        $(document).on('click', 'a:not([data-bypass])', function (evt) {
+        $(document).on('click', 'a:not([data-bypass]):not(.dropdown-item)', function (evt) {
             var href = $(this).attr('href');
             var protocol = this.protocol + '//';
             if (href.slice(protocol.length) !== protocol) {

@@ -1,5 +1,6 @@
 import Backbone from 'backbone';
 import BaseView from './BaseView';
+import Competition from '../models/Competition';
 import CompetitionItem from './CompetitionItem';
 import Server from '../server';
 
@@ -16,7 +17,7 @@ export default class HomeView extends BaseView {
         this.$el.append(this.template);
         Server.get('/competitions').then((cs) => {
             cs.forEach((c) =>{
-                const m = new Backbone.Model(c);
+                const m = new Competition(c);
                 new CompetitionItem({ model: m }).render().$el.appendTo(this.$el);
             });
         });
