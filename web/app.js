@@ -60,6 +60,7 @@ class App extends Backbone.Router {
     test() {
     }
     round(id) {
+        this.$main.empty();
         const round = new Round();
         round.url = this.url(`/rounds/${id}`);
         round.fetch().then(() => {

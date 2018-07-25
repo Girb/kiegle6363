@@ -11,8 +11,8 @@ export default class RegView extends BaseView {
     get template() {
         return `
             <div id="info">
-                <div class="sname"></div>
-                <div class="sclub"></div>
+                <h1 class="sname"></h1>
+                <h2 class="sclub"></h2>
             </div>
             <div id="scores"></div>
             <div id="totals"></div>

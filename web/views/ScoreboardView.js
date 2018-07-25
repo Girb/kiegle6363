@@ -15,6 +15,10 @@ export default class ScoreboardView extends Backbone.View {
         const next = from.el.nextSibling;
         next && next.focus();
     }
+    focusPrev(from) {
+        const prev = from.el.previousElementSibling;
+        prev && prev.focus();
+    }
     sum() {
         let total = 0;
         this.items.forEach((itm) => {
@@ -31,7 +35,9 @@ export default class ScoreboardView extends Backbone.View {
 
         this.items = [];
         for (let i = 0; i < throws.length; i += 1) {
-            const ss = new SingleScoreView({ throw: throws[i] });
+            const ss = new SingleScoreView({ throw: throws[i], round: this.model });
+            this.listenTo(ss, 'focus:next', this.focusNext);
+            this.listenTo(ss, 'focus:prev', this.focusPrev);
             this.items.push(ss);
             this.listenTo(ss, 'change:value', (sx) => {
                 this.focusNext(sx);

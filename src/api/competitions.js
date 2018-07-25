@@ -80,6 +80,52 @@ export default ({ config, db }) => {
     }
     
     api.get('/:id/rounds', (req, res) => {
+        db.task(t => t.batch([
+            t.any(`select p.id, pl.firstname, pl.lastname, pl.nickname, cl.name as club, array_agg(r.id) as round_ids
+                        from participant p
+                        left outer join round r on r.participant_id = p.id
+                        inner join player pl on p.player_id = pl.id
+                        inner join club cl on pl.club_id = cl.id
+                        where p.status_id = 1 and p.competition_id = $1
+                        group by p.id, pl.id, cl.id`, req.params.id),
+            t.any(`select r.id, r.participant_id, sum(t.score)
+                        from round r
+                        inner join throw t on t.round_id = r.id
+                        where r.competition_id = $1
+                        group by r.id
+                `, req.params.id),
+        ])).then((data) => {
+            const ret = [];
+            data[0].forEach((p) => {
+                const px = p;
+                px.rounds = data[1].filter(r => r.participant_id === p.id);
+                ret.push(px);
+            });
+            res.json(ret);
+        }).catch((err) => {
+            res.status(500).json(err);
+        });
+    });
+
+    api.post('/:id/rounds/new', (req, res) => {
+        db.one('insert into round (participant_id, competition_id) values ($1, $2) returning *', [req.body.participant_id, req.params.id]).then((round) => {
+            db.tx((t) => {
+                const qs = [];
+                for (let i = 0; i < 10; i += 1) {
+                    qs.push(`insert into throw (round_id, score) values (${round.id}, null)`);
+                }
+                return t.batch(qs);
+            }).then(() => {
+                res.json(round);
+            }).catch((err) => {
+                res.status(500).json(err);
+            });
+        }).catch((err) => {
+            res.status(500).json(err);
+        });
+    });
+
+    api.get('/:id/roundsasdf', (req, res) => {
         db.any(`select r.*, array_agg(score) as throws
                 from throw t
                 INNER JOIN rounds r ON t.round_id = r.id

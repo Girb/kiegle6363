@@ -3,6 +3,7 @@ import Backbone from 'backbone';
 export default class TotalScoreView extends Backbone.View {
     initialize(options) {
         Object.assign(this, options);
+        this.listenTo(this.model, 'change:score', this.render);
         // this.listenTo(this.doc, 'change:draft', () => {
         //     var draft = this.doc.get('draft');
         //     if( draft && draft.length ) {
@@ -27,7 +28,7 @@ export default class TotalScoreView extends Backbone.View {
         this.$el.text(val);
     }
     render() {
-        this.$el.empty().append(this.template);
+        this.$el.empty().append(this.model.sum() || 0);
         return this;
     }
 }

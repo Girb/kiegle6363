@@ -154,7 +154,7 @@ INNER JOIN club cl ON pl.club_id = cl.id;
 
 --INSERT INTO stage (stage_date, competition_id) VALUES ('2018-04-15', 2);
 
-INSERT INTO round (participant_id, competition_id, status_id) VALUES (9, 1, 1);
+INSERT INTO round (participant_id, competition_id, status_id) VALUES (1, 1, 1);
 INSERT INTO throw (round_id, score) VALUES (1, 7);
 INSERT INTO throw (round_id, score) VALUES (1, 6);
 INSERT INTO throw (round_id, score) VALUES (1, 7);
@@ -166,7 +166,7 @@ INSERT INTO throw (round_id, score) VALUES (1, 7);
 INSERT INTO throw (round_id, score) VALUES (1, 6);
 INSERT INTO throw (round_id, score) VALUES (1, 4);
 
-INSERT INTO round (participant_id, competition_id, status_id) VALUES (9, 1, 1);
+INSERT INTO round (participant_id, competition_id, status_id) VALUES (1, 1, 1);
 INSERT INTO throw (round_id, score) VALUES (2, 6);
 INSERT INTO throw (round_id, score) VALUES (2, 6);
 INSERT INTO throw (round_id, score) VALUES (2, 8);
@@ -178,7 +178,7 @@ INSERT INTO throw (round_id, score) VALUES (2, 4);
 INSERT INTO throw (round_id, score) VALUES (2, 0);
 INSERT INTO throw (round_id, score) VALUES (2, 6);
 
-INSERT INTO round (participant_id, competition_id, status_id) VALUES (7, 1, 1);
+INSERT INTO round (participant_id, competition_id, status_id) VALUES (2, 1, 1);
 INSERT INTO throw (round_id, score) VALUES (3, 7);
 INSERT INTO throw (round_id, score) VALUES (3, 7);
 INSERT INTO throw (round_id, score) VALUES (3, 7);

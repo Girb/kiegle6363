@@ -1,10 +1,24 @@
+import $ from 'jquery';
 import Backbone from 'backbone';
 import SumItem from './SumItem';
+import Server from '../server';
 
 export default class ParticipantQueueItem extends Backbone.View {
     get tagName() { return 'tr'; }
     initialize(options) {
         Object.assign(this, options);
+    }
+    get events() {
+        return {
+            'click .add': 'addRound',
+        };
+    }
+    addRound(e) {
+        e.preventDefault();
+        const pd = { participant_id: this.model.get('id') };
+        Server.post(`/competitions/${app.session.get('competition').id}/rounds/new`, pd).then((res) => {
+            app.navigate(`/round/${res.id}`, { trigger: true });
+        });
     }
     get template() {
         return `

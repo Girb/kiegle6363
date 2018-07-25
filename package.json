@@ -4,7 +4,7 @@
   "description": "One kiegle to rule them all",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "webpack-dev-server --inline --hot",
     "dev": "webpack-dev-server",
     "server": "nodemon -w src --exec \"babel-node src --presets es2015,stage-0\"",
     "build": "webpack -p",

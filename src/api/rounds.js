@@ -21,7 +21,7 @@ export default ({ config, db }) => {
                         INNER JOIN club c ON pl.club_id = c.id
                         INNER JOIN competition comp ON r.competition_id = comp.id
                         where r.id = $1`, req.params.id),
-                db.any('select id, score from throw where round_id = $1', req.params.id)
+                db.any('select id, score from throw where round_id = $1 order by id', req.params.id)
             ]);
         }).then(data => {
             const ret = data[0];
