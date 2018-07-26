@@ -11,13 +11,13 @@ export default class SumItemMenu extends Backbone.View {
     get events() {
         return {
             'click .del': 'deleteRound',
-            'click .edit': 'editRound'
+            'click .edit': 'editRound',
         };
     }
     deleteRound(e) {
         e.preventDefault();
         if (window.confirm('Er du helt sikker?')) {
-            console.log('deleting...');
+            this.trigger('round:delete');
         }
     }
     editRound(e) {

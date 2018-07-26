@@ -58,7 +58,7 @@ export default class ParticipantListItem extends Backbone.View {
                 <button type="button" class="btn btn-sm btn-secondary dn"><i class="material-icons">keyboard_arrow_down</i></button>
                 <button id="more${this.model.get('id')}" type="button" class="btn btn-sm btn-secondary dropdown-toggle more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Valg</button>
                 <div class="dropdown-menu" aria-labelledby="${this.model.get('id')}">
-                    <a class="dropdown-item mnureg" href="#">Påmeldt</a>
+                    <a class="dropdown-item mnureg" href="#">Angre bekreft opmøte</a>
                 </div>
             </div>
         </td>

@@ -15,7 +15,10 @@ export default class ParticipantQueueItem extends Backbone.View {
     }
     addRound(e) {
         e.preventDefault();
-        const pd = { participant_id: this.model.get('id') };
+        const pd = { 
+            participant_id: this.model.get('id'),
+            throws_per_round: app.session.get('competition').get('throws_per_round')
+        };
         Server.post(`/competitions/${app.session.get('competition').id}/rounds/new`, pd).then((res) => {
             app.navigate(`/round/${res.id}`, { trigger: true });
         });
@@ -24,6 +27,7 @@ export default class ParticipantQueueItem extends Backbone.View {
         return `
             <td scope="row">${this.model.toString()}</td>
             <td class="rounds"></td>
+            <td class="commands"></td>
         `;
     }
     roundTemplate(r) {
@@ -36,7 +40,12 @@ export default class ParticipantQueueItem extends Backbone.View {
         this.model.get('rounds').forEach((round) => {
             new SumItem({ round }).render().$el.appendTo(this.$('.rounds'));
         });
-        $('<button/>').addClass('btn btn-primary add').text('Ny').appendTo(this.$('.rounds'));
+        const newbtn = $('<button/>').addClass('btn btn-primary add').text('Ny runde').appendTo(this.$('.commands'));
+        const maxrounds = app.session.get('competition').get('number_of_rounds');
+        if (maxrounds > 0) {
+            newbtn.prop('disabled', this.model.get('rounds').length >= maxrounds);
+        }
+        $('<button/>').addClass('btn btn-outline-success complete ml-2').text('Ferdig').appendTo(this.$('.commands'));
         return this;
     }
 }

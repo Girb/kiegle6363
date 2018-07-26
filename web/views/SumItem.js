@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import Backbone from 'backbone';
 import SumItemMenu from './SumItemMenu';
+import Server from '../server';
 
 export default class SumItem extends Backbone.View {
     get className() { return 'sumdiv'; }
@@ -16,7 +17,13 @@ export default class SumItem extends Backbone.View {
         e.preventDefault();
         const menu = this.$('.dropdown-menu');
         if (!menu.length) {
-            new SumItemMenu({ round: this.round }).render().$el.appendTo(this.$el);
+            const m = new SumItemMenu({ round: this.round });
+            this.listenTo(m, 'round:delete', () => {
+                Server.delete(`/rounds/${this.round.id}`).then(() => {
+                    this.remove();                
+                });
+            });
+            m.render().$el.appendTo(this.$el);
         }
     }
     render() {

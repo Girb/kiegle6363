@@ -130,7 +130,7 @@ CREATE TABLE round (
 
 CREATE TABLE throw (
 	id serial PRIMARY KEY,
-	round_id INTEGER NOT NULL REFERENCES round(id),
+	round_id INTEGER NOT NULL REFERENCES round(id) ON DELETE CASCADE,
 	score INTEGER
 );
 

@@ -26,8 +26,6 @@ export default class NavBar extends Backbone.View {
                         <a class="nav-link" href="/results">Resultater</a>
                     </li>
                 </ul>
-                
-                <button class="btn btn-primary my-2 my-sm-0 addparticipant" type="button"><i class="material-icons">person_add</i> Meld på slager</button>
             </div>
             
         `;

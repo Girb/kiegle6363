@@ -110,9 +110,10 @@ export default ({ config, db }) => {
     api.post('/:id/rounds/new', (req, res) => {
         db.one('insert into round (participant_id, competition_id) values ($1, $2) returning *', [req.body.participant_id, req.params.id]).then((round) => {
             db.tx((t) => {
-                const qs = [];
-                for (let i = 0; i < 10; i += 1) {
-                    qs.push(`insert into throw (round_id, score) values (${round.id}, null)`);
+                const qs = [],
+                    throwcount = req.body.throws_per_round;
+                for (let i = 0; i < throwcount; i += 1) {
+                    qs.push(t.none(`insert into throw (round_id) values (${round.id})`));
                 }
                 return t.batch(qs);
             }).then(() => {

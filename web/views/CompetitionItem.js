@@ -22,7 +22,8 @@ export default class CompetitionItem extends Backbone.View {
         const cb = $('<div/>').addClass('card-body').appendTo(this.$el);
         $('<h5/>').addClass('card-title-primary').text(this.model.get('title')).appendTo(cb);
         $('<p/>').addClass('card-text').text(this.model.rulesDesc()).appendTo(cb);
-        $('<a/>').addClass('btn btn-primary go').prop('href', '/participants').text('Til konkurransen').appendTo(cb);
+        $('<a/>').addClass('btn btn-primary go').prop('href', '/participants').text('Registrering').appendTo(cb);
+        $('<a/>').addClass('btn btn-secondary ml-2 go').prop('href', '/competition').text('Slagning').appendTo(cb);
         return this;
     }
 }

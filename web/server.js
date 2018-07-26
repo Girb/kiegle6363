@@ -1,9 +1,11 @@
-const DONE = 4, OK = 200, OK_NO_CONTENT = 204;
+const DONE = 4, 
+    OK = 200, 
+    OK_NO_CONTENT = 204;
 class Server {
     static get(url, callback) {
         return new Promise(((resolve, reject) => {
             const xhr = Server.createCORSRequest('GET', Server.baseUrl() + url);
-            //xhr.withCredentials = true;
+            // xhr.withCredentials = true;
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === DONE) {
                     if (xhr.status === OK) {
@@ -24,7 +26,7 @@ class Server {
     static post(url, dataobj) {
         return new Promise(((resolve, reject) => {
             const xhr = Server.createCORSRequest('POST', Server.baseUrl() + url);
-            //xhr.withCredentials = true;
+            // xhr.withCredentials = true;
             xhr.setRequestHeader('Content-type', 'application/json;charset=UTF8');
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === DONE) {
@@ -39,6 +41,25 @@ class Server {
                 }
             };
             xhr.send(JSON.stringify(dataobj));
+        }));
+    }
+    static delete(url) {
+        return new Promise(((resolve, reject) => {
+            const xhr = Server.createCORSRequest('DELETE', Server.baseUrl() + url);
+            xhr.setRequestHeader('Content-type', 'application/json;charset=UTF8');
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === DONE) {
+                    if (xhr.status === OK) {
+                        const res = JSON.parse(xhr.responseText || '{}');
+                        resolve(res);
+                    } else if (xhr.status === 404) {
+                        reject('404 not found');
+                    } else {
+                        reject(xhr.responseText);
+                    }
+                }
+            };
+            xhr.send(null);
         }));
     }
     static baseUrl() {
