@@ -2,12 +2,16 @@ import Backbone from 'backbone';
 
 export default class NavBar extends Backbone.View {
     get tagName() { return 'nav'; }
-    get className() { return 'navbar navbar-expand-lg navbar-dark bg-dark fixed-top'; }
+    get className() { return 'navbar navbar-expand-lg navbar-dark fixed-top'; }
     initialize(options) {
         Object.assign(this, options);
         this.listenTo(this.session, 'change:competition', this.render);
+        this.$el.empty().append(this.template);
+        this.$info = this.$('.info');
     }
-
+    info(txt) {
+        this.$info.text(txt);
+    }
     get template() {
         return `
             <a class="navbar-brand" href="/">Kiegle6363</a>
@@ -26,6 +30,7 @@ export default class NavBar extends Backbone.View {
                         <a class="nav-link" href="/results">Resultater</a>
                     </li>
                 </ul>
+                <span class="navbar-text ml-auto info">&copy; Kiegleklubben Kniksen</span>
             </div>
             
         `;
@@ -38,7 +43,7 @@ export default class NavBar extends Backbone.View {
 
 
     render() {
-        this.$el.empty().append(this.template);
+        
         this.$el.toggle(!!this.session.get('competition'));
 
         return this;

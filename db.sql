@@ -35,10 +35,10 @@ CREATE TABLE competition (
 	type_id INTEGER NOT NULL REFERENCES competition_type(id)
 );
 
-INSERT INTO competition (title, type_id) VALUES ('Kongematch 2018 Kvalifisering', 1);
-INSERT INTO competition (title, type_id) VALUES ('Kongematch 2018 Semifinale', 2);
-INSERT INTO competition (title, type_id) VALUES ('Kongematch 2018 Finale', 3);
-INSERT INTO competition (title, type_id) VALUES ('Kniksens Vandrepokal 2018', 4);
+INSERT INTO competition (title, type_id) VALUES ('Kongematch 2018', 1);
+INSERT INTO competition (title, type_id) VALUES ('Kongematch 2018', 2);
+INSERT INTO competition (title, type_id) VALUES ('Kongematch 2018', 3);
+INSERT INTO competition (title, type_id) VALUES ('Slagning 22.07.2018', 4);
 
 CREATE TABLE club (
 	id serial PRIMARY KEY,

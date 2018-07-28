@@ -1,3 +1,67 @@
+$white:    #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #ebebeb !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #999 !default;
+$gray-700: #444 !default;
+$gray-800: #303030 !default;
+$gray-900: #222 !default;
+$black:    #000 !default;
+
+$blue:    #375a7f !default;
+$indigo:  #6610f2 !default;
+$purple:  #6f42c1 !default;
+$pink:    #e83e8c !default;
+$red:     #E74C3C !default;
+$orange:  #fd7e14 !default;
+$yellow:  #F39C12 !default;
+$green:   #00bc8c !default;
+$teal:    #20c997 !default;
+$cyan:    #3498DB !default;
+
+$primary:       $blue !default;
+$secondary:     $gray-700 !default;
+$success:       $green !default;
+$info:          $cyan !default;
+$warning:       $yellow !default;
+$danger:        $red !default;
+$light:         $gray-800 !default;
+$dark:          $gray-800 !default;
+
+$body-bg: #222;
+$body-color: #e4e4e4;
+
+$font-family-sans-serif: 'Helvetica Neue', 'Helvetica', 'Aria', sans-serif;
+$font-size-base: 1rem;
+
+$h1-font-size: 3rem;
+$h2-font-size: 2.5rem;
+$h3-font-size: 2rem;
+
+$table-accent-bg: $gray-800;
+$table-border-color: $gray-700;
+
+$input-border-color: transparent;
+$dropdown-bg: $gray-900;
+
+$nav-link-padding-x: 2rem;
+$nav-link-disabled-color: $gray-500;
+
+$navbar-padding-y: 1rem;
+$navbar-color: $gray-500;
+
+
+$dropdown-bg: $gray-900;
+$dropdown-border-color: $gray-700;
+$dropdown-link-color: $gray-100;
+$dropdown-link-hover-bg: $blue;
+$dropdown-link-hover-color: $white;
+
+
+
+
 @import "~bootstrap/scss/bootstrap";
 
 @font-face {
@@ -23,8 +87,6 @@
   url('../../resources/font/MaterialIcons-Regular.ttf') format('truetype');
 }
 
-$buttonbgcolor1: #5ead3d;
-$buttoncolor1: #fff;
 
 .material-icons {
   font-family: 'Material Icons';
@@ -51,6 +113,11 @@ $buttoncolor1: #fff;
   font-feature-settings: 'liga';
 }
 
+body { padding: 80px 1rem; }
+
+.navbar-dark { background-color: $gray-800; }
+
+/*
 body {
   background: #222; color: #aaa; font-family: "Helvetica Neue", Arial, sans-serif; padding: 60px 0 0 0; margin: 0; font-size: 18px;
   &.bb { background-color: #222; }
@@ -81,6 +148,8 @@ button {
   
 }
 
+*/
+
 .home {
   .comp {
     width: 20em; margin: 0 18px 18px 0; display: inline-block;
@@ -90,6 +159,7 @@ button {
 .competition {
   .queue {
     table {
+      td { vertical-align: middle; }
       .btn-outline-secondary { color: #ccc; }
       .sumdiv { display: inline-block; }
       .sum {
@@ -103,12 +173,7 @@ button {
   }
 }
 
-.admin {
-  .activecomp { margin-bottom: 50px; }
-  .compname { font-weight: bold; font-size: 21px; }
-  .comptype { color: #555; font-size: 16px; }
-  div.buttons { margin-bottom: 25px; }
-}
+
 
 .participants {
   .edit {
@@ -120,6 +185,7 @@ button {
     input { width: 160px; }
   }
   table {
+    td { vertical-align: middle; }
     margin-top: 24px;
     span { display: inline-block; margin-right: 16px; }
     td.commands { 
@@ -129,10 +195,11 @@ button {
   }
   &.confirmed {
     table {
-      tr:nth-child(4n), tr:nth-child(4n-1) { background-color: #313539; }
+      //tr:nth-child(4n), tr:nth-child(4n-1) { background-color: #313539; }
     }
   }
 }
+
 
 .comps {
 
@@ -163,6 +230,7 @@ button {
 
 //.scoreboard,.totalscore { box-shadow: 0 -1px 0 #e4e4e4, 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24); }
 
+
 .scoreboard {
   background-color: #333; padding: 8px; color: #e6ffac; text-shadow: 0 0 12px #87f324, 0 0 18px #288903; box-sizing: border-box; max-width: 1200px;
   font-family: sa-digital-number; font-size: 36px; width: 100%; display: flex; flex-direction: row;
@@ -190,19 +258,7 @@ button {
 @include media-breakpoint-up(xl) {
   .scoreboard,.totalscore { font-size: 96px; margin: 0 auto 8px auto; }
 }
-// @include for-tablet-portrait-up {
-//   .scoreboard,.totalscore { font-size: 48px; }
-// }
-// @include for-tablet-landscape-up {
-//   .scoreboard,.totalscore { font-size: 64px; }
-//   span { padding: 0 4px; }
-// }
-// @include for-desktop-up {
-//   .scoreboard,.totalscore { font-size: 80px; }
-// }
-// @include for-big-desktop-up {
-//   .scoreboard,.totalscore { font-size: 96px; }
-// }
+
 
 @-ms-viewport{ width: device-width; }
 

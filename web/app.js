@@ -13,7 +13,8 @@ class App extends Backbone.Router {
     initialize(options) {
         Object.assign(this, options);
         const body = $('body');
-        new NavBar({ session: this.session }).render().$el.appendTo(body);
+        this.navbar = new NavBar({ session: this.session });
+        this.navbar.render().$el.appendTo(body);
         this.$main = $('<div/>').prop('id', 'main').appendTo(body);        
     }
     url(tail) {

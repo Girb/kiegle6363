@@ -30,7 +30,7 @@ export default class ParticipantsList extends Backbone.View {
     }
     get template() {
         return `
-            <table id="participantlist" class="table table-responsive-lg table-dark table-hover">
+            <table id="participantlist" class="table table-responsive-lg table-hover">
                 <tbody></tbody>
             </table>
         `;

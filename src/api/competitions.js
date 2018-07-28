@@ -36,7 +36,7 @@ export default ({ config, db }) => {
     api.get('/:id/players/add', (req, res) => {
         db.any(`select player.id, firstname, lastname, nickname, email, cl.name as club from player
                 INNER JOIN club cl on club_id = cl.id
-                where player.id NOT IN (select player_id from participant where competition_id = 2) ORDER BY club, firstname;;`, req.params.id).then((data) => {
+                where player.id NOT IN (select player_id from participant where competition_id = $1) ORDER BY club, firstname;`, req.params.id).then((data) => {
             res.json(data);
         });         
     });

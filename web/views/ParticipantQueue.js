@@ -17,7 +17,14 @@ export default class ParticipantQueue extends Backbone.View {
     }
     get template() {
         return `
-            <table class="table table-responsive-lg table-dark table-hover">
+            <table class="table table-responsive-lg table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Navn</th>
+                        <th scope="col">Runder</th>
+                        <th scope="col">Valg</th>
+                    </tr>
+                </thead>
                 <tbody></tbody>
             </table>
         `;

@@ -13,6 +13,12 @@ export default class ParticipantsView extends BaseView {
         this.registered.url = app.url(`/competitions/${app.session.get('competition').id}/participants/0`);
         this.listenTo(this.confirmed, 'change:status_id', this.statusChanged);
         this.listenTo(this.registered, 'change:status_id', this.statusChanged);
+        this.listenTo(this.confirmed, 'change reset', this.updateInfo);
+        this.listenTo(this.registered, 'change reset', this.updateInfo);
+    }
+    updateInfo() {
+        const comp = app.session.get('competition').get('title');
+        app.navbar.info(`${comp} (${this.confirmed.size()} i kø, ${this.registered.size()} ubekreftet)`);
     }
     statusChanged(model) {
         model.collection.remove(model);
