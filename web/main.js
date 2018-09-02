@@ -11,6 +11,5 @@ session.check().then(() => {
     var cfg = Object.assign({}, config);
     cfg.session = session;
     window.app = new App(cfg);
-    const dbname = localStorage.getItem('dbname');
-    window.app.start(dbname);
+    window.app.start();
 });

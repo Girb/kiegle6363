@@ -23,7 +23,10 @@ export default ({ config, db }) => {
     });
     
     api.get('/:id', (req, res) => {
-        db.one('select * from competition where id = $1', req.params.id).then((data) => {
+        db.one(`select c.id, c.title, c.type_id, ct.throws_per_round, ct.number_of_rounds, ct.title as type
+        from competition c
+        INNER JOIN competition_type ct ON c.type_id = ct.id
+        where c.id = $1`, req.params.id).then((data) => {
             res.json(data);
         }).catch((err) => {
             res.status(500).json(err);

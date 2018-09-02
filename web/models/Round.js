@@ -13,4 +13,13 @@ export default class Round extends Backbone.Model {
         const scores = this.throws.map(t => t.score || 0);
         return scores.reduce((a, b) => a + b, 0);
     }
+    secondbest10() {
+        return '';
+    }
+    prog10() {
+        return '';
+    }
+    max10() {
+        return '';
+    }
 }

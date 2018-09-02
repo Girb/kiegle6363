@@ -1,11 +1,10 @@
-import NativeView from 'backbone.nativeview';
+import Backbone from 'backbone';
 
-export default class RegPrognosisView extends NativeView {
+export default class RegPrognosisView extends Backbone.View {
     get className() { return 'prognosis'; }
-    constructor(doc) {
-        super();
-        this.doc = doc;
-        this.listenTo(this.doc, 'change:draft', this.render);
+    initialize(options) {
+        Object.assign(this, options);
+        console.log(this.model);
     }
 
     get template() {
@@ -17,9 +16,9 @@ export default class RegPrognosisView extends NativeView {
                     <th>Maks</th>
                 </tr>
                 <tr>
-                    <td>${this.doc.secondbest10() || '-'}</td>
-                    <td>${this.doc.prog10()}</td>
-                    <td>${this.doc.max10()}</td>
+                    <td>${this.model.secondbest10() || '-'}</td>
+                    <td>${this.model.prog10()}</td>
+                    <td>${this.model.max10()}</td>
                 </tr>
             </table>
         `;

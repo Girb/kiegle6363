@@ -151,9 +151,15 @@ button {
 
 */
 
+.btn {
+  i.material-icons {
+    font-size: 16px; vertical-align: text-top;
+  }
+}
+
 .home {
   .comp {
-    width: 20em; margin: 0 18px 18px 0; display: inline-block; height: 285px;
+    width: 20em; margin: 0 18px 18px 0; display: inline-block; height: 285px; cursor: pointer;
   }
   .newcomp {
     width: 20em; margin: 0 18px 18px 0; display: inline-block; height: 285px; vertical-align: top; 
@@ -170,7 +176,10 @@ button {
 .competition {
   .queue {
     table {
-      td { vertical-align: middle; }
+      td { 
+        vertical-align: middle; 
+        .club { color: #888; }
+      }
       .btn-outline-secondary { color: #ccc; }
       .sumdiv { display: inline-block; }
       .sum {
@@ -196,7 +205,9 @@ button {
     input { width: 160px; }
   }
   table {
-    td { vertical-align: middle; }
+    td { 
+      vertical-align: middle; 
+    }
     margin-top: 24px;
     span { display: inline-block; margin-right: 16px; }
     td.commands { 

@@ -5,12 +5,14 @@ export default class NavBar extends Backbone.View {
     get className() { return 'navbar navbar-expand-lg navbar-dark fixed-top'; }
     initialize(options) {
         Object.assign(this, options);
-        this.listenTo(this.session, 'change:competition', this.render);
         this.$el.empty().append(this.template);
         this.$info = this.$('.info');
     }
-    info(txt) {
-        this.$info.text(txt);
+    update() {
+        this.$info.text(app.comp.get('title'));
+        this.$('#pl').prop('href', `/competition/${app.competitionId()}/participants`);
+        this.$('#cl').prop('href', `/competition/${app.competitionId()}`);
+        this.$('#rl').prop('href', `/competition/${app.competitionId()}/results`);
     }
     get template() {
         return `
@@ -21,13 +23,13 @@ export default class NavBar extends Backbone.View {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/participants">Registrering</a>
+                        <a id="pl" class="nav-link" href="/participants">Registrering</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/competition">Slagning</a>
+                        <a id="cl" class="nav-link" href="/competition">Slagning</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/results">Resultater</a>
+                        <a id="rl" class="nav-link" href="/results">Resultater</a>
                     </li>
                 </ul>
                 <span class="navbar-text ml-auto info">&copy; Kiegleklubben Kniksen</span>
@@ -43,8 +45,8 @@ export default class NavBar extends Backbone.View {
 
 
     render() {
-        
-        this.$el.toggle(!!this.session.get('competition'));
+        //this.$el.empty();
+//        this.$el.toggle(!!app || !!app.comp);
 
         return this;
     }

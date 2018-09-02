@@ -1,7 +1,7 @@
 import BaseView from './BaseView';
 import ScoreboardView from './ScoreboardView';
 import TotalScoreView from './TotalScoreView';
-//import RegPrognosisView from './RegPrognosisView';
+import RegPrognosisView from './RegPrognosisView';
 //import RegOptionsView from './RegOptionsView';
 
 
@@ -30,7 +30,8 @@ export default class RegView extends BaseView {
         this.$el.append(scoreboard.render().$el);
         const totalview = new TotalScoreView({ model: this.model });
         this.$el.append(totalview.render().$el);
-        //const progview = new RegPrognosisView(docmodel);
+        const progview = new RegPrognosisView({ model: this.model });
+        this.$el.append(progview.render().$el);
         //const regopts = new RegOptionsView(docmodel);
         // this.listenTo(regopts, 'start', this.start);
         // this.listenTo(regopts, 'discard', this.discard);

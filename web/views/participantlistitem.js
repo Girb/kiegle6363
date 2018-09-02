@@ -23,7 +23,7 @@ export default class ParticipantListItem extends Backbone.View {
     registerPlayer(e) {
         e.preventDefault();
         const playerid = this.playerSelect.$el.val();
-        this.model.url = app.url(`/competitions/${app.session.get('competition').id}/players/add/${playerid}`);
+        this.model.url = app.url(`/competitions/${app.comp.id}/players/add/${playerid}`);
         this.model.save();
         // .then(() => {
         //     this.model.collection.fetch({ reset: true });
@@ -105,7 +105,7 @@ export default class ParticipantListItem extends Backbone.View {
         this.$el.empty().toggleClass('table-info', this.model.isNew()).append(tmp);
         if (this.model.isNew()) {
             const players = new Players();
-            players.url = `http://localhost:3001/api/competitions/${app.session.get('competition').id}/players/add`;
+            players.url = `http://localhost:3001/api/competitions/${app.comp.id}/players/add`;
             this.playerSelect = new PlayerSelect({ collection: players });
             this.playerSelect.render().$el.appendTo(this.$('.playersel'));
         }
