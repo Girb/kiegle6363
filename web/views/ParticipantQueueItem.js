@@ -40,7 +40,9 @@ export default class ParticipantQueueItem extends Backbone.View {
         this.model.get('rounds').forEach((round) => {
             new SumItem({ round }).render().$el.appendTo(this.$('.rounds'));
         });
-        const newbtn = $('<button/>').addClass('btn btn-primary add').text('Ny runde').appendTo(this.$('.commands'));
+        const newbtn = $('<button/>').addClass('btn btn-primary add').appendTo(this.$('.commands'));
+        newbtn.append('<i class="material-icons">add</i>').appendTo(newbtn);
+        newbtn.append('<span>Ny runde</span>');
         const maxrounds = app.session.get('competition').get('number_of_rounds');
         if (maxrounds > 0) {
             newbtn.prop('disabled', this.model.get('rounds').length >= maxrounds);

@@ -8,11 +8,18 @@ export default class CompetitionItem extends Backbone.View {
     }
     get events() {
         return {
-            'click .go': 'go'
+            'click .go': 'go',
+            'click *': 'go2'
         };
+    }
+    go2(e) {
+        e.preventDefault();
+        app.session.set('competition', this.model);        
+        app.navigate('/participants', { trigger: true });
     }
     go(e) {
         e.preventDefault();
+        e.stopPropagation();
         app.session.set('competition', this.model);
         //app.navigate('/participants', { trigger: true });
     }

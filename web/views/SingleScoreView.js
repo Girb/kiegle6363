@@ -31,7 +31,7 @@ export default class SingleScoreView extends Backbone.View {
             .focus();
     }
     kd(e) {
-        if ([37, 39, 46].indexOf(e.keyCode) !== -1 || (e.keyCode > 47 && e.keyCode < 58)) {
+        if ([37, 39, 46].indexOf(e.keyCode) !== -1 || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) {
             if (e.keyCode === 46) {
                 this.$el.text('-'); 
             } else if (e.keyCode === 37) {
@@ -43,7 +43,8 @@ export default class SingleScoreView extends Backbone.View {
                 this.trigger('focus:next', this);
                 return true;
             } else {
-                this.$el.text(String.fromCharCode(e.which));
+                const numpadmodifier = e.keyCode >= 96 ? 48 : 0;
+                this.$el.text(String.fromCharCode(e.which - numpadmodifier));
             }
             
             this.throw.score = this.get();

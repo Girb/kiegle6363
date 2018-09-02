@@ -12,6 +12,16 @@ export default ({ config, db }) => {
         });
     });
 
+    api.post('/new', (req, res) => {
+        db.one('INSERT INTO competition (title, type_id) VALUES ($1, $2) RETURNING id', [req.body.title, req.body.type_id]).then(id => (
+            res.json({
+                id,
+                title: req.body.title,
+                type_id: req.body.type_id,
+            })
+        ));
+    });
+    
     api.get('/:id', (req, res) => {
         db.one('select * from competition where id = $1', req.params.id).then((data) => {
             res.json(data);
@@ -25,7 +35,7 @@ export default ({ config, db }) => {
                 where competition_id = $1 AND status_id = $2 order by sort_order ASC;`, [req.params.id, req.params.status]).then((data) => {
             res.json(data);
         });
-    });
+    }); 
 
     api.get('/:id/players', (req, res) => {
         db.any('select * from player where id IN (select player_id from participant where competition_id = $1)', req.params.id).then((data) => {
@@ -87,7 +97,8 @@ export default ({ config, db }) => {
                         inner join player pl on p.player_id = pl.id
                         inner join club cl on pl.club_id = cl.id
                         where p.status_id = 1 and p.competition_id = $1
-                        group by p.id, pl.id, cl.id`, req.params.id),
+                        group by p.id, pl.id, cl.id
+                        order by p.sort_order`, req.params.id),
             t.any(`select r.id, r.participant_id, sum(t.score)
                         from round r
                         inner join throw t on t.round_id = r.id

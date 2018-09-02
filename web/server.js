@@ -63,7 +63,7 @@ class Server {
         }));
     }
     static baseUrl() {
-        return 'http://localhost:3001/api';
+        return 'http://10.0.0.104:3001/api';
     }
     static createCORSRequest(method, url) {
         let xhr = new XMLHttpRequest();

@@ -59,6 +59,7 @@ $dropdown-link-color: $gray-100;
 $dropdown-link-hover-bg: $blue;
 $dropdown-link-hover-color: $white;
 
+$input-border-color: rgba(0,0,0,.2);
 
 
 
@@ -113,7 +114,7 @@ $dropdown-link-hover-color: $white;
   font-feature-settings: 'liga';
 }
 
-body { padding: 80px 1rem; }
+body { padding: 80px 0; }
 
 .navbar-dark { background-color: $gray-800; }
 
@@ -152,7 +153,17 @@ button {
 
 .home {
   .comp {
-    width: 20em; margin: 0 18px 18px 0; display: inline-block;
+    width: 20em; margin: 0 18px 18px 0; display: inline-block; height: 285px;
+  }
+  .newcomp {
+    width: 20em; margin: 0 18px 18px 0; display: inline-block; height: 285px; vertical-align: top; 
+    .addimg { 
+      text-align: center; height: 100%; cursor: pointer; background-color: #20c997;
+      &:before { content: '+'; font-size: 224px; line-height: 1; font-weight: bold; color: white; }
+    }
+    form {
+      padding: 16px;
+    }
   }
 }
 
