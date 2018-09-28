@@ -49,7 +49,7 @@ export default class ParticipantsView extends BaseView {
     render() {
         this.$el.empty();
         
-        $('<h1/>').text('Deltagere').appendTo(this.$el);
+        $('<h1/>').text('Påmeldte slagere').appendTo(this.$el);
         const fg = $('<fieldgroup/>').appendTo(this.$el);
         this.radio(0, 'Påmeldt / ubekreftet', fg);
         this.radio(1, 'Bekreftet', fg);

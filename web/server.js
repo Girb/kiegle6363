@@ -63,7 +63,8 @@ class Server {
         }));
     }
     static baseUrl() {
-        return 'http://172.18.8.41:3001/api';
+        //return 'http://172.18.8.41:3001/api';
+        return 'http://localhost:3001/api';
     }
     static createCORSRequest(method, url) {
         let xhr = new XMLHttpRequest();

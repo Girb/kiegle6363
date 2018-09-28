@@ -118,14 +118,7 @@ class App extends Backbone.Router {
     }
 
     competitionId() {
-        const r = this.current();
-        if( r.route && r.route.toLowerCase() === 'competition' ) {
-            if( r.params.length && !isNaN(r.params[0]) ) {
-                return r.params[0];
-            }
-        }
-        console.log('Could not find competitionid');
-        return '';
+        return this.comp.id;
     }
 
     current() {

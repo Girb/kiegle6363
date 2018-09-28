@@ -12,8 +12,6 @@ export default class ParticipantListItem extends Backbone.View {
     }
     get events() {
         return {
-            'click .up': 'moveUp',
-            'click .dn': 'moveDn',
             'click .confirm': 'confirm',
             'click .mnureg': 'registered',
             'click .commitplayer': 'registerPlayer',
@@ -32,14 +30,6 @@ export default class ParticipantListItem extends Backbone.View {
     unregisterPlayer(e) {
         e.preventDefault();
         this.model.destroy();
-    }
-    moveUp() {
-        this.model.moveUp();
-        this.$el.insertBefore(this.$el.prev());
-    }
-    moveDn() {
-        this.model.moveDn();
-        this.$el.insertAfter(this.$el.next());
     }
     confirm() {
         this.model.confirm().then(() => {
@@ -60,8 +50,6 @@ export default class ParticipantListItem extends Backbone.View {
         <td>${this.model.get('email')}</td>
         <td class="commands">
             <div class="btn-group" role="group">
-                <button type="button" class="btn btn-sm btn-secondary up"><i class="material-icons">keyboard_arrow_up</i></button>
-                <button type="button" class="btn btn-sm btn-secondary dn"><i class="material-icons">keyboard_arrow_down</i></button>
                 <button id="more${this.model.get('id')}" type="button" class="btn btn-sm btn-secondary dropdown-toggle more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Valg</button>
                 <div class="dropdown-menu" aria-labelledby="${this.model.get('id')}">
                     <a class="dropdown-item mnureg" href="#">Angre bekreft opmøte</a>

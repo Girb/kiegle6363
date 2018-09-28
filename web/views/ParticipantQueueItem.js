@@ -10,8 +10,19 @@ export default class ParticipantQueueItem extends Backbone.View {
     }
     get events() {
         return {
+            'click .up': 'moveUp',
+            'click .dn': 'moveDn',
             'click .add': 'addRound',
+            'click .complete': 'finished'
         };
+    }
+    moveUp() {
+        this.model.moveUp();
+        this.$el.insertBefore(this.$el.prev());
+    }
+    moveDn() {
+        this.model.moveDn();
+        this.$el.insertAfter(this.$el.next());
     }
     addRound(e) {
         e.preventDefault();
@@ -23,6 +34,14 @@ export default class ParticipantQueueItem extends Backbone.View {
             app.navigate(`/round/${res.id}`, { trigger: true });
         });
     }
+    finished(e) {
+        e.preventDefault();
+        this.model.finished().then(() => {
+            this.$el.hide(50, () => {
+                this.$el.remove();
+            });          
+        });
+    }
     get template() {
         return `
             <td scope="row">
@@ -30,7 +49,12 @@ export default class ParticipantQueueItem extends Backbone.View {
                 <span class="club d-block d-lg-inline-block ml-lg-2">${this.model.club()}</span>
             </td>
             <td class="rounds"></td>
-            <td class="commands"></td>
+            <td class="commands">
+                <button type="button" class="btn btn-sm btn-secondary up"><i class="material-icons">keyboard_arrow_up</i></button>
+                <button type="button" class="btn btn-sm btn-secondary dn"><i class="material-icons">keyboard_arrow_down</i></button>    
+                <button class="btn btn-primary add mr-lg-1">Ny runde</button>
+                <button class="btn btn-outline-success complete">Ferdig</button>
+            </td>
         `;
     }
     roundTemplate(r) {
@@ -43,16 +67,10 @@ export default class ParticipantQueueItem extends Backbone.View {
         this.model.get('rounds').forEach((round) => {
             new SumItem({ round }).render().$el.appendTo(this.$('.rounds'));
         });
-        const newbtn = $('<button/>').addClass('btn btn-primary add mr-lg-1').appendTo(this.$('.commands'));
-        newbtn.append('<i class="material-icons mr-1">add</i>').appendTo(newbtn);
-        newbtn.append('<span class="d-none d-lg-inline-block">Ny runde</span>');
         const maxrounds = app.comp.get('number_of_rounds');
         if (maxrounds > 0) {
-            newbtn.prop('disabled', this.model.get('rounds').length >= maxrounds);
+            this.$('.add').prop('disabled', this.model.get('rounds').length >= maxrounds);
         }
-        const donebtn = $('<button/>').addClass('btn btn-outline-success complete').appendTo(this.$('.commands'));
-        donebtn.append('<span class="d-none d-lg-inline-block">Ferdig</span>');
-        donebtn.append('<i class="material-icons ml-1">check</i>');
         
         return this;
     }

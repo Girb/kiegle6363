@@ -18,6 +18,11 @@ export default class Participant extends Backbone.Model {
             this.set('status_id', 0);
         });
     }
+    finished() {
+        return Server.post(`/participants/${this.get('id')}/status/2`, {}).then((res) => {
+            this.set('status_id', 2);
+        });
+    }
     destroy() {
         this.url = app.url(`/participants/${this.id}`);
         return Backbone.Model.prototype.destroy.apply(this);

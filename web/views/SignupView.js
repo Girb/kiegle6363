@@ -11,7 +11,8 @@ export default class SignupView extends BaseView {
     }
     render() {
         this.$el.empty();
-        var pl = new PlayerList({ collection: this.collection });
+        $('<h1/>').text('Slagere (ikke påmeldte)').appendTo(this.$el);
+        const pl = new PlayerList({ collection: this.collection });
         pl.render().$el.appendTo(this.$el);
         return this;
     }
