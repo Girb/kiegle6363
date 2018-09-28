@@ -9,12 +9,12 @@ export default class Participant extends Backbone.Model {
         this.collection.moveDn(this);
     }
     confirm() {
-        Server.post(`/participants/${this.get('id')}/status/1`, {}).then((res) => {
+        return Server.post(`/participants/${this.get('id')}/status/1`, {}).then((res) => {
             this.set('status_id', 1);
         });
     }
     registered() {
-        Server.post(`/participants/${this.get('id')}/status/0`, {}).then((res) => {
+        return Server.post(`/participants/${this.get('id')}/status/0`, {}).then((res) => {
             this.set('status_id', 0);
         });
     }

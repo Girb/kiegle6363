@@ -42,10 +42,16 @@ export default class ParticipantListItem extends Backbone.View {
         this.$el.insertAfter(this.$el.next());
     }
     confirm() {
-        this.model.confirm();
+        this.model.confirm().then(() => {
+            this.model.collection && this.model.collection.fetch();
+            app.alert(this.model.toString() + ' ble bekreftet', 'success');
+        });
     }
     registered() {
-        this.model.registered();
+        this.model.registered().then(() => {
+            this.model.collection && this.model.collection.fetch();
+            app.alert(this.model.toString() + ' har fått status påmeldt', 'success');
+        });
     }
     get confirmedTemplate() {
         return `

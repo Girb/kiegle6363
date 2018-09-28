@@ -9,6 +9,7 @@ import CompetitionView from './views/CompetitionView';
 import Competition from './models/Competition';
 import Round from './models/Round';
 import RegView from './views/RegView';
+import SignupView from './views/SignupView';
 
 class App extends Backbone.Router {
     initialize(options) {
@@ -21,14 +22,28 @@ class App extends Backbone.Router {
     url(tail) {
         return `${Server.baseUrl()}${tail}`;
     }
+    alert(txt, className) {
+        const ad = $('<div/>')
+            .addClass('alert alert-' + className)
+            .prop('role', 'alert')
+            .html(txt)
+            .hide()
+            .appendTo($('body'))
+            .show(150);
+        setTimeout(() => {
+            ad.hide(100, () => {
+                ad.remove();
+            });
+        }, 3000);
+    }
     get routes() {
         return {
             '': 'home',
             'test': 'test',
             'admin': 'admin',
-            'participants': 'participants',
             'competition': 'competition',
             'competition/:id': 'competition',
+            'competition/:id/signup': 'signup',
             'competition/:id/participants': 'participants',
             'competition/:id/results': 'results',            
             'reg/:id/:count': 'reg',
@@ -82,6 +97,14 @@ class App extends Backbone.Router {
     }
     results() {
         this.$main.empty().append('results');
+    }
+    signup(id) {
+        this.comp = new Competition({ id: id})
+        this.comp.fetch().then( () => {
+            this.$main.empty();
+            const sv = new SignupView();
+            sv.render().$el.appendTo(this.$main);
+        });
     }
     participants(id) {
         this.comp = new Competition({ id: id });

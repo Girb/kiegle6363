@@ -1,0 +1,34 @@
+
+REGISTRERING
+------------
+
+[ Bekreftet ] / [ Ubekreftet ] / [ Ferdig ] [ Legg til ]
+
+Helge Loy			Kniksen		F
+Eivind Sommersten	Kniksen		F
+Håkon Marås			Kniksen		B
+Truls Lien			Kniksen		B
+Ørjan Berg			Kniksen		B
+Anders Sørli		Kniksen		B
+Kjetil Kix			Kniksen		B
+Herman Brandt		Kniksen		U
+Fredrik Gisholt		Kniksen		U
+
+
+
+SLAGNINGSKØ
+-----------
+
+Håkon Marås			Kniksen			32	33		/\ \/ [Ferdig]
+Truls Lien			Kniksen			14	37		/\ \/ [Ferdig]
+Ørjan Berg			Kniksen			27			/\ \/ [Ferdig]
+Anders Sørli		Kniksen			20			/\ \/ [Ferdig]
+Kjetil Kix			Kniksen						/\ \/ [Ikke møtt]
+
+
+
+RESULTATER
+----------
+
+Håkon Marås		Kniksen		65
+Truls Lien		Kniksen		51

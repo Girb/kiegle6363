@@ -5,6 +5,7 @@ import stages from './stages';
 import participants from './participants';
 import rounds from './rounds';
 import throws from './throws';
+import players from './players';
 
 export default ({ config, db }) => {
     const api = Router();
@@ -27,6 +28,7 @@ export default ({ config, db }) => {
     api.use('/participants', participants({ config, db }));
     api.use('/rounds', rounds({ config, db }));
     api.use('/throws', throws({ config, db }));
+    api.use('/players', players({ config, db }));
 
     return api;
 };

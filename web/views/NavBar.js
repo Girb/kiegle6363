@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Backbone from 'backbone';
 
 export default class NavBar extends Backbone.View {
@@ -8,8 +9,19 @@ export default class NavBar extends Backbone.View {
         this.$el.empty().append(this.template);
         this.$info = this.$('.info');
     }
+    get events() {
+        return {
+            'click .nav-link': 'go'
+        };
+    }
+    go(e) {
+        e.preventDefault();
+        const url = `/competition/${app.competitionId() + $(e.currentTarget).prop('href')}`;
+        app.navigate(url, { trigger: true, replace: false });
+    }
     update() {
         this.$info.text(app.comp.get('title'));
+        this.$('#sl').prop('href', `/competition/${app.competitionId()}/signup`);
         this.$('#pl').prop('href', `/competition/${app.competitionId()}/participants`);
         this.$('#cl').prop('href', `/competition/${app.competitionId()}`);
         this.$('#rl').prop('href', `/competition/${app.competitionId()}/results`);
@@ -22,6 +34,9 @@ export default class NavBar extends Backbone.View {
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a id="sl" class="nav-link" href="/signup">Påmelding</a>
+                    </li>
                     <li class="nav-item">
                         <a id="pl" class="nav-link" href="/participants">Registrering</a>
                     </li>
