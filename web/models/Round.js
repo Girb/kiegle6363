@@ -2,7 +2,7 @@ import Backbone from 'backbone';
 
 export default class Round extends Backbone.Model {
     playerName() {
-        return `${this.get('firstname')  } ${  this.get('lastname')}`;
+        return `${this.get('firstname')} ${this.get('lastname')}`;
     }
 
     get throws() {
@@ -13,13 +13,18 @@ export default class Round extends Backbone.Model {
         const scores = this.throws.map(t => t.score || 0);
         return scores.reduce((a, b) => a + b, 0);
     }
+    avg() {
+        const thrown = this.throws.filter(t => t.score !== null);
+        return (this.sum() / thrown.length).toFixed(2);
+    }
     secondbest10() {
         return '';
     }
-    prog10() {
-        return '';
+    prog() {
+        return (this.avg() * this.throws.length).toFixed(0);
     }
-    max10() {
-        return '';
+    max() {
+        const left = this.throws.filter(t => t.score === null).length;
+        return this.sum() + (9 * left);
     }
 }

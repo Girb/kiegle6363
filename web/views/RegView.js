@@ -22,6 +22,20 @@ export default class RegView extends BaseView {
     }
     discard() {
     }
+    get events() {
+        return {
+            'click .done': 'done'
+        };
+    }
+    done(e) {
+        e.preventDefault();
+        if( app.comp ) {
+            const url = `/competition/${app.competitionId()}/queue`;
+            app.navigate(url, { trigger: true, replace: false });
+        } else {
+            window.history.back();
+        }
+    }
     render() {
         this.$el.empty().append(this.template);
         this.$('#info .sname').text(`${this.model.playerName()}`);
@@ -32,6 +46,13 @@ export default class RegView extends BaseView {
         this.$el.append(totalview.render().$el);
         const progview = new RegPrognosisView({ model: this.model });
         this.$el.append(progview.render().$el);
+
+        $('<button/>')
+            .prop('type', 'button')
+            .addClass('btn btn-success done btn-lg mt-5')
+            .html('&lt; Ferdig / tilbake')
+            .appendTo(this.$el);
+
         //const regopts = new RegOptionsView(docmodel);
         // this.listenTo(regopts, 'start', this.start);
         // this.listenTo(regopts, 'discard', this.discard);

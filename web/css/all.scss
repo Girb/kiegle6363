@@ -159,6 +159,9 @@ button {
 .alert {
   display: inline-block; position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
 }
+.modal {
+  color: #333;
+}
 
 .btn {
   i.material-icons {
@@ -237,7 +240,7 @@ button {
 }
 
 .reg {
-  background-color: #212121;
+  background-color: #212121; text-align: center;
   #info {
     padding: 8px 0 0 0; font-size: 5vw; margin-bottom: 8px; color: #aaa; text-align: center;
     .sheader { text-transform: uppercase; font-weight: bold; font-size: 8vw; }
@@ -245,7 +248,7 @@ button {
   .prognosis {
     color: #888; text-transform: uppercase; padding: 8px; text-align: center;
     table { width: 100%; }
-    td { width: 33.333%; }
+    td { width: 33.333%; font-size: 1.5rem; }
     .prog,.max { flex-grow: 3; display: inline-block; }
     .prog { text-align: left; }
     .max { text-align: right; }

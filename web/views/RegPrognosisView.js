@@ -4,21 +4,21 @@ export default class RegPrognosisView extends Backbone.View {
     get className() { return 'prognosis'; }
     initialize(options) {
         Object.assign(this, options);
-        console.log(this.model);
+        this.listenTo(this.model, 'change', this.render);
     }
 
     get template() {
         return `
             <table>
                 <tr>
-                    <th>Må slå</th>
+                    <th>Snitt</th>
                     <th>Prognose</th>
                     <th>Maks</th>
                 </tr>
                 <tr>
-                    <td>${this.model.secondbest10() || '-'}</td>
-                    <td>${this.model.prog10()}</td>
-                    <td>${this.model.max10()}</td>
+                    <td>${this.model.avg()}</td>
+                    <td>${this.model.prog()}</td>
+                    <td>${this.model.max()}</td>
                 </tr>
             </table>
         `;

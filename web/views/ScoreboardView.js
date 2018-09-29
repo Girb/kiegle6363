@@ -41,6 +41,7 @@ export default class ScoreboardView extends Backbone.View {
             this.items.push(ss);
             this.listenTo(ss, 'change:value', (sx) => {
                 this.focusNext(sx);
+                this.model.trigger('change');
                 // this.sum();
             });
             this.$el.append(ss.render().$el);

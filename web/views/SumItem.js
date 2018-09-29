@@ -28,12 +28,18 @@ export default class SumItem extends Backbone.View {
     }
     render() {
         this.$el.empty();
+        // const throwspr = app.comp.throws_per_round;
+        
+        // if (this.round.throws.length < throwspr) {
+        //     txt += '*';
+        // }
+        let txt = this.round.sum || '0';
         $('<button />')
             .addClass('btn btn-outline-secondary dropdown-toggle sum')
             .attr('data-toggle', 'dropdown')
             .attr('aria-haspopup', true)
             .attr('aria-expanded', false)
-            .text(this.round.sum)
+            .text(txt)
             .appendTo(this.$el);
         
         return this;
