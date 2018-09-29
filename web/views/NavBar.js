@@ -11,20 +11,24 @@ export default class NavBar extends Backbone.View {
     }
     get events() {
         return {
-            'click .nav-link': 'go'
+            'click .nav-link': 'go',
         };
     }
     go(e) {
         e.preventDefault();
-        const url = `/competition/${app.competitionId() + $(e.currentTarget).prop('href')}`;
+        const t = $(e.currentTarget);
+        const url = `/competition/${app.competitionId() + t.prop('href')}`;
         app.navigate(url, { trigger: true, replace: false });
     }
     update() {
-        this.$info.text(app.comp.get('title'));
-        this.$('#sl').prop('href', `/competition/${app.competitionId()}/signup`);
-        this.$('#pl').prop('href', `/competition/${app.competitionId()}/participants`);
-        this.$('#cl').prop('href', `/competition/${app.competitionId()}`);
-        this.$('#rl').prop('href', `/competition/${app.competitionId()}/results`);
+        if( app.comp ) {
+            this.$info.text(app.comp.get('title'));
+            this.$('#sl').prop('href', `/competition/${app.competitionId()}/signup`);
+            this.$('#pl').prop('href', `/competition/${app.competitionId()}/participants`);
+            this.$('#cl').prop('href', `/competition/${app.competitionId()}/queue`);
+            this.$('#rl').prop('href', `/competition/${app.competitionId()}/results`);
+        }
+        this.$('ul.navbar-nav').toggle(!!app.comp);
     }
     get template() {
         return `
@@ -34,16 +38,16 @@ export default class NavBar extends Backbone.View {
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
+                    <li class="nav-item su">
                         <a id="sl" class="nav-link" href="/signup">Påmelding</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item pa">
                         <a id="pl" class="nav-link" href="/participants">Registrering</a>
                     </li>
-                    <li class="nav-item">
-                        <a id="cl" class="nav-link" href="/competition">Slagning</a>
+                    <li class="nav-item co">
+                        <a id="cl" class="nav-link" href="/queue">Slagning</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item re">
                         <a id="rl" class="nav-link" href="/results">Resultater</a>
                     </li>
                 </ul>
@@ -52,17 +56,16 @@ export default class NavBar extends Backbone.View {
             
         `;
     }
-    get events() {
-        return {
-            'click .addparticipant': 'add'
-        };
-    }
-
-
     render() {
-        //this.$el.empty();
-//        this.$el.toggle(!!app || !!app.comp);
-
+        this.$('.nav-item').removeClass('active');
+        const f = Backbone.history.fragment;
+        if (f) {
+            if (f.indexOf('signup') !== -1) this.$('.su').addClass('active');
+            if (f.indexOf('participants') !== -1) this.$('.pa').addClass('active');
+            if (f.indexOf('queue') !== -1) this.$('.co').addClass('active');
+            if (f.indexOf('results') !== -1) this.$('.re').addClass('active');
+        }
+        this.update();
         return this;
     }
 }

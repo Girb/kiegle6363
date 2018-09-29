@@ -1,13 +1,27 @@
-import BaseView from '../BaseView';
+import Backbone from 'backbone';
 
-export default class ModalView extends BaseView {
-    get className() { return 'overlay'; }
+export default class ModalView extends Backbone.View {
+    get className() { return 'modal'; }
+    get attributes() {
+        return {
+            'tabindex': '-1',
+            'role': 'dialog'
+        }
+    }
     get template() {
         return `
-            <div class="modal">
-                <div class="header">${this.title}</div>
-                <div class="content"></div>
-                <div class="footer"></div>
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">${this.title}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">${this.content}</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary ok">Lagre</button>
+                        <button type="button" class="btn btn-secondary cancel">Avbryt</button>
+                    </div>
+                </div>
             </div>     
         `;
     }
@@ -19,29 +33,14 @@ export default class ModalView extends BaseView {
         };
     }
     show() {
-        document.body.style.overflow = 'hidden';
-        document.body.appendChild(this.el);
+        return this.$el.modal();        
     }
     close() {
-        document.body.style.overflow = 'auto';
-        this.el.removeEventListener('click', this.close.bind(this));
-        document.body.removeChild(this.el);
+        return this.$el.modal('hide').modal('dispose');
     }
     render() {
-        this.el.addEventListener('click', (e) => {
-            if (e.target.id === 'overlay') {
-                this.close();
-            }
-        });
-        this.el.setAttribute('id', 'overlay');
-        this.el.innerHTML = this.template;
-        const mdl = this.one('.modal');
-        mdl.style.width = this.width ? `${this.width}px` : 'auto';
-        mdl.style.height = this.height ? `${this.height}px` : 'auto';
-        this.one('.content').innerHTML = this.content;
-        _.defer(() => {
-            this.one('input').focus();
-        });
+        
+        this.$el.html(this.template);
 
         return this;
     }

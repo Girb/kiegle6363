@@ -146,11 +146,15 @@ form {
 button {
   i { vertical-align: text-bottom; font-size: 21px; margin-right: 6px; }
 }
-.navbar {
-  
-}
 
 */
+.navbar {
+  .info {
+    text-transform: uppercase; font-size: 1rem; color: #fff;
+  }    
+}
+
+
 
 .alert {
   display: inline-block; position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);

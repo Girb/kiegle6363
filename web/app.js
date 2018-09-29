@@ -1,4 +1,5 @@
 import 'bootstrap';
+import $ from 'jquery';
 import Backbone from 'backbone';
 import NavBar from './views/NavBar';
 import ParticipantsView from './views/ParticipantsView';
@@ -15,9 +16,13 @@ class App extends Backbone.Router {
     initialize(options) {
         Object.assign(this, options);
         const body = $('body');
-        this.navbar = new NavBar();
-        this.navbar.render().$el.appendTo(body);
-        this.$main = $('<div/>').prop('id', 'main').appendTo(body);        
+        this.$navbar = $('<nav/>').addClass('navbar navbar-expand-lg navbar-dark fixed-top').prependTo(body);
+        this.$main = $('<div/>').prop('id', 'main').appendTo(body);
+    }
+    execute(callback, args ) {
+        Backbone.Router.prototype.execute.apply(this, arguments);
+        this.navbar = new NavBar({ el: this.$navbar });
+        this.navbar.render();
     }
     url(tail) {
         return `${Server.baseUrl()}${tail}`;
@@ -43,6 +48,7 @@ class App extends Backbone.Router {
             'admin': 'admin',
             'competition': 'competition',
             'competition/:id': 'competition',
+            'competition/:id/queue': 'competition',
             'competition/:id/signup': 'signup',
             'competition/:id/participants': 'participants',
             'competition/:id/results': 'results',            
@@ -71,6 +77,7 @@ class App extends Backbone.Router {
     //     }
     // }
     home() {
+        delete this.comp;
         this.$main.empty();
         const hv = new HomeView();
         hv.render().$el.appendTo(this.$main);                        

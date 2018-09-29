@@ -15,7 +15,7 @@ export default class CompetitionItem extends Backbone.View {
     go2(e) {
         e.preventDefault();
         app.session.set('competition', this.model);        
-        app.navigate(`/competition/${this.model.id}`, { trigger: true });
+        app.navigate(`/competition/${this.model.id}/participants`, { trigger: true });
     }
     go(e) {
         e.preventDefault();

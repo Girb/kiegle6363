@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Backbone from 'backbone';
 import PlayerListItem from './PlayerListItem';
 
@@ -9,7 +10,6 @@ export default class PlayerList extends Backbone.View {
         Object.assign(this, options);
         this.$el.append(this.template);
         $('<input type="search" class="form-control filter" placeholder="Søk..." />').prependTo(this.$el);
-        $('<button class="btn btn-primary add" type="button">Opprett ny slager...</button>').appendTo(this.$el);
         this.listenTo(this.collection, 'add', this.addOne);
         this.listenTo(this.collection, 'reset', this.addAll);
         this.listenTo(this.collection, 'all', _.debounce(this.render, 0));
@@ -18,7 +18,6 @@ export default class PlayerList extends Backbone.View {
     get events() {
         return {
             'input .filter': 'filterRows',
-            'click .add': 'beginAdd',
         };
     }
     get template() {
