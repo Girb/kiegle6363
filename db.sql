@@ -38,7 +38,6 @@ CREATE TABLE competition (
 INSERT INTO competition (title, type_id) VALUES ('Kongematch 2018', 1);
 INSERT INTO competition (title, type_id) VALUES ('Kongematch 2018', 2);
 INSERT INTO competition (title, type_id) VALUES ('Kongematch 2018', 3);
-INSERT INTO competition (title, type_id) VALUES ('Slagning 22.07.2018', 4);
 
 CREATE TABLE club (
 	id serial PRIMARY KEY,
@@ -46,10 +45,46 @@ CREATE TABLE club (
 );
 
 INSERT INTO club (name) VALUES ('Kniksen');
-INSERT INTO club (name) VALUES ('Satelitten');
-INSERT INTO club (name) VALUES ('Viking');
+INSERT INTO club (name) VALUES ('0-9 united');
+INSERT INTO club (name) VALUES ('B-52');
+INSERT INTO club (name) VALUES ('Balladen');
 INSERT INTO club (name) VALUES ('Baltus');
+INSERT INTO club (name) VALUES ('De Håpefulle');
+INSERT INTO club (name) VALUES ('De Nystemte');
+INSERT INTO club (name) VALUES ('Det Bergenske Selskap');
+INSERT INTO club (name) VALUES ('Dilteren');
+INSERT INTO club (name) VALUES ('Dukk');
+INSERT INTO club (name) VALUES ('Femina');
+INSERT INTO club (name) VALUES ('Femmeren');
 INSERT INTO club (name) VALUES ('Gambrinius');
+INSERT INTO club (name) VALUES ('Gjallahorn');
+INSERT INTO club (name) VALUES ('Gustibus');
+INSERT INTO club (name) VALUES ('H''Andy Cap');
+INSERT INTO club (name) VALUES ('Jr Aour');
+INSERT INTO club (name) VALUES ('KGB');
+INSERT INTO club (name) VALUES ('Kjernen');
+INSERT INTO club (name) VALUES ('Kronerullerne av 1987');
+INSERT INTO club (name) VALUES ('Kuglen');
+INSERT INTO club (name) VALUES ('Ledig av 1988');
+INSERT INTO club (name) VALUES ('Neptun');
+INSERT INTO club (name) VALUES ('Nine Pins');
+INSERT INTO club (name) VALUES ('Outsider');
+INSERT INTO club (name) VALUES ('Rambla');
+INSERT INTO club (name) VALUES ('Renault 92');
+INSERT INTO club (name) VALUES ('Satelitten A');
+INSERT INTO club (name) VALUES ('Satelitten B');
+INSERT INTO club (name) VALUES ('Septim');
+INSERT INTO club (name) VALUES ('Sfinks');
+INSERT INTO club (name) VALUES ('Skaftet');
+INSERT INTO club (name) VALUES ('Skjeivaleisten');
+INSERT INTO club (name) VALUES ('Slagbjørn');
+INSERT INTO club (name) VALUES ('Sub Ligamentaris');
+INSERT INTO club (name) VALUES ('Ulriken');
+INSERT INTO club (name) VALUES ('Vestenfjeldske Kjegleklubb');
+INSERT INTO club (name) VALUES ('Viking');
+INSERT INTO club (name) VALUES ('Young Boys');
+INSERT INTO club (name) VALUES ('z [Annen / ikke oppgitt] z');
+
 
 CREATE TABLE player (
 	id serial PRIMARY KEY,
@@ -75,6 +110,8 @@ INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Axel
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Truls', 'Lien', 'Bien', 'truls.lien@akersolutions.com', 1);
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Andreas', 'Nordgreen', 'Gud', 'andreas.nordgreen@norsildmel.no', 1);
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Håkon', 'Marås', 'Samantha', 'hmaras@broadpark.no', 1);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Anders', 'Sørli', 'Snåttet', 'andsoer@online.no', 1);
+
 
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Jan', 'Sommersten', 'Far', 'jan@sommersten.com', 4);
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Truls', 'sundt', 'Truls', 'trulssundt@online.no', 4);
