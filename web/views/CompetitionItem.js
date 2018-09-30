@@ -14,15 +14,9 @@ export default class CompetitionItem extends Backbone.View {
     }
     go2(e) {
         e.preventDefault();
-        app.session.set('competition', this.model);        
         app.navigate(`/competition/${this.model.id}/participants`, { trigger: true });
     }
-    go(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        app.session.set('competition', this.model);
-        //app.navigate('/participants', { trigger: true });
-    }
+    
     render() {
         this.$el.empty();
         $('<img/>').addClass('card-img-top').prop('src', '../img/bg1.png').appendTo(this.$el);

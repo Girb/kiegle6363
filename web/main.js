@@ -10,6 +10,6 @@ const session = new Session();
 session.check().then(() => {
     var cfg = Object.assign({}, config);
     cfg.session = session;
-    window.app = new App(cfg);
+    window.app = new App({ config: cfg });
     window.app.start();
 });

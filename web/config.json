@@ -1,3 +1,4 @@
 {
-    "beta": true
+    "beta": true,
+    "baseUrl": "http://localhost:3001/api"
 }

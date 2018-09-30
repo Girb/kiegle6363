@@ -19,8 +19,7 @@ export default class ParticipantsView extends BaseView {
         //this.listenTo(this.registered, 'change reset', this.updateInfo);
     }
     updateInfo() {
-        const comp = app.session.get('competition').get('title');
-        app.navbar.info(`${comp} (${this.confirmed.size()} i kø, ${this.registered.size()} ubekreftet)`);
+        
     }
     statusChanged(model) {
         model.collection.remove(model);
