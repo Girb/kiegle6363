@@ -1,4 +1,5 @@
 import Backbone from 'backbone';
+import _ from 'underscore';
 import Server from '../server';
 
 export default class Participant extends Backbone.Model {

@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import _ from 'underscore';
 
 export default ({ config, db }) => {
     const api = Router();
@@ -72,6 +73,10 @@ export default ({ config, db }) => {
         });
     });
 
+    api.get('/:id/results/kvp', (req, res) => {
+        db.any('')        
+    });
+
     function participant(roundrow) {
         return { 
             participant_id: roundrow.participant_id, 
@@ -90,6 +95,17 @@ export default ({ config, db }) => {
             status_id: roundrow.status_id,
             sum: roundrow.throws.reduce((a, b) => a + b, 0),
         };
+    }
+
+    function best2(p) {
+        const rounds = _.sortBy(p.rounds, r=> -parseInt(r.sum || 0));
+        const rx = rounds.map(r=>parseInt(r.sum || 0));
+        if( rx.length > 1 ) return [rx[0], rx[1]];
+        if( rx.length === 1 ) return [rx[0]];
+        return [];
+    }
+    function best2sum(p) {
+        return best2(p).reduce((x,b) => x+b,0);
     }
     
     api.get('/:id/rounds', (req, res) => {
@@ -113,6 +129,8 @@ export default ({ config, db }) => {
             data[0].forEach((p) => {
                 const px = p;
                 px.rounds = data[1].filter(r => r.participant_id === p.id);
+                px.best2 = best2(px);
+                px.best2sum = best2sum(px);
                 ret.push(px);
             });
             res.json(ret);

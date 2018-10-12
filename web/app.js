@@ -11,6 +11,7 @@ import Competition from './models/Competition';
 import Round from './models/Round';
 import RegView from './views/RegView';
 import SignupView from './views/SignupView';
+import KVPResultsView from './views/KVPResultsView';
 
 class App extends Backbone.Router {
     initialize(options) {
@@ -102,8 +103,14 @@ class App extends Backbone.Router {
             cv.render().$el.appendTo(this.$main);
         });
     }
-    results() {
-        this.$main.empty().append('results');
+    results(id) {
+        this.comp = new Competition({ id: id });
+        this.comp.fetch().then( () => {
+            this.comp.save();
+            this.$main.empty();
+            var rv = new KVPResultsView();
+            rv.render().$el.appendTo(this.$main);
+        });
     }
     signup(id) {
         this.comp = new Competition({ id: id})
