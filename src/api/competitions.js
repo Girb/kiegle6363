@@ -115,9 +115,9 @@ export default ({ config, db }) => {
                         left outer join round r on r.participant_id = p.id
                         inner join player pl on p.player_id = pl.id
                         inner join club cl on pl.club_id = cl.id
-                        where p.status_id = 1 and p.competition_id = $1
+                        where p.status_id IN ($2:csv) and p.competition_id = $1
                         group by p.id, pl.id, cl.id
-                        order by p.sort_order`, req.params.id),
+                        order by p.sort_order`, [req.params.id, [1, 2]]),
             t.any(`select r.id, r.participant_id, sum(t.score)
                         from round r
                         inner join throw t on t.round_id = r.id
