@@ -313,10 +313,11 @@ ul.bb {
 }
 
 .publicqueue {
-  font-size: 4vh; padding: 16px; overflow: hidden; background-color: #222;
+  font-size: 3.75vh; padding: 16px; overflow: hidden; background-color: #222;
   .bgcontainer { position: fixed; left: 0; right: 0; top: 0; bottom: 0; }
   table {
-    width: 100%;
+    margin: 0 auto;
+    td { padding-right: 5vw; }
   }
   .circle {
     position: absolute;

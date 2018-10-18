@@ -38,23 +38,44 @@ export default class Participant extends Backbone.Model {
         return this.get('club');
     }
     queueStatus() {
-        if( this.collection ) {
-            if( this.inRound() ) {
+        if (this.collection) {
+            if (this.inRound() || this.get('rounds').length) {
                 return 'PÅGÅR';
-            } else if( this.collection.indexOf(this) < 4 ) {
-                return 'NESTE';
-            }
+            } 
         }
         return '';
     }
     inRound() {
         let inr = false;
         const throwsPrRound = app.comp.get('throws_per_round');
-        this.get('rounds').forEach(r=> {
+        this.get('rounds').forEach((r) => {
             const c = parseInt(r.count);
             inr = inr || (c < throwsPrRound);
         });
         return inr;
     }
-
+    isStarted() {
+        const numRounds = app.comp.get('number_of_rounds'),
+            rounds = this.get('rounds');
+        return (rounds.length > 0 && rounds.length < numRounds) || this.inRound();
+    }
+    isNextUp() {
+        const nextTwo = [];
+        this.collection.each((p) => {
+            if (p.isStarted() && nextTwo.length < 2) {
+                nextTwo.push(p);
+            }
+        });
+        return nextTwo.indexOf(this) !== -1;
+    }
+    isFinished() {
+        const numRounds = app.comp.get('number_of_rounds'),
+            rounds = this.get('rounds');
+        return (rounds.length === numRounds) && !this.inRound();
+    }
+    minsUntil() {
+        const idx = this.collection.indexOf(this);
+        const min = ((idx % 2 === 1) ? ((idx - 1) * 1.5) : idx * 1.5) - 3;
+        return min;
+    }
 }
