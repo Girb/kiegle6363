@@ -9,7 +9,7 @@ export default class ParticipantQueue extends Backbone.View {
         Object.assign(this, options);
         this.$el.append(this.template);
         this.collection = new Participants();
-        this.collection.url = app.url(`/competitions/${this.model.id}/rounds`);
+        this.collection.url = app.url(`/competitions/${this.model.id}/rounds/1`);
         this.listenTo(this.collection, 'reset', this.addAll);
         this.listenTo(this.collection, 'add', this.addOne);
         this.listenTo(this.collection, 'all', _.debounce(this.render, 0));

@@ -35,7 +35,8 @@ export default class ScoreboardView extends Backbone.View {
 
         this.items = [];
         for (let i = 0; i < throws.length; i += 1) {
-            const ss = new SingleScoreView({ throw: throws[i], round: this.model });
+            const sep = (i === 4 && this.model.get('competition_type') === 5); // separator after 5 for dronningaften
+            const ss = new SingleScoreView({ throw: throws[i], round: this.model, separator: sep });
             this.listenTo(ss, 'focus:next', this.focusNext);
             this.listenTo(ss, 'focus:prev', this.focusPrev);
             this.items.push(ss);

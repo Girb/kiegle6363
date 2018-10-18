@@ -114,7 +114,7 @@ $input-border-color: rgba(0,0,0,.2);
   font-feature-settings: 'liga';
 }
 
-body { padding: 80px 0; }
+body:not(.public) { padding: 80px 0; }
 #main { padding: 1rem; }
 
 .navbar-dark { background-color: $gray-800; }
@@ -272,6 +272,7 @@ button {
   span {
     text-align: center; display: inline-block; padding: 0; margin: 0; flex-grow: 2; cursor: pointer; border: 1px solid transparent;
     &:focus-within { outline: none; box-shadow: 0 0 15px rgba(81, 203, 238, 1); border: 1px solid rgba(81, 203, 238, 1); }
+    &.sep { border-right: solid red 1px; }
   }
 }
 
@@ -310,6 +311,62 @@ ul.bb {
   }
   
 }
+
+.publicqueue {
+  font-size: 4vh; padding: 16px; overflow: hidden; background-color: #222;
+  .bgcontainer { position: fixed; left: 0; right: 0; top: 0; bottom: 0; }
+  table {
+    width: 100%;
+  }
+  .circle {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    transform: translate3d(-50%,-50%,0);
+    transform-origin: center center;
+    opacity: 0.3;
+  }
+}
+
+$circles: 100;
+
+@for $i from 0 through $circles {
+  .circle:nth-child(#{$i}) {
+    width: $i * 20px;
+    height: $i * 1px;
+    z-index: $circles - $i;
+    @if $i % 2 != 0 {
+      border: 1px solid #5387bd;
+      animation: rotating $i * 1s linear infinite;
+    }
+    @else {
+      border: 1px solid darken(#5387bd,10%);
+      animation: rotatingReverse $i * 1s linear infinite;
+    }
+  }
+}
+
+@keyframes rotating {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+@keyframes rotatingReverse {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  100% {
+    transform: rotate(-360deg) scale(1);
+  }
+}
+
+
+
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

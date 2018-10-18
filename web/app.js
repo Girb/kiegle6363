@@ -13,6 +13,8 @@ import RegView from './views/RegView';
 import SignupView from './views/SignupView';
 import KVPResultsView from './views/KVPResultsView';
 
+import Queue from './views/public/Queue';
+
 class App extends Backbone.Router {
     initialize(options) {
         Object.assign(this, options);
@@ -53,8 +55,11 @@ class App extends Backbone.Router {
             'competition/:id/signup': 'signup',
             'competition/:id/participants': 'participants',
             'competition/:id/results': 'results',            
+
+            'competition/:id/public/queue': 'publicQueue',
+            
             'reg/:id/:count': 'reg',
-            'round/:id': 'round'
+            'round/:id': 'round',
         };
     }
     start() { // starts the app
@@ -126,6 +131,14 @@ class App extends Backbone.Router {
             this.$main.empty();
             const pv = new ParticipantsView();
             pv.render().$el.appendTo(this.$main);
+        });
+    }
+    publicQueue(id) {
+        this.comp = new Competition({ id: id });
+        this.comp.fetch().then( () => {
+            $('body').addClass('public').empty();
+            const qv = new Queue({ model: this.comp });
+            qv.render().$el.appendTo($('body'));
         });
     }
     admin() {

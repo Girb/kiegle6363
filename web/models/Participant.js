@@ -37,4 +37,24 @@ export default class Participant extends Backbone.Model {
     club() {
         return this.get('club');
     }
+    queueStatus() {
+        if( this.collection ) {
+            if( this.inRound() ) {
+                return 'PÅGÅR';
+            } else if( this.collection.indexOf(this) < 4 ) {
+                return 'NESTE';
+            }
+        }
+        return '';
+    }
+    inRound() {
+        let inr = false;
+        const throwsPrRound = app.comp.get('throws_per_round');
+        this.get('rounds').forEach(r=> {
+            const c = parseInt(r.count);
+            inr = inr || (c < throwsPrRound);
+        });
+        return inr;
+    }
+
 }

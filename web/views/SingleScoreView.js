@@ -65,6 +65,7 @@ export default class SingleScoreView extends Backbone.View {
         });        
     }
     render() {
+        this.$el.toggleClass('sep', !!this.separator);
         this.$el.text(this.throw.score || '-');
         return this;
     }

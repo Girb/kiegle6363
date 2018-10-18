@@ -13,7 +13,7 @@ export default ({ config, db }) => {
 
     api.get('/:id', (req, res) => {
         db.task(t => t.batch([
-            db.one(`select r.id, r.status_id, p.player_id, pl.firstname, pl.lastname, pl.nickname, pl.email, c.id as club_id, c.name as club, comp.title as competition
+            db.one(`select r.id, r.status_id, p.player_id, pl.firstname, pl.lastname, pl.nickname, pl.email, c.id as club_id, c.name as club, comp.title as competition, comp.type_id as competition_type
                         from round r
                         INNER JOIN participant p ON r.participant_id = p.id
                         INNER JOIN player pl ON p.player_id = pl.id

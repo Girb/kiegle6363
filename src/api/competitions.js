@@ -108,7 +108,7 @@ export default ({ config, db }) => {
         return best2(p).reduce((x,b) => x+b,0);
     }
     
-    api.get('/:id/rounds', (req, res) => {
+    api.get('/:id/rounds/:status?', (req, res) => {
         db.task(t => t.batch([
             t.any(`select p.id, pl.firstname, pl.lastname, pl.nickname, cl.name as club, array_agg(r.id) as round_ids
                         from participant p
@@ -117,8 +117,8 @@ export default ({ config, db }) => {
                         inner join club cl on pl.club_id = cl.id
                         where p.status_id IN ($2:csv) and p.competition_id = $1
                         group by p.id, pl.id, cl.id
-                        order by p.sort_order`, [req.params.id, [1, 2]]),
-            t.any(`select r.id, r.participant_id, sum(t.score)
+                        order by p.sort_order`, [req.params.id, req.params.status || [1, 2]]),
+            t.any(`select r.id, r.participant_id, sum(t.score), count(t.score)
                         from round r
                         inner join throw t on t.round_id = r.id
                         where r.competition_id = $1
