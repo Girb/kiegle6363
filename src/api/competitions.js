@@ -118,7 +118,7 @@ export default ({ config, db }) => {
                         where p.status_id IN ($2:csv) and p.competition_id = $1
                         group by p.id, pl.id, cl.id
                         order by p.sort_order`, [req.params.id, req.params.status || [1, 2]]),
-            t.any(`select r.id, r.participant_id, sum(t.score), count(t.score)
+            t.any(`select r.id, r.participant_id, sum(t.score), count(t.score), array_agg(score order by t.id) as throws
                         from round r
                         inner join throw t on t.round_id = r.id
                         where r.competition_id = $1

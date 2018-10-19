@@ -78,4 +78,12 @@ export default class Participant extends Backbone.Model {
         const min = ((idx % 2 === 1) ? ((idx - 1) * 1.5) : idx * 1.5) - 3;
         return min;
     }
+    lastRoundThrows() {
+        const rounds = this.get('rounds');
+        if (rounds && rounds.length) {
+            const lastround = rounds[rounds.length - 1];
+            return lastround.throws.filter(t=>t).join('');
+        }
+        return [];        
+    }
 }

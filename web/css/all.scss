@@ -345,7 +345,18 @@ ul.bb {
   }
   table {
     margin: 0 auto;
-    td { padding-right: 5vw; }
+    td { 
+      padding-right: 5vw; 
+      span.last { 
+        opacity: .5; animation: zoomin 1s linear 0s infinite; transform-origin: center; display: inline-block; animation-fill-mode: forwards;  
+        &.current { opacity: 1; }
+      }
+      .score {
+        font-size: 2.5vh; font-family: sa-digital-number; color: #e6ffac; text-shadow: 0 0 12px #87f324, 0 0 18px #288903; vertical-align: middle;
+      }
+      .sum { margin-right: 1em; opacity: .5; }
+    }
+    tr.inround td span.last { opacity: 1; }
   }
  }
 
@@ -395,7 +406,16 @@ $circles: 100;
 @keyframes blink {
   50% {
     opacity: 0;
-  }
+  } 
+} 
+
+@keyframes zoomin {
+  // 0% {
+  //   opacity: .25;
+  // }
+  // 50% { opacity: 1; }
+  // 100% { opacity: .25; }
+
 }
 
 input::-webkit-outer-spin-button,

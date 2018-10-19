@@ -17,19 +17,29 @@ export default class ResultsList extends Backbone.View {
             this.collection.fetch();
         }, 5000);
     }
-
     redraw() {
         const tbl = this.$('table').empty();
         let cnt = 0;
         for (let i = 0; i < this.collection.length; i += 1) {
-            const r = this.collection.at(i);
+            const r = this.collection.at(i),
+                inRound = r.inRound();
             const sum = r.get('best2sum');
             if (sum) {
-                const tr = $('<tr/>').addClass(r.inRound() ? 'blinking yellow' : '').appendTo(tbl);
+                const tr = $('<tr/>').appendTo(tbl);
                 $('<td/>').html(i + 1).appendTo(tr);
-                $('<td/>').html(r.name()).appendTo(tr);
-                $('<td/>').html(r.club()).appendTo(tr);
-                $('<td/>').html(r.get('best2sum')).appendTo(tr);
+                $('<td/>').addClass(inRound ? 'blinking yellow' : '').html(r.name()).appendTo(tr);
+                $('<td/>').addClass(inRound ? 'blinking yellow' : '').html(r.club()).appendTo(tr);
+                $('<td/>').addClass(inRound ? 'blinking yellow' : '').html(r.get('best2sum')).appendTo(tr);
+                if (inRound) {
+                    const bestRound = Math.max.apply(null, r.get('best2'));
+                    $('<td/>').html(`<span class="score sum">${`${bestRound}</span><span class="score current">${r.lastRoundThrows()}`}</span>` || '').appendTo(tr);
+                } else {
+                    let b2td = $('<td/>').appendTo(tr);
+                    r.get('best2').forEach((b) => {
+                        $('<span/>').addClass('score sum').text(b).appendTo(b2td);
+                    });
+                }
+                
                 cnt += 1;
                 if (cnt === 16) break;
             }
@@ -39,7 +49,7 @@ export default class ResultsList extends Backbone.View {
     render() {
         this.$el.empty();
         const c = $('<div/>').addClass('bgcontainer').appendTo(this.$el);
-        for (let i = 1; i < 400; i++) {
+        for (let i = 1; i < 400; i += 1) {
             $('<div/>').addClass('circle').appendTo(c);
         }
         $('<table/>').appendTo(this.$el);
