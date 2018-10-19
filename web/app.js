@@ -14,6 +14,7 @@ import SignupView from './views/SignupView';
 import KVPResultsView from './views/KVPResultsView';
 
 import Queue from './views/public/Queue';
+import ResultsList from './views/public/ResultsList';
 
 class App extends Backbone.Router {
     initialize(options) {
@@ -22,7 +23,7 @@ class App extends Backbone.Router {
         this.$navbar = $('<nav/>').addClass('navbar navbar-expand-lg navbar-dark fixed-top').prependTo(body);
         this.$main = $('<div/>').prop('id', 'main').appendTo(body);
     }
-    execute(callback, args ) {
+    execute(callback, args) {
         Backbone.Router.prototype.execute.apply(this, arguments);
         this.navbar = new NavBar({ el: this.$navbar });
         this.navbar.render();
@@ -32,7 +33,7 @@ class App extends Backbone.Router {
     }
     alert(txt, className) {
         const ad = $('<div/>')
-            .addClass('alert alert-' + className)
+            .addClass(`alert alert-${  className}`)
             .prop('role', 'alert')
             .html(txt)
             .hide()
@@ -57,6 +58,7 @@ class App extends Backbone.Router {
             'competition/:id/results': 'results',            
 
             'competition/:id/public/queue': 'publicQueue',
+            'competition/:id/public/results': 'publicResults',
             
             'reg/:id/:count': 'reg',
             'round/:id': 'round',
@@ -66,13 +68,13 @@ class App extends Backbone.Router {
         console.log('app starting');
         Backbone.history.start({ pushState: true });
         $(document).on('click', 'a:not([data-bypass]):not(.dropdown-item)', function (evt) {
-            var href = $(this).attr('href');
-            var protocol = this.protocol + '//';
+            let href = $(this).attr('href');
+            let protocol = `${this.protocol  }//`;
             if (href.slice(protocol.length) !== protocol) {
-              evt.preventDefault();
-              app.navigate(href, { trigger: true });
+                evt.preventDefault();
+                app.navigate(href, { trigger: true });
             }
-          });
+        });
     }
     // execute(callback, args) {
     //     if( !this.session.get('competition') ) {
@@ -100,45 +102,53 @@ class App extends Backbone.Router {
         });
     }
     competition(id) {
-        this.comp = new Competition({ id: id });
-        this.comp.fetch().then( () => {
+        this.comp = new Competition({ id });
+        this.comp.fetch().then(() => {
             this.comp.save();
             this.$main.empty();
-            var cv = new CompetitionView();
+            let cv = new CompetitionView();
             cv.render().$el.appendTo(this.$main);
         });
     }
     results(id) {
-        this.comp = new Competition({ id: id });
-        this.comp.fetch().then( () => {
+        this.comp = new Competition({ id });
+        this.comp.fetch().then(() => {
             this.comp.save();
             this.$main.empty();
-            var rv = new KVPResultsView();
+            let rv = new KVPResultsView();
             rv.render().$el.appendTo(this.$main);
         });
     }
     signup(id) {
-        this.comp = new Competition({ id: id})
-        this.comp.fetch().then( () => {
+        this.comp = new Competition({ id });
+        this.comp.fetch().then(() => {
             this.$main.empty();
             const sv = new SignupView();
             sv.render().$el.appendTo(this.$main);
         });
     }
     participants(id) {
-        this.comp = new Competition({ id: id });
-        this.comp.fetch().then( () => {
+        this.comp = new Competition({ id });
+        this.comp.fetch().then(() => {
             this.$main.empty();
             const pv = new ParticipantsView();
             pv.render().$el.appendTo(this.$main);
         });
     }
     publicQueue(id) {
-        this.comp = new Competition({ id: id });
-        this.comp.fetch().then( () => {
+        this.comp = new Competition({ id });
+        this.comp.fetch().then(() => {
             $('body').addClass('public').empty();
             const qv = new Queue({ model: this.comp });
             qv.render().$el.appendTo($('body'));
+        });
+    }
+    publicResults(id) {
+        this.comp = new Competition({ id });
+        this.comp.fetch().then(() => {
+            $('body').addClass('public').empty();
+            const rl = new ResultsList({ model: this.comp });
+            rl.render().$el.appendTo($('body'));
         });
     }
     admin() {
@@ -149,14 +159,14 @@ class App extends Backbone.Router {
     }
 
     current() {
-        var router = this,
+        let router = this,
             fragment = Backbone.history.fragment,
             routes = _.pairs(router.routes),
             route = null, 
             params = null, 
             matched;
 
-        matched = _.find(routes, function (handler) {
+        matched = _.find(routes, (handler) => {
             route = _.isRegExp(handler[0]) ? handler[0] : router._routeToRegExp(handler[0]);
             return route.test(fragment);
         });
@@ -169,9 +179,9 @@ class App extends Backbone.Router {
         }
 
         return {
-            route: route,
-            fragment: fragment,
-            params: params
+            route,
+            fragment,
+            params,
         };
     }
 }

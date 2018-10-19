@@ -12,7 +12,7 @@ export default class Queue extends Backbone.View {
         this.collection.fetch();
         setInterval(() => {
             this.collection.fetch();
-        }, 4000);
+        }, 5000);
     }
 
     redraw() {

@@ -33,4 +33,7 @@ export default class Competition extends Backbone.Model {
         } 
         return `${this.get('number_of_rounds')} X ${this.get('throws_per_round')}`;
     }
+    get statusForResults() {
+        return this.get('number_of_rounds') !== -1 ? 2 : ''; // defaults to 1+2 on server
+    }
 }
