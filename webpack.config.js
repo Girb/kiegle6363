@@ -6,7 +6,7 @@ module.exports = {
         'babel-polyfill',
         './web/css/all.scss',
         './web/main',
-        'webpack-dev-server/client?http://0.0.0.0:3000',
+        'webpack-dev-server/client?http://0.0.0.0:6363',
     ],
     output: {
         publicPath: '/',
@@ -64,7 +64,7 @@ module.exports = {
     ],
     devServer: {
         contentBase: './web',
-        port: 3000,
+        port: 6363,
         host: '0.0.0.0',
         historyApiFallback: true,
     },

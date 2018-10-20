@@ -325,12 +325,14 @@ ul.bb {
   .circle {
     position: absolute;
     top: 50%;
-    left: 0;
+    left: 3%;
     border-radius: 50%;
+    border-width: 8px !important;
     overflow: hidden;
     transform: translate3d(-50%,-50%,0);
     transform-origin: center center;
-    opacity: 0.3;
+    opacity: .07;
+    background: linear-gradient(to bottom, rgba(83, 135, 204, 1), rgba(83, 135, 204, 0));
   }
 }
 
@@ -354,7 +356,8 @@ ul.bb {
       .score {
         font-size: 2.5vh; font-family: sa-digital-number; color: #e6ffac; text-shadow: 0 0 12px #87f324, 0 0 18px #288903; vertical-align: middle;
       }
-      .sum { margin-right: 1em; opacity: .5; }
+      .sum { margin-right: 1em; opacity: .5; background-color: black; border: 1px solid #555; padding: 0 3px; }
+      .current { min-width: 8.6em; background-color: black; border: 1px solid #555; display: inline-block; }
     }
     tr.inround td span.last { opacity: 1; }
   }
@@ -364,16 +367,16 @@ $circles: 100;
 
 @for $i from 0 through $circles {
   .circle:nth-child(#{$i}) {
-    width: $i * 20px;
-    height: $i * 1px;
+    width: $i * 1vw;
+    height: $i * .1vh;
     z-index: $circles - $i;
     @if $i % 2 != 0 {
       border: 1px solid #5387bd;
-      animation: rotating $i * 1s linear infinite;
+      animation: rotating $i * 1.5s linear infinite;
     }
     @else {
       border: 1px solid darken(#5387bd,10%);
-      animation: rotatingReverse $i * 1s linear infinite;
+      animation: rotatingReverse $i * 1.5s linear infinite;
     }
   }
 }
