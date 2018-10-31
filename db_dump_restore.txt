@@ -1,0 +1,3 @@
+pg_dump -f kiegl63_1 -F c -U postgres kiegle63
+
+pg_restore -U postgres -d kiegle63 -1 -c kiegl63_1
