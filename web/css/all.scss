@@ -319,8 +319,8 @@ ul.bb {
   }
   .bgcontainer { position: fixed; left: 0; right: 0; top: 0; bottom: 0; }
   table {
-    margin: 0 auto;
-    td { padding-right: 5vw; }
+    margin: 0 auto; z-index: 999;
+    td { padding-right: 5vw; color: white; }
   }
   .circle {
     position: absolute;
@@ -333,6 +333,11 @@ ul.bb {
     transform-origin: center center;
     opacity: .07;
     background: linear-gradient(to bottom, rgba(83, 135, 204, 1), rgba(83, 135, 204, 0));
+  }
+  #bottom {
+    text-align: right; position: fixed; bottom: 0; left: 0; right: 0; padding-right: 16px;
+    #logo { height: 2.25vh; vertical-align: middle;  }
+
   }
 }
 

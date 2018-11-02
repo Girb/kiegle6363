@@ -6,39 +6,49 @@ export default class Queue extends Backbone.View {
     get className() { return 'publicqueue'; }
     initialize(options) {
         Object.assign(this, options);
+        this.page = 1;
         this.collection = new Participants();
         this.collection.url = app.url(`/competitions/${this.model.id}/rounds/1`);
         this.listenTo(this.collection, 'sync', this.redraw);
         this.collection.fetch();
-        setInterval(() => {
-            this.collection.fetch();
-        }, 5000);
+        setInterval(this.refresh.bind(this), 10000);
+    }
+
+    refresh() {
+        this.$('table').fadeTo(500, 0, () => {
+            this.collection.fetch().then(() => {
+                this.$('table').fadeTo(500, 1);
+            });
+        });
     }
 
     redraw() {
         const tbl = this.$('table').empty();
         let cnt = 0, 
-            minCounter = 0;
-        for (let i = 0; i < this.collection.length; i += 1) {
+            minCounter = 0,
+            start = this.page === 1 ? 0 : 16,
+            length = Math.min(this.collection.length, start + 16);
+            
+        for (let i = start; i < length; i += 1) {
             const p = this.collection.at(i);
             if (!p.isFinished()) { // different from participant-status, this one is derived
                 const tr = $('<tr/>').appendTo(tbl);
-                let qs = '';
+                let qstatus = '';
                 if (p.isStarted()) {
-                    qs = '<span style="color: yellow;">PÅGÅR</span>';
+                    qstatus = '<span style="color: yellow;">PÅGÅR</span>';
                 } else if (p.isNextUp()) {
-                    qs = 'NESTE';
+                    qstatus = 'NESTE';
                 }
                 
-                if (!qs) {
-                    minCounter += 1;
-                    let txt = 'NESTE';
-                    if (minCounter > 2) {
-                        txt = `<span style="color: #aaa">${p.minsUntil()} min</span>`;
-                    }
+                if (!qstatus) {
+                    //minCounter += 1;
+                    // let txt = 'NESTE';
+                    // if (minCounter > 2) {
+                    let txt = `<span style="color: #eee;">${p.minsUntil()} min</span>`;
+                    //}
                     $('<td />').html(txt).appendTo(tr);
                 } else {
-                    $('<td />').html(qs).appendTo(tr);
+                    $('<td />').html(qstatus).appendTo(tr);
                 }
                 $('<td style="text-transform: uppercase;" />').html(p.name()).appendTo(tr);
                 $('<td />').html(p.club()).appendTo(tr);
@@ -46,6 +56,12 @@ export default class Queue extends Backbone.View {
                 if (cnt === 16) break;
             }
         }
+
+        this.page = (this.page === 1) ? 2 : 1;
+    }
+
+    get bottom() {
+        return `<div id="bottom"><img id="logo" src='../../../img/machina_white.png' /></div>`;
     }
 
     render() {
@@ -55,6 +71,8 @@ export default class Queue extends Backbone.View {
             $('<div/>').addClass('circle').appendTo(c);
         }
         const tbl = $('<table/>').appendTo(this.$el);
+        this.$el.append(this.bottom);
+
         return this;
     }
 }

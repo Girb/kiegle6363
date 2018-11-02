@@ -19,7 +19,10 @@ export default class SignupView extends BaseView {
         e.preventDefault();
         const ev = new EditPlayerView();
         this.listenToOnce(ev, 'saved', (player) => {
-            this.collection.add(player);
+            //this.collection.add(player);
+            this.collection.fetch().then(() => {
+                this.$('.add').focus();
+            });
         });
         ev.render().show();
     }

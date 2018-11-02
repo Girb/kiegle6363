@@ -57,6 +57,7 @@ export default class EditPlayerView extends ModalView {
             clubs.forEach((club) => {
                 $('<option />').val(club.id).text(club.name).appendTo(sel);
             });
+            this.$('#firstname').focus();
         });
         return this;
     }

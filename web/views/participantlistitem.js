@@ -47,7 +47,6 @@ export default class ParticipantListItem extends Backbone.View {
         return `
         <td scope="row">${this.model.get('firstname')} ${this.model.get('lastname')}</td>
         <td>${this.model.get('club')}</td>
-        <td>${this.model.get('email')}</td>
         <td class="commands">
             <div class="btn-group" role="group">
                 <button id="more${this.model.get('id')}" type="button" class="btn btn-sm btn-secondary dropdown-toggle more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Valg</button>
@@ -62,7 +61,6 @@ export default class ParticipantListItem extends Backbone.View {
         return `
             <td scope="row">${this.model.get('firstname')} ${this.model.get('lastname')}</td>
             <td>${this.model.get('club')}</td>
-            <td>${this.model.get('email')}</td>
             <td class="commands">
                 <button type="button" class="btn btn-sm btn-secondary confirm">Bekreft oppmøte</button>
                 <button type="button" class="btn btn-sm btn-outline-danger unregister">Meld av</button>

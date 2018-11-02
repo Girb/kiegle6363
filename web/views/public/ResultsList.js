@@ -13,9 +13,14 @@ export default class ResultsList extends Backbone.View {
         this.collection.url = app.url(`/competitions/${app.competitionId()}/rounds/${status}`);
         this.listenTo(this.collection, 'sync', this.redraw);
         this.collection.fetch();
-        setInterval(() => {
-            this.collection.fetch();
-        }, 5000);
+        setInterval(this.refresh.bind(this), 5000);
+    }
+    refresh() {
+        this.$('table').fadeTo(500, 0, () => {
+            this.collection.fetch().then(() => {
+                this.$('table').fadeTo(500, 1);
+            });
+        });
     }
     redraw() {
         const tbl = this.$('table').empty();

@@ -62,7 +62,7 @@ export default class Participant extends Backbone.Model {
     isNextUp() {
         const nextTwo = [];
         this.collection.each((p) => {
-            if (p.isStarted() && nextTwo.length < 2) {
+            if (!p.isStarted() && nextTwo.length < 2) {
                 nextTwo.push(p);
             }
         });
@@ -74,15 +74,19 @@ export default class Participant extends Backbone.Model {
         return (rounds.length === numRounds) && !this.inRound();
     }
     minsUntil() {
+        const ongoingCount = this.collection.filter(p => p.isStarted()).length;
         const idx = this.collection.indexOf(this);
-        const min = ((idx % 2 === 1) ? ((idx - 1) * 1.5) : idx * 1.5) - 3;
+        let min = ((idx % 2 === 1) ? ((idx - 1) * 1.5) : idx * 1.5);
+        if (ongoingCount > 1) {
+            min -= 3;
+        }
         return min;
     }
     lastRoundThrows() {
         const rounds = this.get('rounds');
         if (rounds && rounds.length) {
             const lastround = rounds[rounds.length - 1];
-            return lastround.throws.filter(t=>t).join('');
+            return lastround.throws.filter(t => t).join('');
         }
         return [];        
     }
