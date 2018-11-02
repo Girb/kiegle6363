@@ -16,7 +16,7 @@ INSERT INTO competition_type (id, title, throws_per_round, number_of_rounds) VAL
 INSERT INTO competition_type (id, title, throws_per_round, number_of_rounds) VALUES (2, 'Kongematch (semi)', 5, 2);
 INSERT INTO competition_type (id, title, throws_per_round, number_of_rounds) VALUES (3, 'Kongematch (finale)', 10, 2);
 INSERT INTO competition_type (id, title, throws_per_round, number_of_rounds) VALUES (4, 'Kniksens Vandrepokal', 10, -1);
-INSERT INTO competition_type (id, title, throws_per_round, number_of_rounds) VALUES (5, 'Dronningaften', 5, -1);
+INSERT INTO competition_type (id, title, throws_per_round, number_of_rounds) VALUES (5, 'Dronningaften', 10, -1);
 INSERT INTO competition_type (id, title, throws_per_round, number_of_rounds) VALUES (6, 'Klubb vs Klubb', 10, 2);
 
 CREATE TABLE round_status (
@@ -49,7 +49,7 @@ INSERT INTO club (name) VALUES ('0-9 united');
 INSERT INTO club (name) VALUES ('B-52');
 INSERT INTO club (name) VALUES ('Balladen');
 INSERT INTO club (name) VALUES ('Baltus');
-INSERT INTO club (name) VALUES ('De Håpefulle');
+INSERT INTO club (name) VALUES ('De HÃ¥pefulle');
 INSERT INTO club (name) VALUES ('De Nystemte');
 INSERT INTO club (name) VALUES ('Det Bergenske Selskap');
 INSERT INTO club (name) VALUES ('Dilteren');
@@ -77,11 +77,12 @@ INSERT INTO club (name) VALUES ('Septim');
 INSERT INTO club (name) VALUES ('Sfinks');
 INSERT INTO club (name) VALUES ('Skaftet');
 INSERT INTO club (name) VALUES ('Skjeivaleisten');
-INSERT INTO club (name) VALUES ('Slagbjørn');
+INSERT INTO club (name) VALUES ('SlagbjÃ¸rn');
 INSERT INTO club (name) VALUES ('Sub Ligamentaris');
 INSERT INTO club (name) VALUES ('Ulriken');
 INSERT INTO club (name) VALUES ('Vestenfjeldske Kjegleklubb');
-INSERT INTO club (name) VALUES ('Viking');
+INSERT INTO club (name) VALUES ('Viking Junior');
+INSERT INTO club (name) VALUES ('Viking Senior');
 INSERT INTO club (name) VALUES ('Young Boys');
 INSERT INTO club (name) VALUES ('z [Annen / ikke oppgitt] z');
 
@@ -100,24 +101,17 @@ INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Ørja
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Herman', 'Brandt', 'Prinsen', 'herman.brandt@gmail.com', 1);
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Cato', 'Ervik', 'Svinet', 'cato@ervik-it.no', 1);
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Fredrik', 'Gisholt', 'Essemusen', 'fgi@wr.no', 1);
-INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Arne', 'Kolle d.y.', 'Godteposen', 'arne@kolle.no', 1);
-INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Olav', 'Kolle d.e.', 'Kolli BMF', 'olav@kolle.no', 1);
+--INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Arne', 'Kolle d.y.', 'Godteposen', 'arne@kolle.no', 1);
+--INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Olav', 'Kolle d.e.', 'Kolli BMF', 'olav@kolle.no', 1);
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Kjetil', 'Lilletvedt', 'Kix Melon', 'kixmelon@gmail.com', 1);
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Helge', 'Loy', 'Helveten', 'helge@machina.no', 1);
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Julius', 'Sannem', 'Frans', 'jul-san@online.no', 1);
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Eivind', 'Sommersten', 'Sommerhesten', 'eivind@machina.no', 1);
-INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Axel', 'Wangberg', 'Dr', 'axelwangberg@hotmail.com', 1);
+--INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Axel', 'Wangberg', 'Dr', 'axelwangberg@hotmail.com', 1);
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Truls', 'Lien', 'Bien', 'truls.lien@akersolutions.com', 1);
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Andreas', 'Nordgreen', 'Gud', 'andreas.nordgreen@norsildmel.no', 1);
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Håkon', 'Marås', 'Samantha', 'hmaras@broadpark.no', 1);
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Anders', 'Sørli', 'Snåttet', 'andsoer@online.no', 1);
-
-
-INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Jan', 'Sommersten', 'Far', 'jan@sommersten.com', 4);
-INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Truls', 'sundt', 'Truls', 'trulssundt@online.no', 4);
-INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Morten', 'Iversen', 'Morten', 'morten@spv.no', 5);
-INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Knut', 'Matre', 'Knut', 'knut@example.com', 5);
-INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Egil', 'Skjoldmo', 'Skjoldmo', 'egil@nordea.no', 5);
 
 CREATE TABLE participant_status (
 	id INTEGER PRIMARY KEY,
@@ -137,18 +131,18 @@ CREATE table participant (
 	status_id INTEGER NOT NULL DEFAULT 0 REFERENCES participant_status(id)
 );
 
-INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,1,0,1);
-INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,2,1,1);
-INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,3,2,0);
-INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,4,3,0);
-INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,5,4,0);
-INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,8,5,0);
-INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,9,6,0);
-INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,10,7,0);
-INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,11,8,0);
-INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,13,9,0);
-INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,14,10,0);
-INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,15,11,0);
+--INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,1,0,1);
+--INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,2,1,1);
+--INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,3,2,0);
+--INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,4,3,0);
+--INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,5,4,0);
+--INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,8,5,0);
+--INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,9,6,0);
+--INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,10,7,0);
+--INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,11,8,0);
+--INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,13,9,0);
+--INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,14,10,0);
+--INSERT INTO participant (competition_id, player_id, sort_order, status_id) VALUES (1,15,11,0);
 
 
 --CREATE TABLE stage (
@@ -191,40 +185,40 @@ INNER JOIN club cl ON pl.club_id = cl.id;
 
 --INSERT INTO stage (stage_date, competition_id) VALUES ('2018-04-15', 2);
 
-INSERT INTO round (participant_id, competition_id, status_id) VALUES (1, 1, 1);
-INSERT INTO throw (round_id, score) VALUES (1, 7);
-INSERT INTO throw (round_id, score) VALUES (1, 6);
-INSERT INTO throw (round_id, score) VALUES (1, 7);
-INSERT INTO throw (round_id, score) VALUES (1, 7);
-INSERT INTO throw (round_id, score) VALUES (1, 8);
-INSERT INTO throw (round_id, score) VALUES (1, 8);
-INSERT INTO throw (round_id, score) VALUES (1, 5);
-INSERT INTO throw (round_id, score) VALUES (1, 7);
-INSERT INTO throw (round_id, score) VALUES (1, 6);
-INSERT INTO throw (round_id, score) VALUES (1, 4);
+--INSERT INTO round (participant_id, competition_id, status_id) VALUES (1, 1, 1);
+--INSERT INTO throw (round_id, score) VALUES (1, 7);
+--INSERT INTO throw (round_id, score) VALUES (1, 6);
+--INSERT INTO throw (round_id, score) VALUES (1, 7);
+--INSERT INTO throw (round_id, score) VALUES (1, 7);
+--INSERT INTO throw (round_id, score) VALUES (1, 8);
+--INSERT INTO throw (round_id, score) VALUES (1, 8);
+--INSERT INTO throw (round_id, score) VALUES (1, 5);
+--INSERT INTO throw (round_id, score) VALUES (1, 7);
+--INSERT INTO throw (round_id, score) VALUES (1, 6);
+--INSERT INTO throw (round_id, score) VALUES (1, 4);
 
-INSERT INTO round (participant_id, competition_id, status_id) VALUES (1, 1, 1);
-INSERT INTO throw (round_id, score) VALUES (2, 6);
-INSERT INTO throw (round_id, score) VALUES (2, 6);
-INSERT INTO throw (round_id, score) VALUES (2, 8);
-INSERT INTO throw (round_id, score) VALUES (2, 8);
-INSERT INTO throw (round_id, score) VALUES (2, 8);
-INSERT INTO throw (round_id, score) VALUES (2, 8);
-INSERT INTO throw (round_id, score) VALUES (2, 5);
-INSERT INTO throw (round_id, score) VALUES (2, 4);
-INSERT INTO throw (round_id, score) VALUES (2, 0);
-INSERT INTO throw (round_id, score) VALUES (2, 6);
+--INSERT INTO round (participant_id, competition_id, status_id) VALUES (1, 1, 1);
+--INSERT INTO throw (round_id, score) VALUES (2, 6);
+--INSERT INTO throw (round_id, score) VALUES (2, 6);
+--INSERT INTO throw (round_id, score) VALUES (2, 8);
+--INSERT INTO throw (round_id, score) VALUES (2, 8);
+--INSERT INTO throw (round_id, score) VALUES (2, 8);
+--INSERT INTO throw (round_id, score) VALUES (2, 8);
+--INSERT INTO throw (round_id, score) VALUES (2, 5);
+--INSERT INTO throw (round_id, score) VALUES (2, 4);
+--INSERT INTO throw (round_id, score) VALUES (2, 0);
+--INSERT INTO throw (round_id, score) VALUES (2, 6);
 
-INSERT INTO round (participant_id, competition_id, status_id) VALUES (2, 1, 1);
-INSERT INTO throw (round_id, score) VALUES (3, 7);
-INSERT INTO throw (round_id, score) VALUES (3, 7);
-INSERT INTO throw (round_id, score) VALUES (3, 7);
-INSERT INTO throw (round_id, score) VALUES (3, 7);
-INSERT INTO throw (round_id, score) VALUES (3, 7);
-INSERT INTO throw (round_id, score) VALUES (3, 7);
-INSERT INTO throw (round_id, score) VALUES (3, 7);
-INSERT INTO throw (round_id, score) VALUES (3, 7);
-INSERT INTO throw (round_id, score) VALUES (3, 7);
-INSERT INTO throw (round_id, score) VALUES (3, 6);
+--INSERT INTO round (participant_id, competition_id, status_id) VALUES (2, 1, 1);
+--INSERT INTO throw (round_id, score) VALUES (3, 7);
+--INSERT INTO throw (round_id, score) VALUES (3, 7);
+--INSERT INTO throw (round_id, score) VALUES (3, 7);
+--INSERT INTO throw (round_id, score) VALUES (3, 7);
+--INSERT INTO throw (round_id, score) VALUES (3, 7);
+--INSERT INTO throw (round_id, score) VALUES (3, 7);
+--INSERT INTO throw (round_id, score) VALUES (3, 7);
+--INSERT INTO throw (round_id, score) VALUES (3, 7);
+--INSERT INTO throw (round_id, score) VALUES (3, 7);
+--INSERT INTO throw (round_id, score) VALUES (3, 6);
 
 
