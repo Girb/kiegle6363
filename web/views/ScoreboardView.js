@@ -1,9 +1,11 @@
 import Backbone from 'backbone';
+import $ from 'jquery';
 import SingleScoreView from './SingleScoreView';
 
 export default class ScoreboardView extends Backbone.View {
     initialize(options) {
         Object.assign(this, options);
+        this.listenTo(app, 'window:focus', this.windowFocused);
     }
     get className() { return 'scoreboard'; }
     get events() {
@@ -11,13 +13,23 @@ export default class ScoreboardView extends Backbone.View {
             'click #startreg': 'start',
         };
     }
+    windowFocused(e) {
+        setTimeout(() => {
+            this.current && this.current.focus();
+            //console.log('window focus arrived');
+        });
+    }
+    focus(el) {
+        el && el.focus();
+        this.current = el;
+    }
     focusNext(from) {
         const next = from.el.nextSibling;
-        next && next.focus();
+        this.focus(next);
     }
     focusPrev(from) {
         const prev = from.el.previousElementSibling;
-        prev && prev.focus();
+        this.focus(prev);
     }
     sum() {
         let total = 0;
@@ -48,7 +60,10 @@ export default class ScoreboardView extends Backbone.View {
             this.$el.append(ss.render().$el);
         }
         setTimeout(() => {
-            this.items[0].$el.focus();
+            this.focus(this.items[0].$el);
+            this.$el.on('destroyed', () => {
+                this.stopListening();
+            })
         });
 
         return this;

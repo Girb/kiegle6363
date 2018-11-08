@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import Backbone from 'backbone';
 import Server from '../server';
+import { timingSafeEqual } from 'crypto';
 
 export default class SingleScoreView extends Backbone.View {
     initialize(options) {
@@ -19,26 +20,29 @@ export default class SingleScoreView extends Backbone.View {
             'blur input': 'bl',
         };
     }
-    bl() {
+    bl(e) {
         this.$ipt.remove();
     }
     fc() {
         this.$ipt = $('<input />')
             .prop('type', 'number')
             .css('position', 'absolute')
-            .css('left', '-200%')
+            .css('width', '2em')
+            .css('left', '20px')
+            .css('top', '400px')
             .appendTo(this.$el)
             .focus();
+        this.trigger('focused', this);
     }
     kd(e) {
-        if ([37, 39, 46].indexOf(e.keyCode) !== -1 || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) {
+        if ([37, 39, 46, 9  ].indexOf(e.keyCode) !== -1 || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) {
             if (e.keyCode === 46) {
                 this.$el.text('-'); 
-            } else if (e.keyCode === 37) {
+            } else if (e.keyCode === 37 || (e.keyCode === 9 && e.shiftKey)) {
                 e.preventDefault();
                 this.trigger('focus:prev', this);
                 return true;
-            } else if (e.keyCode === 39) {
+            } else if (e.keyCode === 39 || (e.keyCode === 9 && !e.shiftKey)) {
                 e.preventDefault();
                 this.trigger('focus:next', this);
                 return true;

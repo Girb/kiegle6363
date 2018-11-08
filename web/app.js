@@ -75,6 +75,9 @@ class App extends Backbone.Router {
                 app.navigate(href, { trigger: true });
             }
         });
+        $(window).on('focus', () => {
+            this.trigger('window:focus');
+        });
     }
     // execute(callback, args) {
     //     if( !this.session.get('competition') ) {
