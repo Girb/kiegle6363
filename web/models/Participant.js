@@ -90,4 +90,19 @@ export default class Participant extends Backbone.Model {
         }
         return [];        
     }
+    allRoundsCardinalityModifier() {
+        const allThrows = _.flatten(_.map(this.get('rounds'), r => r.throws));
+        //console.log(allThrows);
+        const cs = _.countBy(allThrows);
+        let c = 0;
+        c = c + (cs[9] || 0) * 100000;
+        c = c + (cs[8] || 0) * 10000;
+        c = c + (cs[7] || 0) * 1000;
+        c = c + (cs[6] || 0) * 100;
+        c = c + (cs[5] || 0) * 10;
+        c = c + (cs[4] || 0) * 1;
+        return c;
+
+        // sum: roundrow.throws.reduce((a, b) => a + b, 0),
+    }
 }
