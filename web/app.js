@@ -48,6 +48,7 @@ class App extends Backbone.Router {
     get routes() {
         return {
             '': 'home',
+            '/': 'home',
             'test': 'test',
             'admin': 'admin',
             'competition': 'competition',
