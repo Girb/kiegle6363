@@ -366,6 +366,11 @@ ul.bb {
     }
     tr.inround td span.last { opacity: 1; }
   }
+  #bottom {
+    text-align: right; position: fixed; bottom: 0; left: 0; right: 0; padding-right: 16px;
+    #logo { height: 2.25vh; vertical-align: middle;  }
+
+  }
  }
 
 $circles: 100;

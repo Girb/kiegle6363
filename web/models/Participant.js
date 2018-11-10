@@ -86,9 +86,10 @@ export default class Participant extends Backbone.Model {
         const rounds = this.get('rounds');
         if (rounds && rounds.length) {
             const lastround = rounds[rounds.length - 1];
-            return lastround.throws.filter(t => t).join('');
+            const res = lastround.throws.filter(t => t !== undefined && t !== null).join('');
+            return res || '-';
         }
-        return [];        
+        return '';
     }
     allRoundsCardinalityModifier() {
         const allThrows = _.flatten(_.map(this.get('rounds'), r => r.throws));
