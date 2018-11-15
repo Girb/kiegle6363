@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="nb">
+  <head>
+    <meta charset="UTF-8">
+    <meta content="initial-scale=1, shrink-to-fit=no, width=device-width" name="viewport">
+    <link href="favicon.ico" rel="icon" type="image/x-icon" />
+    <title>Kongematch 2018 - Kiegleklubben Kniksen</title>
+    <style type="text/css" media="screen">
+
+@font-face {
+  font-family: 'sa-digital-number';
+  src: url('DigitalNumbers-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+  html { min-height: 100%;  }
+  body, html {
+    padding: 0; margin: 0; height: 100%;
+
+    background: url('godstart2.jpg') no-repeat center center fixed; background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover;
+    color: #dde; text-shadow: rgba(0,0,0,.75) 0 0 4px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+  }
+
+#counter { font-size: 28px; padding: 3px; color: #e6ffac; text-shadow: 0 0 12px #87f324, 0 0 18px #288903; font-family: sa-digital-number; background-color: rgba(0,0,0,.35); display: inline-block; position: absolute; bottom: 7%; left: 0; right: 0;}
+#counter span { margin-right: 16px; display: inline-block; }
+
+#header { background-color: rgba(124,102,58,.3); position: absolute; top: 20%; left: 0; right: 0; padding: 8px 0; }
+#header h1 { font-size: 48px; text-transform: uppercase; font-weight: bold; vertical-align: middle; margin: 0; color: #fff; font-size: 48px; text-shadow: 4px 4px 10px rgba(0,0,0,.25); }
+#header h2 { margin: 0; color: #eee; font-size: 27px; }
+
+#header #program { margin-top: 12px;  }
+#header #program a { font-size: 24px; color: #eee; display: inline-block; background-color: #5387bd; text-decoration: none; padding: 4px 24px; box-shadow: 3px 3px 6px rgba(0,0,0,.25); border-radius: 2px; }
+#header #program a:hover { box-shadow: 6px 6px 9px rgba(0,0,0,.25); color: #fff; }
+#header #dlimg { height: 24px; vertical-align: text-top; margin-right: 8px; }
+
+#credit { position: absolute; bottom: 3px; right: 3px; font-size: 12px; color: rgba(255,255,255,.35); }
+.kniksen { color: #eee; }
+
+@media only screen and (max-width: 600px) {
+  #header h1 { font-size: 32px;  }
+  #header h2 { font-size: 18px;  }
+  #header #counter { font-size: 21px; margin-top: 3px; }
+  #credit { font-size: 10px; color: rgba(255,255,255,.25); }
+}
+
+
+
+
+
+
+    </style>
+  </head>
+  <body>
+  <div id="counter"></div>
+	<div id="header">
+      <h2><span class="kniksen">Kiegleklubben Kniksen</span> presenterer</h2>
+      <h1>Kongematch 2018</h1>
+      <div id="program"><a href="Kongematch2018.pdf" target="_blank"><img id="dlimg" src="dl.svg" />Last ned program</a></div>
+  </div>
+  <div id="credit">Foto: Herman Brandt</div>
+  
+  <script type="text/javascript">
+    var date = new Date("Nov 30, 2018 10:20:00").getTime();
+    var pad = function(str, max) {
+      str = str.toString();
+      return str.length < max ? pad("0" + str, max) : str;
+    }
+    var update = function() {
+      var now = new Date().getTime();
+      var diff = date - now;
+      var cntelem = document.getElementById('counter');
+
+      var days = Math.floor(diff / (1000*60*60*24));
+      var hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+      var mins = Math.floor((diff % (1000*60*60)) / (1000*60));
+      var secs = Math.floor((diff % (1000*60)) / 1000);
+
+      cntelem.innerHTML = '<span>' + pad(days,2) + '</span><span>' + pad(hours,2) + '</span><span>' + pad(mins,2) + '</span><span>' + pad(secs,2) + '</span>';
+
+      if( diff < 0 ) {
+        clearInterval(x);
+        cntelem.innerHTML = "I GANG";
+      }
+
+    };
+    var x = setInterval(update, 1000);
+    update();
+  </script>
+  </body>
+</html>
+
