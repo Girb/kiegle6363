@@ -48,6 +48,7 @@ class App extends Backbone.Router {
     get routes() {
         return {
             '': 'home',
+            '/': 'home',
             'test': 'test',
             'admin': 'admin',
             'competition': 'competition',
@@ -74,6 +75,9 @@ class App extends Backbone.Router {
                 evt.preventDefault();
                 app.navigate(href, { trigger: true });
             }
+        });
+        $(window).on('focus', () => {
+            this.trigger('window:focus');
         });
     }
     // execute(callback, args) {

@@ -57,7 +57,7 @@ export default class Queue extends Backbone.View {
             }
         }
 
-        this.page = (this.page === 1) ? 2 : 1;
+        this.page = (this.collection.length > 16 && this.page === 1) ? 2 : 1;
     }
 
     get bottom() {

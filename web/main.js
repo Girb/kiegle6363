@@ -1,6 +1,15 @@
 import { App } from './app';
 import config from './config.json';
 import Session from './models/Session';
+import $ from 'jquery';
+
+$.event.special.destroyed = {
+    remove: function(o) {
+      if (o.handler) {
+        o.handler()
+      }
+    }
+  }
 
 if (config.beta) {
     document.body.classList.add('beta');

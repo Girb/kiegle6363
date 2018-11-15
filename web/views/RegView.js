@@ -6,6 +6,10 @@ import RegPrognosisView from './RegPrognosisView';
 
 
 export default class RegView extends BaseView {
+    initialize(options) {
+        BaseView.prototype.initialize.apply(this, arguments);
+        this.listenTo(this.model, 'change', this.updateBackButton);
+    }
     get title() { return 'Slagning'; }
     get className() { return 'reg'; }
     get template() {
@@ -36,6 +40,12 @@ export default class RegView extends BaseView {
             window.history.back();
         }
     }
+    updateBackButton() {
+        const done = this.model.isComplete();
+        this.$('.done')
+            .toggleClass('btn-success', done)
+            .toggleClass('btn-secondary', !done);
+    }
     render() {
         this.$el.empty().append(this.template);
         this.$('#info .sname').text(`${this.model.playerName()}`);
@@ -49,7 +59,7 @@ export default class RegView extends BaseView {
 
         $('<button/>')
             .prop('type', 'button')
-            .addClass('btn btn-success done btn-lg mt-5')
+            .addClass('btn done btn-secondary btn-lg mt-5')
             .html('&lt; Ferdig / tilbake')
             .appendTo(this.$el);
 

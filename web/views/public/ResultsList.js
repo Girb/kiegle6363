@@ -8,6 +8,7 @@ export default class ResultsList extends Backbone.View {
     }
     initialize(options) {
         Object.assign(this, options);
+        this.page = 1;
         this.collection = new Results();
         const status = app.comp.statusForResults;
         this.collection.url = app.url(`/competitions/${app.competitionId()}/rounds/${status}`);
@@ -24,8 +25,10 @@ export default class ResultsList extends Backbone.View {
     }
     redraw() {
         const tbl = this.$('table').empty();
-        let cnt = 0;
-        for (let i = 0; i < this.collection.length; i += 1) {
+        let cnt = 0,
+            start = this.page === 1 ? 0 : 16,
+            length = Math.min(this.collection.length, start + 16);
+        for (let i = start; i < length; i += 1) {
             const r = this.collection.at(i),
                 inRound = r.inRound();
             const sum = r.get('best2sum');
@@ -36,7 +39,8 @@ export default class ResultsList extends Backbone.View {
                 $('<td/>').addClass(inRound ? 'blinking yellow' : '').html(r.club()).appendTo(tr);
                 $('<td/>').addClass(inRound ? 'blinking yellow' : '').html(r.get('best2sum')).appendTo(tr);
                 if (inRound) {
-                    const bestRound = Math.max.apply(null, r.get('best2'));
+                    const b2 = r.get('best2');
+                    const bestRound = b2.length > 1 ? Math.max.apply(null, b2) : '--';
                     $('<td/>').html(`<span class="score sum">${`${bestRound}</span><span class="score current">${r.lastRoundThrows()}`}</span>` || '').appendTo(tr);
                 } else {
                     let b2td = $('<td/>').appendTo(tr);
@@ -49,8 +53,14 @@ export default class ResultsList extends Backbone.View {
                 if (cnt === 16) break;
             }
         }
+
+        this.page = (this.collection.length > 16 && this.page === 1) ? 2 : 1;
     }
     
+    get bottom() {
+        return `<div id="bottom"><img id="logo" src='../../../img/machina_white.png' /></div>`;
+    }
+
     render() {
         this.$el.empty();
         const c = $('<div/>').addClass('bgcontainer').appendTo(this.$el);
@@ -58,6 +68,9 @@ export default class ResultsList extends Backbone.View {
             $('<div/>').addClass('circle').appendTo(c);
         }
         $('<table/>').appendTo(this.$el);
+
+        this.$el.append(this.bottom);
+
         return this;
     }
 }

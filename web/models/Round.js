@@ -27,4 +27,7 @@ export default class Round extends Backbone.Model {
         const left = this.throws.filter(t => t.score === null).length;
         return this.sum() + (9 * left);
     }
+    isComplete() {
+        return !!(this.get('throws') && this.get('throws').every(t => (t.score !== null && t.score !== undefined)));
+    }
 }
