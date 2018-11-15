@@ -1,3 +1,4 @@
+/* eslint-disable */
 var main = document.getElementById('main'),
     tbl = document.getElementById('results');
 

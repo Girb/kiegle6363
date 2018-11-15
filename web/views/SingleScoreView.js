@@ -28,8 +28,7 @@ export default class SingleScoreView extends Backbone.View {
             .prop('type', 'number')
             .css('position', 'absolute')
             .css('width', '2em')
-            .css('left', '20px')
-            .css('top', '400px')
+            .css('left', '-200%')
             .appendTo(this.$el)
             .focus();
         this.trigger('focused', this);
