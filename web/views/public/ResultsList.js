@@ -14,7 +14,7 @@ export default class ResultsList extends Backbone.View {
         this.collection.url = app.url(`/competitions/${app.competitionId()}/rounds/${status}`);
         this.listenTo(this.collection, 'sync', this.redraw);
         this.collection.fetch();
-        setInterval(this.refresh.bind(this), 5000);
+        this.interval = setInterval(this.refresh.bind(this), 5000);
     }
     refresh() {
         this.$('table').fadeTo(500, 0, () => {
@@ -70,6 +70,10 @@ export default class ResultsList extends Backbone.View {
         $('<table/>').appendTo(this.$el);
 
         this.$el.append(this.bottom);
+
+        this.$el.on('destroyed', () => {
+            clearInterval(this.interval);
+        });
 
         return this;
     }

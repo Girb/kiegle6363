@@ -171,7 +171,15 @@ button {
 
 .home {
   .comp {
-    width: 20em; margin: 0 18px 18px 0; display: inline-block; height: 285px; cursor: pointer;
+    width: 20em; margin: 0 18px 18px 0; display: inline-block; height: 330px;
+    .qlnk { 
+      display: block; color: #07c; 
+      &:before { content: '➞'; margin-right: 5px; }
+    }
+    .slnk {
+      display: block; color: #07c; 
+      &:before { content: '🖵'; margin-right: 5px; }
+    }
   }
   .newcomp {
     width: 20em; margin: 0 18px 18px 0; display: inline-block; height: 285px; vertical-align: top; 

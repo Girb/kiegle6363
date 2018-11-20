@@ -15,11 +15,15 @@ import KVPResultsView from './views/KVPResultsView';
 
 import Queue from './views/public/Queue';
 import ResultsList from './views/public/ResultsList';
+import { timingSafeEqual } from 'crypto';
 
 class App extends Backbone.Router {
     initialize(options) {
         Object.assign(this, options);
-        const body = $('body');
+        this.createStructure();
+    }
+    createStructure() {
+        const body = $('body').removeClass('public').empty();
         this.$navbar = $('<nav/>').addClass('navbar navbar-expand-lg navbar-dark fixed-top').prependTo(body);
         this.$main = $('<div/>').prop('id', 'main').appendTo(body);
     }
@@ -90,6 +94,7 @@ class App extends Backbone.Router {
     // }
     home() {
         delete this.comp;
+        this.createStructure();
         this.$main.empty();
         const hv = new HomeView();
         hv.render().$el.appendTo(this.$main);                        
@@ -110,7 +115,7 @@ class App extends Backbone.Router {
         this.comp.fetch().then(() => {
             this.comp.save();
             this.$main.empty();
-            let cv = new CompetitionView();
+            let cv = new CompetitionView({ model: this.comp });
             cv.render().$el.appendTo(this.$main);
         });
     }

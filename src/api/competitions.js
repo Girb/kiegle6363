@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import _ from 'underscore';
+import Logger from '../Logger';
 
 export default ({ config, db }) => {
     const api = Router();
 
     api.get('/', (req, res) => {
+        Logger.info('get all competitions');
         db.any(`select c.id, c.title, ct.throws_per_round, ct.number_of_rounds, ct.title as type from competition c
                 INNER JOIN competition_type ct ON c.type_id = ct.id`).then((data) => {
             res.json(data);
@@ -14,6 +16,7 @@ export default ({ config, db }) => {
     });
 
     api.post('/new', (req, res) => {
+        Logger.info('create new competitions');
         db.one('INSERT INTO competition (title, type_id) VALUES ($1, $2) RETURNING id', [req.body.title, req.body.type_id]).then(id => (
             res.json({
                 id,
@@ -24,6 +27,7 @@ export default ({ config, db }) => {
     });
     
     api.get('/:id', (req, res) => {
+        Logger.info(`get competition ${req.params.id}`);
         db.one(`select c.id, c.title, c.type_id, ct.throws_per_round, ct.number_of_rounds, ct.title as type
         from competition c
         INNER JOIN competition_type ct ON c.type_id = ct.id
@@ -35,6 +39,7 @@ export default ({ config, db }) => {
     });
 
     api.get('/:id/participants/:status', (req, res) => {
+        Logger.info(`get participants from competition ${req.params.id} with status ${req.params.status}`);
         db.any(`select * from participants
                 where competition_id = $1 AND status_id = $2 order by sort_order ASC;`, [req.params.id, req.params.status]).then((data) => {
             res.json(data);
@@ -42,12 +47,14 @@ export default ({ config, db }) => {
     }); 
 
     api.get('/:id/players', (req, res) => {
+        Logger.info(`get players from competition ${req.params.id}`);
         db.any('select * from player where id IN (select player_id from participant where competition_id = $1)', req.params.id).then((data) => {
             res.json(data);
         });
     });
 
     api.get('/:id/players/add', (req, res) => {
+        Logger.info(`get player to add to competition ${req.params.id}`);
         db.any(`select player.id, firstname, lastname, nickname, email, cl.name as club from player
                 INNER JOIN club cl on club_id = cl.id
                 where player.id NOT IN (select player_id from participant where competition_id = $1) ORDER BY club, firstname;`, req.params.id).then((data) => {
@@ -56,6 +63,7 @@ export default ({ config, db }) => {
     });
 
     api.post('/:id/players/add/:playerid', (req, res) => {
+        Logger.info(`add player with id ${req.params.playerid} to competition ${req.params.id}`);
         db.one('select max(sort_order)+1 as sortorder from participant where competition_id = $1;', req.params.id).then((data) => {
             db.one('INSERT INTO participant (competition_id, player_id, sort_order) VALUES ($1, $2, $3) RETURNING id;', [req.params.id, req.params.playerid, data.sortorder]).then((ret) => {
                 db.one('SELECT * from participants where id = $1', ret.id).then((data) => {
@@ -109,6 +117,7 @@ export default ({ config, db }) => {
     }
     
     api.get('/:id/rounds/:status?', (req, res) => {
+        Logger.info(`get rounds from competition ${req.params.id} with status ${req.params.status}`);
         db.task(t => t.batch([
             t.any(`select p.id, pl.firstname, pl.lastname, pl.nickname, cl.name as club, array_agg(r.id) as round_ids
                         from participant p
@@ -140,6 +149,7 @@ export default ({ config, db }) => {
     });
 
     api.post('/:id/rounds/new', (req, res) => {
+        Logger.info(`create new round for participant ${req.body.participant_id} in competition ${req.params.id}`);
         db.one('insert into round (participant_id, competition_id) values ($1, $2) returning *', [req.body.participant_id, req.params.id]).then((round) => {
             db.tx((t) => {
                 const qs = [],

@@ -79,6 +79,6 @@
     "pg-promise": "^8.4.0",
     "popper.js": "^1.14.3",
     "resource-router-middleware": "^0.7.0",
-    "winston": "^3.0.0-rc1"
+    "winston": "^3.1.0"
   }
 }

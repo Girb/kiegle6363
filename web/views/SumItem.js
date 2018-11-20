@@ -39,6 +39,7 @@ export default class SumItem extends Backbone.View {
             .attr('data-toggle', 'dropdown')
             .attr('aria-haspopup', true)
             .attr('aria-expanded', false)
+            .attr('title', this.round.throws.join(' '))
             .text(txt)
             .appendTo(this.$el);
         

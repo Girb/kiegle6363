@@ -11,7 +11,11 @@ export default class Queue extends Backbone.View {
         this.collection.url = app.url(`/competitions/${this.model.id}/rounds/1`);
         this.listenTo(this.collection, 'sync', this.redraw);
         this.collection.fetch();
-        setInterval(this.refresh.bind(this), 10000);
+        this.interval = setInterval(this.refresh.bind(this), 3000);
+    }
+
+    remove() {
+        console.log('REMOVED!');
     }
 
     refresh() {
@@ -72,6 +76,10 @@ export default class Queue extends Backbone.View {
         }
         const tbl = $('<table/>').appendTo(this.$el);
         this.$el.append(this.bottom);
+
+        this.$el.on('destroyed', () => {
+            clearInterval(this.interval);
+        });
 
         return this;
     }
