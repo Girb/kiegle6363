@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import Backbone from 'backbone';
 import Participants from '../../models/Participants';
+import ScreenFull from 'screenfull';
 
 export default class Queue extends Backbone.View {
     get className() { return 'publicqueue'; }
@@ -13,7 +14,14 @@ export default class Queue extends Backbone.View {
         this.collection.fetch();
         this.interval = setInterval(this.refresh.bind(this), 3000);
     }
-
+    get events() {
+        return {
+            'click #logo': 'toggleFullscreen',
+        };
+    }
+    toggleFullscreen() {
+        ScreenFull.toggle();
+    }
     remove() {
         console.log('REMOVED!');
     }

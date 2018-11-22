@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import Backbone from 'backbone';
 import Results from '../../models/Results';
+import ScreenFull from 'screenfull';
 
 export default class ResultsList extends Backbone.View {
     get className() {
@@ -15,6 +16,14 @@ export default class ResultsList extends Backbone.View {
         this.listenTo(this.collection, 'sync', this.redraw);
         this.collection.fetch();
         this.interval = setInterval(this.refresh.bind(this), 5000);
+    }
+    get events() {
+        return {
+            'click #logo': 'toggleFullscreen',
+        }
+    }
+    toggleFullscreen() {
+        ScreenFull.toggle();
     }
     refresh() {
         this.$('table').fadeTo(500, 0, () => {
