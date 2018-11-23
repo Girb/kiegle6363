@@ -11,7 +11,7 @@ export default class Queue extends Backbone.View {
         this.collection = new Participants();
         this.collection.url = app.url(`/competitions/${this.model.id}/rounds/1`);
         this.listenTo(this.collection, 'sync', this.redraw);
-        this.collection.fetch();
+        this.collection.fetch({ reset: true });
         this.interval = setInterval(this.refresh.bind(this), 3000);
     }
     get events() {
@@ -27,49 +27,46 @@ export default class Queue extends Backbone.View {
     }
 
     refresh() {
-        this.$('table').fadeTo(500, 0, () => {
-            this.collection.fetch().then(() => {
-                this.$('table').fadeTo(500, 1);
-            });
+        const tbl = this.$('table');
+        tbl.fadeTo(500, 0, () => {
+            this.collection.fetch({ reset: true });
         });
     }
 
     redraw() {
         const tbl = this.$('table').empty();
+        const queued = this.collection.filter(p => !p.isFinished()); // different from participant-status, this one is derived
         let cnt = 0, 
             minCounter = 0,
             start = this.page === 1 ? 0 : 16,
-            length = Math.min(this.collection.length, start + 16);
+            length = Math.min(queued.length, start + 16);
             
         for (let i = start; i < length; i += 1) {
-            const p = this.collection.at(i);
-            if (!p.isFinished()) { // different from participant-status, this one is derived
-                const tr = $('<tr/>').appendTo(tbl);
-                let qstatus = '';
-                if (p.isStarted()) {
-                    qstatus = '<span style="color: yellow;">PÅGÅR</span>';
-                } else if (p.isNextUp()) {
-                    qstatus = 'NESTE';
-                }
-                
-                if (!qstatus) {
-                    //minCounter += 1;
-                    // let txt = 'NESTE';
-                    // if (minCounter > 2) {
-                    let txt = `<span style="color: #eee;">${p.minsUntil()} min</span>`;
-                    //}
-                    $('<td />').html(txt).appendTo(tr);
-                } else {
-                    $('<td />').html(qstatus).appendTo(tr);
-                }
-                $('<td style="text-transform: uppercase;" />').html(p.name()).appendTo(tr);
-                $('<td />').html(p.club()).appendTo(tr);
-                cnt += 1;
-                if (cnt === 16) break;
+            const p = queued[i];
+            const tr = $('<tr/>').appendTo(tbl);
+            let qstatus = '';
+            if (p.isStarted()) {
+                qstatus = '<span style="color: yellow;">PÅGÅR</span>';
+            } else if (p.isNextUp()) {
+                qstatus = 'NESTE';
             }
+            
+            if (!qstatus) {
+                let txt = `<span style="color: #eee;">${p.minsUntil()} min</span>`;
+                $('<td />').html(txt).appendTo(tr);
+            } else {
+                $('<td />').html(qstatus).appendTo(tr);
+            }
+            $('<td style="text-transform: uppercase;" />').html(p.name()).appendTo(tr);
+            $('<td />').html(p.club()).appendTo(tr);
+            // cnt += 1;
+            // if (cnt === 16) break;
+
         }
 
-        this.page = (this.collection.length > 16 && this.page === 1) ? 2 : 1;
+        tbl.fadeTo(500, 1);
+
+        this.page = (queued.length > 16 && this.page === 1) ? 2 : 1;
     }
 
     get bottom() {

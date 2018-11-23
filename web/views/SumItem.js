@@ -26,6 +26,9 @@ export default class SumItem extends Backbone.View {
             m.render().$el.appendTo(this.$el);
         }
     }
+    isComplete() {
+        return !!(this.round.throws && this.round.throws.every(t => (t !== null && t !== undefined)));
+    }
     render() {
         this.$el.empty();
         // const throwspr = app.comp.throws_per_round;
@@ -33,14 +36,15 @@ export default class SumItem extends Backbone.View {
         // if (this.round.throws.length < throwspr) {
         //     txt += '*';
         // }
-        let txt = this.round.sum || '0';
+        const txt = this.round.sum || '0';
         $('<button />')
             .addClass('btn btn-outline-secondary dropdown-toggle sum')
+            .toggleClass('incomplete', !this.isComplete())
             .attr('data-toggle', 'dropdown')
             .attr('aria-haspopup', true)
             .attr('aria-expanded', false)
             .attr('title', this.round.throws.join(' '))
-            .text(txt)
+            .text( this.isComplete() ? txt : '(' + txt + ')')
             .appendTo(this.$el);
         
         return this;

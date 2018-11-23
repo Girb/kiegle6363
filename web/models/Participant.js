@@ -62,7 +62,7 @@ export default class Participant extends Backbone.Model {
     isNextUp() {
         const nextTwo = [];
         this.collection.each((p) => {
-            if (!p.isStarted() && nextTwo.length < 2) {
+            if (!p.isFinished() && !p.isStarted() && nextTwo.length < 2) {
                 nextTwo.push(p);
             }
         });
@@ -75,7 +75,7 @@ export default class Participant extends Backbone.Model {
     }
     minsUntil() {
         const ongoingCount = this.collection.filter(p => p.isStarted()).length;
-        const idx = this.collection.indexOf(this);
+        const idx = this.collection.filter(p => !p.isFinished()).indexOf(this);
         let min = ((idx % 2 === 1) ? ((idx - 1) * 1.5) : idx * 1.5);
         if (ongoingCount > 1) {
             min -= 3;

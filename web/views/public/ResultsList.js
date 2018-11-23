@@ -3,6 +3,8 @@ import Backbone from 'backbone';
 import Results from '../../models/Results';
 import ScreenFull from 'screenfull';
 
+const REFRESH_INTERVAL = 3000;
+
 export default class ResultsList extends Backbone.View {
     get className() {
         return 'publicresults';
@@ -14,22 +16,20 @@ export default class ResultsList extends Backbone.View {
         const status = app.comp.statusForResults;
         this.collection.url = app.url(`/competitions/${app.competitionId()}/rounds/${status}`);
         this.listenTo(this.collection, 'sync', this.redraw);
-        this.collection.fetch();
-        this.interval = setInterval(this.refresh.bind(this), 5000);
+        this.collection.fetch({ reset: true });
+        //this.interval = setTimeout(this.refresh.bind(this), REFRESH_INTERVAL);
     }
     get events() {
         return {
             'click #logo': 'toggleFullscreen',
-        }
+        };
     }
     toggleFullscreen() {
         ScreenFull.toggle();
     }
     refresh() {
         this.$('table').fadeTo(500, 0, () => {
-            this.collection.fetch().then(() => {
-                this.$('table').fadeTo(500, 1);
-            });
+            this.collection.fetch({ reset: true });
         });
     }
     redraw() {
@@ -63,6 +63,8 @@ export default class ResultsList extends Backbone.View {
             }
         }
 
+        tbl.fadeTo(500, 1);
+        this.interval = setTimeout(this.refresh.bind(this), REFRESH_INTERVAL);
         this.page = (this.collection.length > 16 && this.page === 1) ? 2 : 1;
     }
     

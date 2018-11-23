@@ -5,7 +5,7 @@ export default ({ config, db }) => {
     const api = Router();
 
     api.post('/sort', (req, res) => {
-        Logger.info(`set sortorder to ${ox.sortOrder} for participant ${ox.id}`);
+        Logger.info(`update sortorder`);
         db.tx((t) => {
             const ts = [];
             req.body.forEach((ox) => {

@@ -169,6 +169,7 @@ button {
   }
 }
 
+
 .home {
   .comp {
     width: 20em; margin: 0 18px 18px 0; display: inline-block; height: 330px;
@@ -204,6 +205,7 @@ button {
       .sumdiv { display: inline-block; }
       .sum {
         padding-left: 24px; border-color: transparent;
+        &.incomplete { color: yellow; }
         &::after { border-top-color: transparent; }
         &:hover {
           &::after { border-top-color: rgb(204,204,204); }
