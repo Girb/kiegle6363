@@ -3,7 +3,7 @@ import Backbone from 'backbone';
 import Results from '../../models/Results';
 import ScreenFull from 'screenfull';
 
-const REFRESH_INTERVAL = 3000;
+const REFRESH_INTERVAL = 15000;
 
 export default class ResultsList extends Backbone.View {
     get className() {

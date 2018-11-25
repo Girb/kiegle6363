@@ -27,6 +27,7 @@ export default class KVPResultsView extends Backbone.View {
                 </thead>
                 <tbody></tbody>
             </table>
+            <div id="clubres"></div>
         `;
     }
     addAll() {
@@ -36,8 +37,27 @@ export default class KVPResultsView extends Backbone.View {
         const itm = new KVPResultItemView({ model, idx });
         itm.render().$el.appendTo(this.$('tbody'));
     }
+    getClubStanding() {
+        const cs = this.collection.groupBy('club');
+        const res = {};
+        _.keys(cs).forEach((c) => {
+            cs[c].forEach((v) => {
+                if (!res[c]) {
+                    res[c] = { clubsum: 0 };
+                }
+                res[c].clubsum += v.get('best2sum');
+            });
+        });
+        return res;
+    }
     render() {
-
+        if (this.collection.length) {
+            const cres = this.getClubStanding();
+            _.keys(cres).forEach((c) => {
+                const d = $('<div/>').appendTo(this.$('#clubres'));
+                d.append(`${c} -&gt; ${cres[c].clubsum}`);
+            });
+        }
         return this;
     }
 }

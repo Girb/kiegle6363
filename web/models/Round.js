@@ -15,13 +15,15 @@ export default class Round extends Backbone.Model {
     }
     avg() {
         const thrown = this.throws.filter(t => t.score !== null);
-        return (this.sum() / thrown.length).toFixed(2);
+        const x = (this.sum() / thrown.length);
+        return x ? x.toFixed(2) : '-';
     }
     secondbest10() {
         return '';
     }
     prog() {
-        return (this.avg() * this.throws.length).toFixed(0);
+        const x = (this.avg() * this.throws.length);
+        return x ? x.toFixed(0) : '-';
     }
     max() {
         const left = this.throws.filter(t => t.score === null).length;

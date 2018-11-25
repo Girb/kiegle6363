@@ -3,6 +3,7 @@ import Backbone from 'backbone';
 import Participants from '../../models/Participants';
 import ScreenFull from 'screenfull';
 
+const REFRESH_INTERVAL = 15000;
 export default class Queue extends Backbone.View {
     get className() { return 'publicqueue'; }
     initialize(options) {
@@ -12,7 +13,6 @@ export default class Queue extends Backbone.View {
         this.collection.url = app.url(`/competitions/${this.model.id}/rounds/1`);
         this.listenTo(this.collection, 'sync', this.redraw);
         this.collection.fetch({ reset: true });
-        this.interval = setInterval(this.refresh.bind(this), 3000);
     }
     get events() {
         return {
@@ -61,11 +61,10 @@ export default class Queue extends Backbone.View {
             $('<td />').html(p.club()).appendTo(tr);
             // cnt += 1;
             // if (cnt === 16) break;
-
         }
 
         tbl.fadeTo(500, 1);
-
+        this.interval = setTimeout(this.refresh.bind(this), REFRESH_INTERVAL);
         this.page = (queued.length > 16 && this.page === 1) ? 2 : 1;
     }
 
