@@ -84,6 +84,7 @@ export default class Queue extends Backbone.View {
         this.$el.on('destroyed', () => {
             clearInterval(this.interval);
         });
+        
 
         return this;
     }

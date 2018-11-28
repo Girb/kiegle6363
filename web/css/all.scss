@@ -383,6 +383,21 @@ ul.bb {
   }
  }
 
+ .split {
+   .splitter {
+     display: flex; flex-direction: row; justify-content: stretch;
+     .left {
+       
+
+     }
+     .right {
+
+     }
+     .publicqueue { background-color: #333; }
+     .publicresults { background-color: #000; }
+   }
+ }
+
 $circles: 100;
 
 @for $i from 0 through $circles {

@@ -2,6 +2,7 @@ import Backbone from 'backbone';
 import _ from 'underscore';
 import Server from '../server';
 
+const ROUND_MINUTES = 4;
 export default class Participant extends Backbone.Model {
     moveUp() {
         this.collection.moveUp(this);
@@ -76,9 +77,9 @@ export default class Participant extends Backbone.Model {
     minsUntil() {
         const ongoingCount = this.collection.filter(p => p.isStarted()).length;
         const idx = this.collection.filter(p => !p.isFinished()).indexOf(this);
-        let min = ((idx % 2 === 1) ? ((idx - 1) * 1.5) : idx * 1.5);
+        let min = ((idx % 2 === 1) ? ((idx - 1) * (ROUND_MINUTES/2)) : idx * (ROUND_MINUTES/2));
         if (ongoingCount > 1) {
-            min -= 3;
+            min -= ROUND_MINUTES;
         }
         return min;
     }

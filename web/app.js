@@ -15,6 +15,7 @@ import KVPResultsView from './views/KVPResultsView';
 
 import Queue from './views/public/Queue';
 import ResultsList from './views/public/ResultsList';
+import SplitView from './views/public/SplitView';
 import { timingSafeEqual } from 'crypto';
 
 class App extends Backbone.Router {
@@ -64,9 +65,11 @@ class App extends Backbone.Router {
 
             'competition/:id/public/queue': 'publicQueue',
             'competition/:id/public/results': 'publicResults',
+            'competition/:id/public/split': 'publicSplit',
             
             'reg/:id/:count': 'reg',
             'round/:id': 'round',
+            
         };
     }
     start() { // starts the app
@@ -158,6 +161,14 @@ class App extends Backbone.Router {
             $('body').addClass('public').empty();
             const rl = new ResultsList({ model: this.comp });
             rl.render().$el.appendTo($('body'));
+        });
+    }
+    publicSplit(id) {
+        this.comp = new Competition({ id });
+        this.comp.fetch().then(() => {
+            $('body').addClass('public split').empty();
+            const sv = new SplitView({ model: this.comp });
+            sv.render().$el.appendTo($('body'));
         });
     }
     admin() {

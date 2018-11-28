@@ -34,11 +34,12 @@ export default class ResultsList extends Backbone.View {
     }
     redraw() {
         const tbl = this.$('table').empty();
+        const queued = this.collection.filter(r => !!r.get('best2sum'));
         let cnt = 0,
             start = this.page === 1 ? 0 : 16,
-            length = Math.min(this.collection.length, start + 16);
+            length = Math.min(queued.length, start + 16);
         for (let i = start; i < length; i += 1) {
-            const r = this.collection.at(i),
+            const r = queued[i],
                 inRound = r.inRound();
             const sum = r.get('best2sum');
             if (sum) {
@@ -65,7 +66,7 @@ export default class ResultsList extends Backbone.View {
 
         tbl.fadeTo(500, 1);
         this.interval = setTimeout(this.refresh.bind(this), REFRESH_INTERVAL);
-        this.page = (this.collection.length > 16 && this.page === 1) ? 2 : 1;
+        this.page = (queued.length > 16 && this.page === 1) ? 2 : 1;
     }
     
     get bottom() {
