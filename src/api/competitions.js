@@ -65,7 +65,7 @@ export default ({ config, db }) => {
     api.post('/:id/players/add/:playerid', (req, res) => {
         Logger.info(`add player with id ${req.params.playerid} to competition ${req.params.id}`);
         db.one('select max(sort_order)+1 as sortorder from participant where competition_id = $1;', req.params.id).then((data) => {
-            db.one('INSERT INTO participant (competition_id, player_id, sort_order) VALUES ($1, $2, $3) RETURNING id;', [req.params.id, req.params.playerid, data.sortorder]).then((ret) => {
+            db.one('INSERT INTO participant (competition_id, player_id, sort_order, prev1, prev2) VALUES ($1, $2, $3, $4, $5) RETURNING id;', [req.params.id, req.params.playerid, data.sortorder, req.body.prev1, req.body.prev2]).then((ret) => {
                 db.one('SELECT * from participants where id = $1', ret.id).then((data) => {
                     res.json(data);
                 });
@@ -119,7 +119,7 @@ export default ({ config, db }) => {
     api.get('/:id/rounds/:status?', (req, res) => {
         Logger.info(`get rounds from competition ${req.params.id} with status ${req.params.status || '[not set]'}`);
         db.task(t => t.batch([
-            t.any(`select p.id, pl.firstname, pl.lastname, pl.nickname, cl.name as club, array_agg(r.id) as round_ids
+            t.any(`select p.id, p.prev1, p.prev2, pl.firstname, pl.lastname, pl.nickname, cl.name as club, array_agg(r.id) as round_ids
                         from participant p
                         left outer join round r on r.participant_id = p.id
                         inner join player pl on p.player_id = pl.id
