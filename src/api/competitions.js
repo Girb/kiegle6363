@@ -117,7 +117,7 @@ export default ({ config, db }) => {
     }
     
     api.get('/:id/rounds/:status?', (req, res) => {
-        Logger.info(`get rounds from competition ${req.params.id} with status ${req.params.status}`);
+        Logger.info(`get rounds from competition ${req.params.id} with status ${req.params.status || '[not set]'}`);
         db.task(t => t.batch([
             t.any(`select p.id, pl.firstname, pl.lastname, pl.nickname, cl.name as club, array_agg(r.id) as round_ids
                         from participant p

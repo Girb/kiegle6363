@@ -71,6 +71,7 @@ export default class ParticipantQueueItem extends Backbone.View {
         if (maxrounds > 0) {
             this.$('.add').prop('disabled', this.model.get('rounds').length >= maxrounds);
         }
+        this.$('.complete').prop('disabled', this.model.inRound());
         
         return this;
     }

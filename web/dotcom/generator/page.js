@@ -46,9 +46,10 @@ class Page {
 
     render() {
         const tmp = createPage(this.competition, this.rounds);
-        fs.writeFile('1.html', tmp, (err) => {
+        const filename = this.competition.id + '.html'
+        fs.writeFile(filename, tmp, (err) => {
             if (err) throw err;
-            console.log('File saved');
+            console.log(`${filename} saved.`);
         });
     }
 }

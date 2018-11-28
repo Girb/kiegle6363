@@ -1,5 +1,5 @@
 {
-    "interval": 5000,
+    "interval": 15000,
     "server": {
         "address": "localhost",
         "port": "3001"
