@@ -38,6 +38,13 @@ export default class Participant extends Backbone.Model {
     club() {
         return this.get('club');
     }
+    prevSum() {
+        const p1 = this.get('prev1') || 0, p2 = this.get('prev2') || 0;
+        return p1 + p2;
+    }
+    totalSum() {
+        return this.prevSum() + this.get('best2sum');
+    }
     queueStatus() {
         if (this.collection) {
             if (this.inRound() || this.get('rounds').length) {

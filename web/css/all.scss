@@ -367,7 +367,9 @@ ul.bb {
   table {
     margin: 0 auto;
     td { 
-      padding-right: 5vw; 
+      padding-right: 3vw; 
+      &.prev { opacity: .5; }
+      &.live { padding-right: 1vw; }
       span.last { 
         opacity: .5; animation: zoomin 1s linear 0s infinite; transform-origin: center; display: inline-block; animation-fill-mode: forwards;  
         &.current { opacity: 1; }
@@ -375,7 +377,7 @@ ul.bb {
       .score {
         font-size: 2.5vh; font-family: sa-digital-number; color: #e6ffac; text-shadow: 0 0 12px #87f324, 0 0 18px #288903; vertical-align: middle;
       }
-      .sum { margin-right: 1em; opacity: .5; background-color: black; border: 1px solid #555; padding: 0 3px; }
+      .sum { margin-right: .5em; opacity: .5; background-color: black; border: 1px solid #555; padding: 0 3px; }
       .current { min-width: 8.6em; background-color: black; border: 1px solid #555; display: inline-block; }
     }
     tr.inround td span.last { opacity: 1; }

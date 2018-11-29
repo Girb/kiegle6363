@@ -38,6 +38,15 @@
 #header #program a:hover { box-shadow: 6px 6px 9px rgba(0,0,0,.25); color: #fff; }
 #header #dlimg { height: 24px; vertical-align: text-top; margin-right: 8px; }
 
+#header .livelink { margin: 32px 0; font-size: 24px; }
+#header .livelink a { text-decoration: none; padding: 4px 24px; color: #ccc; background-color: #888; }
+#header .livelink.current a { color: #feefc3; background-color: #5387bd; }
+#header .livelink.current a:after { content: ' >' }
+
+#r1 { display: none; }
+#r2 { display: none; }
+#r3 { display: none; }
+
 #credit { position: absolute; bottom: 3px; right: 3px; font-size: 12px; color: rgba(255,255,255,.35); }
 .kniksen { color: #eee; }
 
@@ -61,6 +70,15 @@
       <h2><span class="kniksen">Kiegleklubben Kniksen</span> presenterer</h2>
       <h1>Kongematch 2018</h1>
       <div id="program"><a href="Kongematch2018.pdf" target="_blank"><img id="dlimg" src="dl.svg" />Last ned program</a></div>
+      <div id="r1" class="livelink current">
+        <a href="/gen/1.html">INNLEDENDE RUNDE</a>
+      </div>
+      <div id="r2" class="livelink">
+        <a href="/gen/2.html">SEMIFINALE</a>
+      </div>
+      <div id="r3" class="livelink">
+        <a href="/gen/3.html">FINALE</a>
+      </div>
   </div>
   <div id="credit">Foto: Herman Brandt</div>
   

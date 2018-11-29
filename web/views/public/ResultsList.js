@@ -3,7 +3,7 @@ import Backbone from 'backbone';
 import Results from '../../models/Results';
 import ScreenFull from 'screenfull';
 
-const REFRESH_INTERVAL = 15000;
+const REFRESH_INTERVAL = 3000;
 
 export default class ResultsList extends Backbone.View {
     get className() {
@@ -38,6 +38,7 @@ export default class ResultsList extends Backbone.View {
         let cnt = 0,
             start = this.page === 1 ? 0 : 16,
             length = Math.min(queued.length, start + 16);
+        const usePrev = (app.comp.get('type_id') === 2 || app.comp.get('type_id') === 3);
         for (let i = start; i < length; i += 1) {
             const r = queued[i],
                 inRound = r.inRound();
@@ -47,16 +48,22 @@ export default class ResultsList extends Backbone.View {
                 $('<td/>').html(i + 1).appendTo(tr);
                 $('<td/>').addClass(inRound ? 'blinking yellow' : '').html(r.name()).appendTo(tr);
                 $('<td/>').addClass(inRound ? 'blinking yellow' : '').html(r.club()).appendTo(tr);
-                $('<td/>').addClass(inRound ? 'blinking yellow' : '').html(r.get('best2sum')).appendTo(tr);
+                if( usePrev ) {
+                    $('<td/>').addClass('prev').html('(' + r.prevSum() + ')').appendTo(tr);
+                }                
                 if (inRound) {
                     const b2 = r.get('best2');
                     const bestRound = b2.length > 1 ? Math.max.apply(null, b2) : '--';
-                    $('<td/>').html(`<span class="score sum">${`${bestRound}</span><span class="score current">${r.lastRoundThrows()}`}</span>` || '').appendTo(tr);
+                    $('<td/>').addClass('live').html(`<span class="score sum">${`${bestRound}</span><span class="score current">${r.lastRoundThrows()}`}</span>` || '').appendTo(tr);
                 } else {
-                    let b2td = $('<td/>').appendTo(tr);
+                    let b2td = $('<td/>').addClass('live').appendTo(tr);
                     r.get('best2').forEach((b) => {
                         $('<span/>').addClass('score sum').text(b).appendTo(b2td);
                     });
+                }
+                $('<td/>').addClass(inRound ? 'blinking yellow' : '').html(r.get('best2sum')).appendTo(tr);
+                if( usePrev ) {
+                    $('<td />').addClass(inRound ? 'blinking yellow' : '').html(r.totalSum()).appendTo(tr);
                 }
                 
                 cnt += 1;

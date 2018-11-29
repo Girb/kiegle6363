@@ -6,8 +6,8 @@ export default class Results extends Backbone.Collection {
     get model() { return Participant; }
     comparator(x,y) {
         if( !x || !y ) return 0;
-        const sumx = x.get('best2sum'),
-            sumy = y.get('best2sum');
+        const sumx = x.totalSum(),
+            sumy = y.totalSum();
         if( sumx !== sumy ) {
             return sumx < sumy ? 1 : -1;
         }
