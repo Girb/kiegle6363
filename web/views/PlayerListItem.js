@@ -34,7 +34,7 @@ export default class PlayerListItem extends Backbone.View {
         $('<td/>').text(this.model.club()).appendTo(this.$el);
         const td = $('<td/>').addClass('commands').appendTo(this.$el);
         const typeid = app.comp.get('type_id');
-        if( typeid === 2 ) {
+        if( typeid === 2 || typeid === 3 ) {
             $('<input />').addClass('prev1').prop('placeholder', 'Total kval').appendTo(td);
         }
         if( typeid === 3 ) {

@@ -15,6 +15,7 @@ export default class KVPResultsView extends Backbone.View {
         this.collection.fetch({ reset: true });
     }
     get template() {
+        const typeid = app.comp.get('type_id');
         return `
             <table class="table table-responsive-lg table-hover">
                 <thead>
@@ -22,6 +23,8 @@ export default class KVPResultsView extends Backbone.View {
                         <th scope="col">Plassering</th>
                         <th scope="col">Navn</th>
                         <th scope="col">Resultater</th>
+                        ${typeid === 2 ? '<th>Innledende</th>' : ''}
+                        ${typeid === 3 ? '<th>Semi+innledende</th>' : ''}
                         <th scope="col">Total</th>
                     </tr>
                 </thead>
@@ -40,22 +43,22 @@ export default class KVPResultsView extends Backbone.View {
     getClubStanding() {
         const cs = this.collection.groupBy('club');
         const res = {};
-        _.keys(cs).forEach((c) => {
-            cs[c].forEach((v) => {
-                if (!res[c]) {
-                    res[c] = { clubsum: 0 };
-                }
-                res[c].clubsum += v.get('best2sum');
-            });
+        _.keys(cs).forEach(c => {
+            res[c] = _.map(cs[c], rs => rs.get('best2sum'));
+        });
+        _.keys(res).forEach((c) => {
+            var b5r = res[c].sort().reverse().splice(0, 5);
+            res[c] = _.reduce(b5r, (memo, num) => { return memo + num; }, 0);
         });
         return res;
     }
     render() {
-        if (this.collection.length) {
+        const typeid = app.comp.get('type_id');
+        if ( typeid === 1 && this.collection.length) {
             const cres = this.getClubStanding();
             _.keys(cres).forEach((c) => {
                 const d = $('<div/>').appendTo(this.$('#clubres'));
-                d.append(`${c} -&gt; ${cres[c].clubsum}`);
+                d.append(`${c} -&gt; ${cres[c]}`);
             });
         }
         return this;

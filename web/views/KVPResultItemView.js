@@ -6,11 +6,13 @@ export default class KVPResultItemView extends Backbone.View {
         Object.assign(this, options);
     }
     get template() {
+        const typeid = app.comp.get('type_id');
         return `
             <td>${this.idx+1}</td>
             <td>${this.model.name()}</td>
             <td>${this.model.get('best2').join(' &nbsp; ')}</td>
-            <td>${this.model.get('best2sum')}</td>
+            ${typeid == 2 || typeid == 3 ? '<td>' + this.model.prevSum() + '</td>' : ''}
+            <td>${this.model.totalSum()}</td>
         `;
     }
     render() {
