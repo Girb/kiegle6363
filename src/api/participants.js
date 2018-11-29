@@ -30,7 +30,7 @@ export default ({ config, db }) => {
 
     api.post('/:id/status/:statusid', (req, res) => {
         Logger.info(`set status for participant ${req.params.id} to ${req.params.statusid}`);
-        db.none('UPDATE participant SET status_id = $1 WHERE id = $2', [parseInt(req.params.statusid), parseInt(req.params.id)]).then(() => {
+        db.none('UPDATE participant SET status_id = $1, sort_order = (select coalesce(max(sort_order),0)+1 from participant where status_id = $1 AND competition_id = (select competition_id from participant where id = $2)) WHERE id = $2', [parseInt(req.params.statusid), parseInt(req.params.id)]).then(() => {
             res.end();
         }).catch((err) => {
             res.status(500).json(err);
