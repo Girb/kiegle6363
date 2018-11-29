@@ -64,7 +64,7 @@ export default ({ config, db }) => {
 
     api.post('/:id/players/add/:playerid', (req, res) => {
         Logger.info(`add player with id ${req.params.playerid} to competition ${req.params.id}`);
-        db.one('select max(sort_order)+1 as sortorder from participant where competition_id = $1;', req.params.id).then((data) => {
+        db.one('select coalesce(max(sort_order), 0)+1 as sortorder from participant where competition_id = $1;', req.params.id).then((data) => {
             db.one('INSERT INTO participant (competition_id, player_id, sort_order, prev1, prev2) VALUES ($1, $2, $3, $4, $5) RETURNING id;', [req.params.id, req.params.playerid, data.sortorder, req.body.prev1, req.body.prev2]).then((ret) => {
                 db.one('SELECT * from participants where id = $1', ret.id).then((data) => {
                     res.json(data);

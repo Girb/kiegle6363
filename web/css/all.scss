@@ -368,7 +368,7 @@ ul.bb {
     margin: 0 auto;
     td { 
       padding-right: 3vw; 
-      &.prev { opacity: .5; }
+      &.prev { opacity: .5; font-size: 2vh;  }
       &.live { padding-right: 1vw; }
       span.last { 
         opacity: .5; animation: zoomin 1s linear 0s infinite; transform-origin: center; display: inline-block; animation-fill-mode: forwards;  

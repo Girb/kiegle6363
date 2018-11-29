@@ -3,7 +3,7 @@ import Backbone from 'backbone';
 import Results from '../../models/Results';
 import ScreenFull from 'screenfull';
 
-const REFRESH_INTERVAL = 3000;
+const REFRESH_INTERVAL = 15000;
 
 export default class ResultsList extends Backbone.View {
     get className() {
@@ -48,9 +48,6 @@ export default class ResultsList extends Backbone.View {
                 $('<td/>').html(i + 1).appendTo(tr);
                 $('<td/>').addClass(inRound ? 'blinking yellow' : '').html(r.name()).appendTo(tr);
                 $('<td/>').addClass(inRound ? 'blinking yellow' : '').html(r.club()).appendTo(tr);
-                if( usePrev ) {
-                    $('<td/>').addClass('prev').html('(' + r.prevSum() + ')').appendTo(tr);
-                }                
                 if (inRound) {
                     const b2 = r.get('best2');
                     const bestRound = b2.length > 1 ? Math.max.apply(null, b2) : '--';
@@ -62,6 +59,9 @@ export default class ResultsList extends Backbone.View {
                     });
                 }
                 $('<td/>').addClass(inRound ? 'blinking yellow' : '').html(r.get('best2sum')).appendTo(tr);
+                if( usePrev ) {
+                    $('<td/>').addClass('prev').html('+' + r.prevSum() + '').appendTo(tr);
+                }                
                 if( usePrev ) {
                     $('<td />').addClass(inRound ? 'blinking yellow' : '').html(r.totalSum()).appendTo(tr);
                 }
