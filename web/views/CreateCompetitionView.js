@@ -20,6 +20,7 @@ export default class CreateCompetitionView extends Backbone.View {
                         <option selected value="4">Slagning / Kniksens Vandrepokal</option>
                         <option value="5">Dronningaften</option>
                         <option value="6">Klubb vs Klubb</option>
+                        <option value="7">Gustibus-kveld</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -53,7 +54,7 @@ export default class CreateCompetitionView extends Backbone.View {
     fixName() {
         const t = this.$('#type').val();
         let name;
-        if( ['1','2','3','5'].indexOf(t) !== -1 ) {
+        if( ['1','2','3','5','7'].indexOf(t) !== -1 ) {
             name = this.$('#type>option:selected').text() + ' ' + moment().format('YYYY');
         } else if( t === '4' ) {
             name = 'Slagning ' + moment().format('DD.MM.YYYY');

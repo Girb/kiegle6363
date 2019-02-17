@@ -18,6 +18,7 @@ INSERT INTO competition_type (id, title, throws_per_round, number_of_rounds) VAL
 INSERT INTO competition_type (id, title, throws_per_round, number_of_rounds) VALUES (4, 'Kniksens Vandrepokal', 10, -1);
 INSERT INTO competition_type (id, title, throws_per_round, number_of_rounds) VALUES (5, 'Dronningaften', 10, -1);
 INSERT INTO competition_type (id, title, throws_per_round, number_of_rounds) VALUES (6, 'Klubb vs Klubb', 10, 2);
+INSERT INTO competition_type (id, title, throws_per_round, number_of_rounds) VALUES (7, 'Gustibus-kveld', 5, -1);
 
 CREATE TABLE round_status (
 	id INTEGER PRIMARY KEY,
@@ -49,7 +50,7 @@ INSERT INTO club (name) VALUES ('0-9 united');
 INSERT INTO club (name) VALUES ('B-52');
 INSERT INTO club (name) VALUES ('Balladen');
 INSERT INTO club (name) VALUES ('Baltus');
-INSERT INTO club (name) VALUES ('De Håpefulle');
+INSERT INTO club (name) VALUES ('De Hï¿½pefulle');
 INSERT INTO club (name) VALUES ('De Nystemte');
 INSERT INTO club (name) VALUES ('Det Bergenske Selskap');
 INSERT INTO club (name) VALUES ('Dilteren');
@@ -77,7 +78,7 @@ INSERT INTO club (name) VALUES ('Septim');
 INSERT INTO club (name) VALUES ('Sfinks');
 INSERT INTO club (name) VALUES ('Skaftet');
 INSERT INTO club (name) VALUES ('Skjeivaleisten');
-INSERT INTO club (name) VALUES ('Slagbjørn');
+INSERT INTO club (name) VALUES ('Slagbjï¿½rn');
 INSERT INTO club (name) VALUES ('Sub Ligamentaris');
 INSERT INTO club (name) VALUES ('Ulriken');
 INSERT INTO club (name) VALUES ('Vestenfjeldske Kjegleklubb');
@@ -96,8 +97,8 @@ CREATE TABLE player (
 	club_id INTEGER NOT NULL REFERENCES club(id)
 );
 
-INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Bjørn-Erik', 'Allers-Hansen', 'Bønnen', 'bjorneah@online.no', 1);
-INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Ørjan', 'Berg', 'Kaptein Tinn', 'orbe@berg-hansen.no', 1);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Bjï¿½rn-Erik', 'Allers-Hansen', 'Bï¿½nnen', 'bjorneah@online.no', 1);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('ï¿½rjan', 'Berg', 'Kaptein Tinn', 'orbe@berg-hansen.no', 1);
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Herman', 'Brandt', 'Prinsen', 'herman.brandt@gmail.com', 1);
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Cato', 'Ervik', 'Svinet', 'cato@ervik-it.no', 1);
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Fredrik', 'Gisholt', 'Essemusen', 'fgi@wr.no', 1);
@@ -110,8 +111,8 @@ INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Eivi
 --INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Axel', 'Wangberg', 'Dr', 'axelwangberg@hotmail.com', 1);
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Truls', 'Lien', 'Bien', 'truls.lien@akersolutions.com', 1);
 INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Andreas', 'Nordgreen', 'Gud', 'andreas.nordgreen@norsildmel.no', 1);
-INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Håkon', 'Marås', 'Samantha', 'hmaras@broadpark.no', 1);
-INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Anders', 'Sørli', 'Snåttet', 'andsoer@online.no', 1);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Hï¿½kon', 'Marï¿½s', 'Samantha', 'hmaras@broadpark.no', 1);
+INSERT INTO player (firstname, lastname, nickname, email, club_id) VALUES ('Anders', 'Sï¿½rli', 'Snï¿½ttet', 'andsoer@online.no', 1);
 
 CREATE TABLE participant_status (
 	id INTEGER PRIMARY KEY,
