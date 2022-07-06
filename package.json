@@ -40,7 +40,7 @@
     "file-loader": "^1.1.6",
     "imports-loader": "^0.7.1",
     "mocha": "^5.0.0",
-    "moment": "^2.20.1",
+    "moment": "^2.29.4",
     "node-libs-browser": "^2.1.0",
     "node-sass": "^4.7.2",
     "nodemon": "^1.14.11",
