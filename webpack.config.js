@@ -4,7 +4,7 @@ const webpack = require('webpack');
 module.exports = {
     entry: [
         'babel-polyfill',
-        './web/css/all.scss',
+        // './web/css/all.scss',
         './web/main',
         'webpack-dev-server/client?http://0.0.0.0:6363',
     ],
@@ -28,26 +28,24 @@ module.exports = {
                     presets: ['es2015'],
                 },
             },
-            {
-                test: /\.(scss)$/,
-                use: [{
-                    loader: 'style-loader', // inject CSS to page
-                }, {
-                    loader: 'css-loader', // translates CSS into CommonJS modules
-                }, {
-                    loader: 'postcss-loader', // Run post css actions
-                    options: {
-                        plugins() { // post css plugins, can be exported to postcss.config.js
-                            return [
-                                require('precss'),
-                                require('autoprefixer'),
-                            ];
-                        },
-                    },
-                }, {
-                    loader: 'sass-loader', // compiles Sass to CSS
-                }],
-            },
+            // {
+            //     test: /\.(scss)$/,
+            //     use: [{
+            //         loader: 'style-loader', // inject CSS to page
+            //     }, {
+            //         loader: 'css-loader', // translates CSS into CommonJS modules
+            //     }, {
+            //         loader: 'postcss-loader', // Run post css actions
+            //         options: {
+            //             plugins() { // post css plugins, can be exported to postcss.config.js
+            //                 return [
+            //                     require('precss'),
+            //                     require('autoprefixer'),
+            //                 ];
+            //             },
+            //         },
+            //     }],
+            // },
             {
                 test: /\.(eot|woff|woff2|ttf|png)$/,
                 loader: 'file-loader',

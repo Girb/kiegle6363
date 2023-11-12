@@ -9,8 +9,10 @@ export default ({ config, db }) => {
         Logger.info('get all competitions');
         db.any(`select c.id, c.title, ct.throws_per_round, ct.number_of_rounds, ct.title as type from competition c
                 INNER JOIN competition_type ct ON c.type_id = ct.id`).then((data) => {
+            console.log(data);
             res.json(data);
         }).catch((err) => {
+            console.log(err);
             res.status(500).json(err);
         });
     });
